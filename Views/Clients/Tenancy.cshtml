@@ -1,0 +1,62 @@
+﻿@using TheHotel.ViewModels.Clients
+@model TenancyViewModel
+
+@{
+    this.ViewData["Title"] = "Tenancy";
+}
+
+<h1>Tenancy</h1>
+<form method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="col-md-4">
+        <div class="form-group">
+            <label asp-for="FirstName"></label>
+            <input class="form-control" asp-for="FirstName" />
+            <span class="text-danger" asp-validation-for="FirstName"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="LastName"></label>
+            <input class="form-control" asp-for="LastName" />
+            <span class="text-danger" asp-validation-for="LastName"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="PersonalIdentityNumber"></label>
+            <input class="form-control" asp-for="PersonalIdentityNumber" />
+            <span class="text-danger" asp-validation-for="PersonalIdentityNumber"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Phone"></label>
+            <input class="form-control" asp-for="Phone" />
+            <span class="text-danger" asp-validation-for="Phone"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Email"></label>
+            <input class="form-control" asp-for="Email" type="email" />
+            <span class="text-danger" asp-validation-for="Email"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="RoomId"></label>
+            <input class="form-control" asp-for="RoomId" readonly />
+            <span class="text-danger" asp-validation-for="RoomId"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="AccommodationDate"></label>
+            <input class="form-control" asp-for="AccommodationDate" />
+            <span class="text-danger" asp-validation-for="AccommodationDate"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="DepartureDate"></label>
+            <input class="form-control" asp-for="DepartureDate" />
+            <span class="text-danger" asp-validation-for="DepartureDate"></span>
+        </div>
+        <div class="form-check form-switch font-weight-bolder">
+            <input asp-for="UpdateClientInfo" class="form-check-input" type="checkbox" id="updateClient">
+            <label asp-for="UpdateClientInfo" class="form-check-label" placeholder="hint"></label>
+        </div>
+        <br>
+        <div class="form-group">
+            <input class="btn btn-primary" type="submit" name="confirmBtn" value="Confirm" />
+        </div>
+    </div>
+</form>

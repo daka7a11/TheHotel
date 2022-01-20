@@ -1,0 +1,15 @@
+﻿@using TheHotel.ViewModels.Rooms
+@model HireRoomViewModel
+
+@{
+    this.ViewData["Title"] = "Client PIN";
+}
+
+<form method="post">
+    <div class="form-group">
+        <label asp-for="PersonalIdentityNumber"></label>
+        <input class="form-control" asp-for="PersonalIdentityNumber" />
+        <span class="text-danger" asp-validation-for="PersonalIdentityNumber"></span>
+    </div>
+    <input class="btn btn-primary" type="submit" name="getPIN" value="Submit" />
+</form>

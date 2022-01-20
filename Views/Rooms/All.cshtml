@@ -1,0 +1,54 @@
+﻿@using TheHotel.ViewModels.Rooms
+@model AllViewModel
+
+@{
+    this.ViewData["Title"] = "Rooms";
+}
+<form method="post">
+    <div class="text-center border-bottom">
+        <div class="d-inline-block col-5">
+            <label for="accommodationDate">Accommodation date: </label>
+            <input type="date" name="accommodationDate" value="" />
+        </div>
+        <div class="d-inline-block col-5">
+            <label for="departureDate">Departure date: </label>
+            <input type="date" name="departureDate" value="" />
+        </div>
+
+        <input class="btn btn-success" type="submit" name="searchBtn" value="Search" />
+    </div>
+</form>
+@if (Model.AvailableRoomsViewModel != null)
+{
+    <div class="alert alert-warning alert- text-center">
+        <h3 class="text-success">@Model.AvailableRoomsViewModel.AccommodationDate.Value.ToShortDateString() - @Model.AvailableRoomsViewModel.DepartureDate.Value.ToShortDateString()</h3>
+    </div>
+}
+<h1>Rooms</h1>
+<table class="table table-hover table-striped">
+    <tr class="text-center">
+        <th>№</th>
+        <th style="width: 10%">Room type</th>
+        <th style="width: 8%">Size</th>
+        <th>Floor</th>
+        <th>Price</th>
+        <th class="border-right-0">Description</th>
+        <th></th>
+    </tr>
+    @foreach (var room in Model.AllRoomsViewModel.OrderBy(x => x.Price))
+    {
+        <tr>
+            <td>@room.Id</td>
+            <td>@room.RoomType</td>
+            <td>@room.Size m&sup2;</td>
+            <td>@room.Floor</td>
+            <td class="font-weight-bold">@room.Price$</td>
+            <td>@room.Description</td>
+            <td>
+                <div>
+                    <a class="btn btn-primary btn-sm" href="/Rooms/ClientPin?roomId=@room.Id">Hire</a>
+                </div>
+            </td>
+        </tr>
+    }
+</table>
