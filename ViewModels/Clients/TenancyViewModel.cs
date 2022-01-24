@@ -44,9 +44,6 @@ namespace TheHotel.ViewModels.Clients
         [Display(Name = "Departure date")]
         public DateTime? DepartureDate { get; set; }
 
-        [Display(Name = "Update client information")]
-        public bool UpdateClientInfo { get; set; }
-
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             if (this.DepartureDate <= this.AccommodationDate)

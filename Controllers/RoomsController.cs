@@ -93,6 +93,30 @@ namespace TheHotel.Controllers
             return this.RedirectToAction("Tenancy", "Clients", new { roomId = model.RoomId, clientPin = model.PersonalIdentityNumber });
         }
 
+        public IActionResult Details(int roomId)
+        {
+            var room = roomsService.GetById(roomId);
+
+            if (room == null)
+            {
+                return this.Redirect($"RoomError?roomId={roomId}");
+            }
+
+            var model = new RoomDetailsViewModel()
+            {
+                Id = room.Id,
+                Floor = room.Floor,
+                Description = room.Description,
+                RoomType = room.RoomType.Type,
+                Size = room.Size,
+                Price = room.Price,
+                HireDates = room.HireDates,
+                Images = room.Images,
+            };
+
+            return this.View(model);
+        }
+
         private bool IsRoomAvailable(Room room, DateTime? accDate, DateTime? depDate)
         {
             foreach (var hireDate in room.HireDates)

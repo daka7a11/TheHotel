@@ -7,12 +7,13 @@
     <title>@this.ViewData["Title"] - @GlobalConstants.SystemName</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+    <link href="~/css/MyStyle.css?v=1" rel="stylesheet" />
 </head>
 <body class="d-flex flex-column min-vh-100">
-    <header class="card-header" style="background-color: navajowhite">
-        <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom box-shadow mb-3">
+    <header class="card-header border-bottom-0" style="background-color: navajowhite">
+        <nav class=" navbar navbar-expand-sm navbar-dark bg-dark border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">@GlobalConstants.SystemName</a>
+                <a class="navbar-brand" style="font-size:130%" asp-area="" asp-controller="Home" asp-action="Index">@GlobalConstants.SystemName</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -21,7 +22,10 @@
                     <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Rooms" asp-action="All">Rooms</a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="Rooms" asp-action="All">Rooms</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="" asp-controller="Clients" asp-action="All">Clients</a>
                         </li>
                     </ul>
                 </div>
@@ -36,9 +40,11 @@
         </main>
     </div>
 
-    <footer class="mt-auto border-top footer text-muted">
-        <div class="container">
-            &copy; @DateTime.Now.Year - @GlobalConstants.SystemName - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <footer class="mt-auto border-top footer text-muted form-control" style="background-color: navajowhite">
+        <div class="container font-weight-bolder">
+            &copy; @DateTime.Now.Year - @GlobalConstants.SystemName -
+            <a class="mr-md-1" asp-area="" asp-controller="Home" asp-action="Home">Home</a>
+            <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
 

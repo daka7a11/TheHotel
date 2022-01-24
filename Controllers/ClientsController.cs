@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using TheHotel.Common;
 using TheHotel.Data;
@@ -113,7 +114,7 @@ namespace TheHotel.Controllers
 
             return this.Redirect(
                 $"/Clients/Success?clientName={currClient.FirstName}&roomId={model.RoomId}" +
-                $"&accDate={model.AccommodationDate.Value.ToString("d")}&depDate={model.DepartureDate.Value.ToString("d")}");
+                $"&accDate={model.AccommodationDate.Value.ToString("dd,MM,yyyy")}&depDate={model.DepartureDate.Value.ToString("dd,MM,yyyy")}");
         }
 
         public IActionResult Success(TenancySuccessViewModel model)
@@ -152,6 +153,70 @@ namespace TheHotel.Controllers
             await this.clientsService.AddAsync(client);
 
             return this.RedirectToAction("Success");
+        }
+
+        public IActionResult All()
+        {
+            var clients = clientsService.GetAll()
+                .Select(x => new ClientViewModel()
+                {
+                    Id = x.Id,
+                    FirstName = x.FirstName,
+                    LastName = x.LastName,
+                    Phone = x.Phone,
+                    Email = x.Email,
+                    PersonalIdentityNumber = x.PersonalIdentityNumber,
+                    Rooms = x.Rooms,
+                });
+
+            return this.View(clients);
+        }
+
+        [HttpPost]
+        public IActionResult All(string clientPin)
+        {
+            if (clientPin == null)
+            {
+                return Redirect("/Clients/All");
+            }
+
+            var clients = clientsService.GetAll()
+                .Where(x => x.PersonalIdentityNumber == clientPin)
+                .Select(x => new ClientViewModel()
+                {
+                    Id = x.Id,
+                    FirstName = x.FirstName,
+                    LastName = x.LastName,
+                    Phone = x.Phone,
+                    Email = x.Email,
+                    PersonalIdentityNumber = x.PersonalIdentityNumber,
+                    Rooms = x.Rooms,
+                });
+
+            return this.View(clients);
+        }
+
+        public IActionResult Details(string clientId)
+        {
+            var client = clientsService.GetClientById(clientId);
+
+            if (client == null)
+            {
+                return this.Redirect("Clients/Error");
+            }
+
+            var model = new ClientViewModel()
+            {
+                Id = client.Id,
+                FirstName = client.FirstName,
+                LastName = client.LastName,
+                Phone = client.Phone,
+                Email = client.Email,
+                PersonalIdentityNumber = client.PersonalIdentityNumber,
+                Rooms = client.Rooms,
+            };
+
+            return this.View(model);
         }
     }
 }

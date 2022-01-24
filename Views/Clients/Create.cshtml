@@ -1,6 +1,10 @@
 ﻿@using TheHotel.ViewModels.Clients
 @model CreateClientViewModel
 
+@{
+    this.ViewData["Title"] = "Create client";
+}
+
 <h1>Create new client</h1>
 <form method="post">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>

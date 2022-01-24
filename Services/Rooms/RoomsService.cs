@@ -1,8 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using TheHotel.Data;
 using TheHotel.Data.Models;
 
@@ -31,9 +29,10 @@ namespace TheHotel.Services.Rooms
             return db.Rooms
                 .Where(x => x.Id == id)
                 .Include(x => x.HireDates)
+                .ThenInclude(x => x.Client)
                 .Include(x => x.RoomType)
                 .Include(x => x.Images)
-                .First();
+                .FirstOrDefault();
         }
 
         public int GetCount()

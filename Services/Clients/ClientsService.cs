@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using TheHotel.Data;
 using TheHotel.Data.Models;
@@ -18,6 +20,22 @@ namespace TheHotel.Services.Clients
         {
             await db.Clients.AddAsync(client);
             await db.SaveChangesAsync();
+        }
+
+        public IEnumerable<Client> GetAll()
+        {
+            return db.Clients
+                .Include(x => x.Rooms)
+                .ThenInclude(x => x.Room)
+                .ToList();
+        }
+
+        public Client GetClientById(string clientId)
+        {
+            return db.Clients
+                .Include(x => x.Rooms)
+                .ThenInclude(x => x.Room)
+                .FirstOrDefault(x => x.Id == clientId);
         }
 
         public Client GetClientByPIN(string personalIdentityNumber)

@@ -1,0 +1,74 @@
+﻿@using TheHotel.ViewModels.Rooms
+@model RoomDetailsViewModel
+
+@{
+    ViewData["Title"] = "Room details";
+}
+
+<div class="details">
+    <div class="border-bottom text-center">
+        <h1>Room @Model.Id</h1>
+    </div>
+    <br />
+    <div class="row" style="background-color: navajowhite">
+        <div class="col-sm-6 d-inline-block ">
+            <div class="bg-light border border-left-0">
+                <dl class="row m-1">
+                    <dt class="col-md-4">Room type: </dt>
+                    <dd class="col-sm-8">@Model.RoomType</dd>
+                </dl>
+                <dl class="row m-1">
+                    <dt class="col-md-4">Floor: </dt>
+                    <dd class="col-sm-8">@Model.Floor</dd>
+                </dl>
+                <dl class="row m-1">
+                    <dt class="col-md-4">Size: </dt>
+                    <dd class="col-sm-8">@Model.Size m&sup2;</dd>
+                </dl>
+                <dl class="row m-1">
+                    <dt class="col-md-4">Price: </dt>
+                    <dd class="col-sm-8">@Model.Price$</dd>
+                </dl>
+            </div>
+        </div>
+        <div class="col-sm-6 d-inline-block bg-light border border-left-0">
+            <dl>
+                <dt class="text-center border-bottom">Description</dt>
+                <dd class="text-center m-2">@Model.Description</dd>
+            </dl>
+        </div>
+    </div>
+    @if (Model.HireDates.Count > 0)
+    {
+        <br>
+        <h4 class="text-center border" style="background-color: navajowhite">Hired dates</h4>
+        <div>
+            <table class="table table-hover table-striped table-bordered table-responsive-md bg-light">
+                <thead>
+                    <tr class="text-center">
+                        <th>Full name</th>
+                        <th>Personal identity number</th>
+                        <th>Accommodation date</th>
+                        <th>Departure date</th>
+                        <th>Overnight/s</th>
+                        <th>Total in $</th>
+                    </tr>
+                </thead>
+                @foreach (var item in Model.HireDates.OrderByDescending(x => x.AccommodationDate))
+                {
+                    int totalDays = (int)item.DepartureDate.Subtract(item.AccommodationDate).TotalDays;
+                    <tbody>
+                        <tr class="text-center">
+                            <td>@item.Client.FirstName @item.Client.LastName</td>
+                            <td>@item.Client.PersonalIdentityNumber</td>
+                            <td class="font-weight-bold">@item.AccommodationDate.ToString("dd.MM.yyyy")</td>
+                            <td class="font-weight-bold">@item.DepartureDate.ToString("dd.MM.yyyy")</td>
+                            <td>@totalDays</td>
+                            <td>@(item.Room.Price * totalDays)$</td>
+                        </tr>
+                    </tbody>
+                }
+            </table>
+        </div>
+    }
+</div>

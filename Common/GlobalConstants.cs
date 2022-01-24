@@ -2,7 +2,7 @@
 {
     public static class GlobalConstants
     {
-        public const string SystemName = "The hotel";
+        public const string SystemName = "TheHotel";
 
         public const int RoomMinSize = 1;
 
