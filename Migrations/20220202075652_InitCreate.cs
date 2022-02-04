@@ -63,19 +63,19 @@ namespace TheHotel.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Foods",
+                name: "Products",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FoodType = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ProductType = table.Column<int>(type: "int", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Foods", x => x.Id);
+                    table.PrimaryKey("PK_Products", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -349,10 +349,10 @@ namespace TheHotel.Migrations
                 name: "ClientRooms");
 
             migrationBuilder.DropTable(
-                name: "Foods");
+                name: "Images");
 
             migrationBuilder.DropTable(
-                name: "Images");
+                name: "Products");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

@@ -1,6 +1,6 @@
 ﻿namespace TheHotel.Data.Models.Enumerables
 {
-    public enum FoodType
+    public enum ProductType
     {
         Breakfast = 1,
         Lunch = 2,

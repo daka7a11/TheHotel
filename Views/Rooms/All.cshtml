@@ -5,7 +5,7 @@
     this.ViewData["Title"] = "Rooms";
 }
 
-<div class="jumbotron-fluid border border-top-0" style="background-color: navajowhite; height:50px">
+<div class="jumbotron-fluid border border-top-0 shadow" style="background-color: navajowhite; height:50px">
     <form method="post">
         <div class="text-center">
             <div class="d-inline-block col-5">
@@ -28,8 +28,8 @@
     </div>
 }
 <h1 class="text-center">Rooms</h1>
-<table class="table table-hover table-striped">
-    <tr class="text-center">
+<table class="table table-hover table-striped shadow">
+    <tr class="text-center bg-secondary text-light shadow">
         <th>№</th>
         <th style="width: 10%">Room type</th>
         <th style="width: 8%">Size</th>
@@ -40,7 +40,7 @@
     </tr>
     @foreach (var room in Model.AllRoomsViewModel.OrderBy(x => x.Price))
     {
-        <tr>
+        <tr class="text-center">
             <td>@room.Id</td>
             <td>@room.RoomType</td>
             <td>@room.Size m&sup2;</td>

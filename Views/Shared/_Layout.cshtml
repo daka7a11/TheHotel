@@ -4,9 +4,11 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/all.css" integrity="sha384-aOkxzJ5uQz7WBObEZcHvV5JvRW3TUc2rNPA7pe3AwnsUohiw1Vj2Rgx2KSOkF5+h" crossorigin="anonymous">
     <title>@this.ViewData["Title"] - @GlobalConstants.SystemName</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/lazy.css">
     <link href="~/css/MyStyle.css?v=1" rel="stylesheet" />
 </head>
 <body class="d-flex flex-column min-vh-100">
@@ -27,6 +29,13 @@
                         <li class="nav-item">
                             <a class="nav-link text-light" asp-area="" asp-controller="Clients" asp-action="All">Clients</a>
                         </li>
+                        <li class="nav-item dropdown">
+                            <a href="#" class="nav-link text-light dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Restaurant <span class="caret"></span></a>
+                            <ul class="dropdown-menu bg-dark  border-0" role="menu" style="background-color:none">
+                                <li><a class="btn btn-lg text-light" href="/Restaurant/Home">Home</a></li>
+                                <li><a class="btn btn-lg text-light" href="/Restaurant/Menu">Menu</a></li>
+                            </ul>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -43,7 +52,7 @@
     <footer class="mt-auto border-top footer text-muted form-control" style="background-color: navajowhite">
         <div class="container font-weight-bolder">
             &copy; @DateTime.Now.Year - @GlobalConstants.SystemName -
-            <a class="mr-md-1" asp-area="" asp-controller="Home" asp-action="Home">Home</a>
+            <a class="mr-md-1" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
             <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
@@ -53,6 +62,8 @@
     <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js" asp-append-version="true"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.min.js" asp-append-version="true"></script>
     <script src="~/js/site.min.js" asp-append-version="true"></script>
+    <script src="~/lib/popper/popper.min.js"></script>
+    <script src="~/js/lazy.js"></script>
     @await this.RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

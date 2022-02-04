@@ -114,7 +114,7 @@ namespace TheHotel.Controllers
 
             return this.Redirect(
                 $"/Clients/Success?clientName={currClient.FirstName}&roomId={model.RoomId}" +
-                $"&accDate={model.AccommodationDate.Value.ToString("dd,MM,yyyy")}&depDate={model.DepartureDate.Value.ToString("dd,MM,yyyy")}");
+                $"&accDate={model.AccommodationDate.Value.ToString("dd.MM.yyyy")}&depDate={model.DepartureDate.Value.ToString("dd.MM.yyyy")}");
         }
 
         public IActionResult Success(TenancySuccessViewModel model)

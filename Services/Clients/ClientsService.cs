@@ -35,6 +35,7 @@ namespace TheHotel.Services.Clients
             return db.Clients
                 .Include(x => x.Rooms)
                 .ThenInclude(x => x.Room)
+                .ThenInclude(x => x.RoomType)
                 .FirstOrDefault(x => x.Id == clientId);
         }
 

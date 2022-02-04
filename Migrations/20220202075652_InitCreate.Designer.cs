@@ -10,7 +10,7 @@ using TheHotel.Data;
 namespace TheHotel.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220119194525_InitCreate")]
+    [Migration("20220202075652_InitCreate")]
     partial class InitCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -281,30 +281,6 @@ namespace TheHotel.Migrations
                     b.ToTable("ClientRooms");
                 });
 
-            modelBuilder.Entity("TheHotel.Data.Models.Food", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("FoodType")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Foods");
-                });
-
             modelBuilder.Entity("TheHotel.Data.Models.Image", b =>
                 {
                     b.Property<int>("Id")
@@ -323,6 +299,31 @@ namespace TheHotel.Migrations
                     b.HasIndex("RoomId");
 
                     b.ToTable("Images");
+                });
+
+            modelBuilder.Entity("TheHotel.Data.Models.Product", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("ProductType")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("TheHotel.Data.Models.Room", b =>

@@ -7,7 +7,7 @@ namespace TheHotel.ViewModels.Rooms
     {
         public int RoomId { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Personal Identity Number is required!")]
         [MinLength(GlobalConstants.PINMinLegth, ErrorMessage = GlobalConstants.PersonalIdentityNumberErrorMsg)]
         [MaxLength(GlobalConstants.PINMaxLegth, ErrorMessage = GlobalConstants.PersonalIdentityNumberErrorMsg)]
         [Display(Name = "Personal Identity Number")]

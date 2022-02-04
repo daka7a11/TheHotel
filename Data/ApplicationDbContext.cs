@@ -17,7 +17,7 @@ namespace TheHotel.Data
 
         public virtual DbSet<Client> Clients { get; set; }
 
-        public virtual DbSet<Food> Foods { get; set; }
+        public virtual DbSet<Product> Products { get; set; }
 
         public virtual DbSet<ClientRoom> ClientRooms { get; set; }
 

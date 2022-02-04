@@ -1,1 +1,70 @@
-﻿<h1 class="text-center">Details</h1>
+﻿@using TheHotel.ViewModels.Clients
+@model ClientViewModel
+
+@{
+    ViewData["Title"] = "Client details";
+}
+
+<div class="details">
+    <div class="border-bottom text-center">
+        <h1>@Model.FirstName @Model.LastName</h1>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-sm-8 d-inline-block ">
+            <div class="bg-light border">
+                <dl class="row m-1">
+                    <dt class="col-md-5">Personal identity number:</dt>
+                    <dd class="col-sm-7">@Model.PersonalIdentityNumber</dd>
+                </dl>
+                <dl class="row m-1">
+                    <dt class="col-md-5">Phone:</dt>
+                    <dd class="col-sm-7">@Model.Phone</dd>
+                </dl>
+                <dl class="row m-1">
+                    <dt class="col-md-5">Email:</dt>
+                    <dd class="col-sm-7">@Model.Email</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+    @if (Model.Rooms.Count > 0)
+    {
+        <br>
+        <h4 class="text-center border shadow" style="background-color: navajowhite">Hired rooms</h4>
+        <div>
+            <table class="table table-hover table-striped table-bordered table-responsive-md bg-light shadow">
+                <thead>
+                    <tr class="text-center bg-secondary text-light shadow">
+                        <th>№</th>
+                        <th>Room type</th>
+                        <th>Floor</th>
+                        <th>Size</th>
+                        <th>Price</th>
+                        <th>Accommodation date</th>
+                        <th>Departure date</th>
+                        <th>Overnight/s</th>
+                        <th>Total in $</th>
+                    </tr>
+                </thead>
+                @foreach (var item in Model.Rooms.OrderByDescending(x => x.AccommodationDate))
+                {
+                    var totalDays = (int)(item.DepartureDate - item.AccommodationDate).TotalDays;
+                    <tbody>
+                        <tr class="text-center">
+                            <td>@item.Room.Id</td>
+                            <td>@item.Room.RoomType.Type</td>
+                            <td>@item.Room.Floor</td>
+                            <td>@item.Room.Size</td>
+                            <td>@item.Room.Price</td>
+                            <td class="font-weight-bold">@item.AccommodationDate.ToString("dd.MM.yyyy")</td>
+                            <td class="font-weight-bold">@item.DepartureDate.ToString("dd.MM.yyyy")</td>
+                            <td>@totalDays</td>
+                            <td>@(item.Room.Price * totalDays)$</td>
+                        </tr>
+                    </tbody>
+                }
+            </table>
+        </div>
+    }
+</div>
