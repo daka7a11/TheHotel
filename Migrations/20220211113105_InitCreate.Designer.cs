@@ -10,7 +10,7 @@ using TheHotel.Data;
 namespace TheHotel.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220202075652_InitCreate")]
+    [Migration("20220211113105_InitCreate")]
     partial class InitCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -281,6 +281,49 @@ namespace TheHotel.Migrations
                     b.ToTable("ClientRooms");
                 });
 
+            modelBuilder.Entity("TheHotel.Data.Models.FoodCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("FoodCategory");
+                });
+
+            modelBuilder.Entity("TheHotel.Data.Models.FoodItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("FoodCategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FoodCategoryId");
+
+                    b.ToTable("Products");
+                });
+
             modelBuilder.Entity("TheHotel.Data.Models.Image", b =>
                 {
                     b.Property<int>("Id")
@@ -299,31 +342,6 @@ namespace TheHotel.Migrations
                     b.HasIndex("RoomId");
 
                     b.ToTable("Images");
-                });
-
-            modelBuilder.Entity("TheHotel.Data.Models.Product", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("ProductType")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("TheHotel.Data.Models.Room", b =>
@@ -438,6 +456,17 @@ namespace TheHotel.Migrations
                     b.Navigation("Room");
                 });
 
+            modelBuilder.Entity("TheHotel.Data.Models.FoodItem", b =>
+                {
+                    b.HasOne("TheHotel.Data.Models.FoodCategory", "FoodCategory")
+                        .WithMany("FoodItems")
+                        .HasForeignKey("FoodCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("FoodCategory");
+                });
+
             modelBuilder.Entity("TheHotel.Data.Models.Image", b =>
                 {
                     b.HasOne("TheHotel.Data.Models.Room", "Room")
@@ -463,6 +492,11 @@ namespace TheHotel.Migrations
             modelBuilder.Entity("TheHotel.Data.Models.Client", b =>
                 {
                     b.Navigation("Rooms");
+                });
+
+            modelBuilder.Entity("TheHotel.Data.Models.FoodCategory", b =>
+                {
+                    b.Navigation("FoodItems");
                 });
 
             modelBuilder.Entity("TheHotel.Data.Models.Room", b =>
