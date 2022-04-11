@@ -120,3 +120,5 @@ $tf/
 #Visual studio config folder
 .vs/
 TODO.txt
+WebHotelSystem.txt
+*.pdf

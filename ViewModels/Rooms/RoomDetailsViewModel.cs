@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using AutoMapper;
+using System.Collections.Generic;
 using TheHotel.Data.Models;
+using TheHotel.Mapping;
 
 namespace TheHotel.ViewModels.Rooms
 {
-    public class RoomDetailsViewModel
+    public class RoomDetailsViewModel : IMapFrom<Room>, IHaveCustomMappings
     {
         public int Id { get; set; }
 
@@ -20,5 +22,12 @@ namespace TheHotel.ViewModels.Rooms
         public ICollection<Image> Images { get; set; }
 
         public string Description { get; set; }
+
+        public void CreateMappings(IProfileExpression configuration)
+        {
+            configuration.CreateMap<Room, RoomDetailsViewModel>()
+                .ForMember(x => x.RoomType, opt =>
+                    opt.MapFrom(x => x.RoomType.Type));
+        }
     }
 }

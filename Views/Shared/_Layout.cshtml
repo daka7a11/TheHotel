@@ -24,16 +24,23 @@
                     <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Rooms" asp-action="All">Rooms</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Clients" asp-action="All">Clients</a>
+                            <a class="nav-link text-light" asp-controller="Rooms" asp-action="All">Rooms</a>
+                        </li>                              
+                        <li class="nav-item">              
+                            <a class="nav-link text-light" asp-controller="Clients" asp-action="All">Clients</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a href="#" class="nav-link text-light dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Restaurant <span class="caret"></span></a>
                             <ul class="dropdown-menu bg-dark  border-0" role="menu" style="background-color:none">
-                                <li><a class="btn btn-lg text-light" href="/Restaurant/Home">Home</a></li>
-                                <li><a class="btn btn-lg text-light" href="/Restaurant/Menu">Menu</a></li>
+                                <li><a class="btn btn-lg text-light" asp-controller="Restaurant" asp-action="Home">Home</a></li>
+                                <li><a class="btn btn-lg text-light" asp-controller="Restaurant" asp-action="Menu">Menu</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a href="#" class="nav-link text-danger dropdown-toggle font-weight-bold" data-toggle="dropdown" role="button" aria-expanded="false">Administrator <span class="caret"></span></a>
+                            <ul class="dropdown-menu bg-dark  border-0" role="menu" style="background-color:none">
+                                <li><a class="btn btn-lg text-light" asp-controller="Restaurant" asp-action="AddCategory">Add food category</a></li>
+                                <li><a class="btn btn-lg text-light" asp-controller="Restaurant" asp-action="AddFoodItem">Add food item</a></li>
                             </ul>
                         </li>
                     </ul>
