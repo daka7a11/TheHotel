@@ -56,7 +56,9 @@ namespace TheHotel.Controllers
                 return this.View(model);
             }
 
-            var selectedRoom = this.roomsService.GetById(model.RoomId);
+            //TODO: REFACTOR THE CODE!
+
+            var selectedRoom = this.roomsService.GetById<Room>(model.RoomId);
 
             foreach (var hireDate in selectedRoom.HireDates)
             {

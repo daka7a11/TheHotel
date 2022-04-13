@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TheHotel.Data;
 using TheHotel.Data.Models;
+using TheHotel.Mapping;
 
 namespace TheHotel.Services.Rooms
 {
@@ -24,7 +25,7 @@ namespace TheHotel.Services.Rooms
                 .ToList();
         }
 
-        public Room GetById(int id)
+        public T GetById<T>(int id)
         {
             return db.Rooms
                 .Where(x => x.Id == id)
@@ -32,6 +33,7 @@ namespace TheHotel.Services.Rooms
                 .ThenInclude(x => x.Client)
                 .Include(x => x.RoomType)
                 .Include(x => x.Images)
+                .To<T>()
                 .FirstOrDefault();
         }
 

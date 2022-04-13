@@ -10,12 +10,15 @@ using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using TheHotel.Data;
 using TheHotel.Data.Seeding;
+using TheHotel.Mapping;
 using TheHotel.Services.ClientRooms;
 using TheHotel.Services.Clients;
 using TheHotel.Services.Rooms;
+using TheHotel.ViewModels;
 
 namespace TheHotel
 {
@@ -48,6 +51,8 @@ namespace TheHotel
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
+
             using (var serviceScope = app.ApplicationServices.CreateScope())
             {
                 var db = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();

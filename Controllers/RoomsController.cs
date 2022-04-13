@@ -95,26 +95,14 @@ namespace TheHotel.Controllers
 
         public IActionResult Details(int roomId)
         {
-            var room = roomsService.GetById(roomId);
+            var room = roomsService.GetById<RoomDetailsViewModel>(roomId);
 
             if (room == null)
             {
                 return this.Redirect($"RoomError?roomId={roomId}");
             }
 
-            var model = new RoomDetailsViewModel()
-            {
-                Id = room.Id,
-                Floor = room.Floor,
-                Description = room.Description,
-                RoomType = room.RoomType.Type,
-                Size = room.Size,
-                Price = room.Price,
-                HireDates = room.HireDates,
-                Images = room.Images,
-            };
-
-            return this.View(model);
+            return this.View(room);
         }
 
         private bool IsRoomAvailable(Room room, DateTime? accDate, DateTime? depDate)

@@ -9,6 +9,6 @@ namespace TheHotel.Services.Rooms
 
         ICollection<Room> GetAll();
 
-        Room GetById(int id);
+        T GetById<T>(int id);
     }
 }

@@ -17,10 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\img\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Update="wwwroot\css\demo.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -30,15 +26,13 @@
     <Content Update="wwwroot\css\MyStyle.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Update="wwwroot\js\demo.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Update="wwwroot\js\lazy.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Update="wwwroot\js\site.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\img\" />
   </ItemGroup>
 
 </Project>

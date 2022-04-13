@@ -51,7 +51,6 @@
                         <th>Accommodation date</th>
                         <th>Departure date</th>
                         <th>Overnight/s</th>
-                        <th>Total in $</th>
                     </tr>
                 </thead>
                 @foreach (var item in Model.HireDates.OrderByDescending(x => x.AccommodationDate))
@@ -64,7 +63,6 @@
                             <td class="font-weight-bold">@item.AccommodationDate.ToString("dd.MM.yyyy")</td>
                             <td class="font-weight-bold">@item.DepartureDate.ToString("dd.MM.yyyy")</td>
                             <td>@totalDays</td>
-                            <td>@(item.Room.Price * totalDays)$</td>
                         </tr>
                     </tbody>
                 }
