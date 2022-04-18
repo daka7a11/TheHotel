@@ -13,7 +13,7 @@ namespace TheHotel.Data.Seeding
                 return;
             }
 
-            await db.RoomTypes.AddRangeAsync(new RoomType() { Type = "Single" }, new RoomType() { Type = "Double" }, new RoomType() { Type = "Triple" }, new RoomType() { Type = "Quad" });
+            await db.RoomTypes.AddRangeAsync(new RoomType() { Type = "Единична" , MaxGuests = 1}, new RoomType() { Type = "Двойна", MaxGuests = 2 }, new RoomType() { Type = "Тройна", MaxGuests = 3 }, new RoomType() { Type = "Апартамент", MaxGuests = 4 });
         }
     }
 }

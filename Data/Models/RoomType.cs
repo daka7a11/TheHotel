@@ -12,6 +12,8 @@ namespace TheHotel.Data.Models
 
         public string Type { get; set; }
 
+        public int MaxGuests { get; set; }
+
         public virtual ICollection<Room> Rooms { get; set; }
     }
 }

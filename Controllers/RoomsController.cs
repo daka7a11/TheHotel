@@ -41,7 +41,7 @@ namespace TheHotel.Controllers
         }
 
         [HttpPost]
-        public IActionResult All(DateTime? accommodationDate, DateTime? departureDate)
+        public IActionResult All(DateTime? accommodationDate, DateTime? departureDate, int? numGuests)
         {
             if (accommodationDate == null || departureDate == null )
             {

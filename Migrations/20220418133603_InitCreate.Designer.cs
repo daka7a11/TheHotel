@@ -10,7 +10,7 @@ using TheHotel.Data;
 namespace TheHotel.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220211190450_InitCreate")]
+    [Migration("20220418133603_InitCreate")]
     partial class InitCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -382,6 +382,9 @@ namespace TheHotel.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("MaxGuests")
+                        .HasColumnType("int");
 
                     b.Property<string>("Type")
                         .HasColumnType("nvarchar(max)");

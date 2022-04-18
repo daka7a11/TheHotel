@@ -7,68 +7,81 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/all.css" integrity="sha384-aOkxzJ5uQz7WBObEZcHvV5JvRW3TUc2rNPA7pe3AwnsUohiw1Vj2Rgx2KSOkF5+h" crossorigin="anonymous">
     <title>@this.ViewData["Title"] - @GlobalConstants.SystemName</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/lazy.css">
     <link href="~/css/MyStyle.css?v=1" rel="stylesheet" />
 </head>
 <body class="d-flex flex-column min-vh-100">
-    <header class="card-header border-bottom-0" style="background-color: navajowhite">
-        <nav class=" navbar navbar-expand-sm navbar-dark bg-dark border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" style="font-size:130%" asp-area="" asp-controller="Home" asp-action="Index">@GlobalConstants.SystemName</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <partial name="_LoginPartial" />
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-controller="Rooms" asp-action="All">Rooms</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-controller="Clients" asp-action="All">Clients</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a href="#" class="nav-link text-light dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Restaurant <span class="caret"></span></a>
-                            <ul class="dropdown-menu bg-dark  border-0" role="menu" style="background-color:none">
-                                <li><a class="btn btn-lg text-light" asp-controller="Restaurant" asp-action="Home">Home</a></li>
-                                <li><a class="btn btn-lg text-light" asp-controller="Restaurant" asp-action="Menu">Menu</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a href="#" class="nav-link text-danger dropdown-toggle font-weight-bold" data-toggle="dropdown" role="button" aria-expanded="false">Administrator <span class="caret"></span></a>
-                            <ul class="dropdown-menu bg-dark  border-0" role="menu" style="background-color:none">
-                                <li><a class="btn btn-lg text-light" asp-controller="Restaurant" asp-action="AddCategory">Add food category</a></li>
-                                <li><a class="btn btn-lg text-light" asp-controller="Restaurant" asp-action="AddFoodItem">Add food item</a></li>
-                            </ul>
-                        </li>
-                    </ul>
+    <div class="page-container">
+        <header class="card-header border-bottom-0" style="background-color: navajowhite">
+            <nav class=" navbar navbar-expand-sm navbar-dark bg-dark border-bottom box-shadow mb-3">
+                <div class="container">
+                    <a class="navbar-brand" style="font-size:130%" asp-area="" asp-controller="Home" asp-action="Index">@GlobalConstants.SystemName</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                        <partial name="_LoginPartial" />
+                        <ul class="navbar-nav flex-grow-1 justify-content-md-center">
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-controller="Home" asp-action="Index">Начало</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-controller="Rooms" asp-action="All">Настаняване</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link text-light dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Ресторант <span class="caret"></span></a>
+                                <ul class="dropdown-menu bg-dark  border-0" role="menu" style="background-color:none">
+                                    <li><a class="btn btn-lg text-light" asp-controller="Restaurant" asp-action="Home">Начало</a></li>
+                                    <li><a class="btn btn-lg text-light" asp-controller="Restaurant" asp-action="Menu">Меню</a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-controller="Home" asp-action="Offers">Оферти</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-controller="Home" asp-action="Gallery">Галерия</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-controller="Home" asp-action="Contacts">Контакти</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link text-danger dropdown-toggle font-weight-bold" data-toggle="dropdown" role="button" aria-expanded="false">Администратор <span class="caret"></span></a>
+                                <ul class="dropdown-menu bg-dark  border-0" role="menu" style="background-color:none">
+                                    <li>
+                                        <a class="btn btn-lg text-light" asp-controller="Restaurant" asp-action="AddCategory">Add food category</a>
+                                    </li>
+                                    <li>
+                                        <a class="btn btn-lg text-light" asp-controller="Restaurant" asp-action="AddFoodItem">Add food item</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-light" asp-controller="Clients" asp-action="All">Clients</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-        </nav>
-    </header>
-
-    <div class="container">
-        <partial name="_CookieConsentPartial" />
-        <main role="main" class="pb-3">
-            @this.RenderBody()
-        </main>
+            </nav>
+        </header>
+        <div class="container">
+            <partial name="_CookieConsentPartial" />
+            <main role="main" class="pb-3">
+                @this.RenderBody()
+            </main>
+        </div>
     </div>
-
-    <footer class="mt-auto border-top footer text-muted form-control" style="background-color: navajowhite">
+    <footer class="mt-auto border-top">
         <div class="container font-weight-bolder">
             &copy; @DateTime.Now.Year - @GlobalConstants.SystemName -
-            <a class="mr-md-1" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-            <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <a asp-area="" asp-controller="Home" asp-action="Index">Начало</a>
+            <a asp-area="" asp-controller="Home" asp-action="Privacy">Поверителност</a>
         </div>
     </footer>
 
     <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js" asp-append-version="true"></script>
-    <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js" asp-append-version="true"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.min.js" asp-append-version="true"></script>
-    <script src="~/js/site.min.js" asp-append-version="true"></script>
     <script src="~/lib/popper/popper.min.js"></script>
 
     @await this.RenderSectionAsync("Scripts", required: false)

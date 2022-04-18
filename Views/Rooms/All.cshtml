@@ -5,37 +5,49 @@
     this.ViewData["Title"] = "Rooms";
 }
 
-<div class="jumbotron-fluid border border-top-0 shadow" style="background-color: navajowhite; height:50px">
+<div>
     <form method="post">
-        <div class="text-center">
-            <div class="d-inline-block col-5">
-                <label class="font-weight-bold" for="accommodationDate">Accommodation date: </label>
+        <div class="row text-center">
+            <div class="d-inline-block col-sm-3">
+                <label class="font-weight-bold" for="accommodationDate">Дата на настаняване: </label>
                 <input type="date" name="accommodationDate" value="" />
             </div>
-            <div class="d-inline-block col-5">
-                <label class="font-weight-bold" for="departureDate">Departure date: </label>
+            <div class="d-inline-block col-sm-3">
+                <label class="font-weight-bold" for="departureDate">Дата на напускане: </label>
                 <input type="date" name="departureDate" value="" />
             </div>
-
-            <input class="btn btn-success" type="submit" name="searchBtn" value="Search" />
+            <div class="d-inline-block col-sm-3">
+                <label class="font-weight-bold" for="numGuests">Стая за: </label>
+                <br />
+                <select name="numGuests" id="numGuests">
+                    <option value="null"></option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                </select>
+            </div>
+            <div class="d-inline-block col-sm-3">
+                <input class="btn btn-success" type="submit" name="searchBtn" value="Търси" />
+            </div>
         </div>
     </form>
 </div>
 @if (Model.AvailableRoomsViewModel != null)
 {
     <div class="alert alert-danger text-center">
-        <h3 class="text-success">@Model.AvailableRoomsViewModel.AccommodationDate.Value.ToString("dd.MM.yyyy") - @Model.AvailableRoomsViewModel.DepartureDate.Value.ToString("dd.MM.yyyy")</h3>
+        <h3 class="text-success">@Model.AvailableRoomsViewModel.AccommodationDate.Value.ToString("dd.MM.yyyy")г. - @Model.AvailableRoomsViewModel.DepartureDate.Value.ToString("dd.MM.yyyy")г.</h3>
     </div>
 }
-<h1 class="text-center">Rooms</h1>
+<h1 class="text-center">Стаи</h1>
 <table class="table table-hover table-striped shadow">
     <tr class="text-center bg-secondary text-light shadow">
         <th>№</th>
-        <th style="width: 10%">Room type</th>
-        <th style="width: 8%">Size</th>
-        <th>Floor</th>
-        <th>Price</th>
-        <th class="border-right-0">Description</th>
+        <th>Вид</th>
+        <th>Размер</th>
+        <th>Етаж</th>
+        <th>Цена</th>
+        <th>Описание</th>
         <th></th>
     </tr>
     @foreach (var room in Model.AllRoomsViewModel.OrderBy(x => x.Price))
@@ -45,7 +57,7 @@
             <td>@room.RoomType</td>
             <td>@room.Size m&sup2;</td>
             <td>@room.Floor</td>
-            <td class="font-weight-bold">@room.Price$</td>
+            <td class="font-weight-bold col-md-2">@room.Price лв.</td>
             <td>@room.Description</td>
             <td class="col-sm-2">
                 <div class="d-inline-block text-center">
