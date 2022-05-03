@@ -1,7 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
+using TheHotel.Common;
+using TheHotel.Data;
 using TheHotel.Data.Models;
+using TheHotel.EmailSender;
+using TheHotel.EmailSender.ViewRender;
 using TheHotel.Services.ClientRooms;
 using TheHotel.Services.Rooms;
 using TheHotel.ViewModels.Rooms;
@@ -12,11 +17,18 @@ namespace TheHotel.Controllers
     {
         private readonly IRoomsService roomsService;
         private readonly IClientRoomsService clientRoomsService;
+        private readonly IViewRenderService viewRenderService;
+        private readonly IMailService mailService;
 
-        public RoomsController(IRoomsService roomsService, IClientRoomsService clientRoomsService)
+        public RoomsController(IRoomsService roomsService,
+            IClientRoomsService clientRoomsService,
+            IViewRenderService viewRenderService,
+            IMailService mailService)
         {
             this.roomsService = roomsService;
             this.clientRoomsService = clientRoomsService;
+            this.viewRenderService = viewRenderService;
+            this.mailService = mailService;
         }
 
         public IActionResult All()
@@ -27,6 +39,7 @@ namespace TheHotel.Controllers
                     Id = x.Id,
                     Size = x.Size,
                     RoomType = x.RoomType.Type,
+                    MaxGuests = x.RoomType.MaxGuests,
                     Floor = x.Floor,
                     Price = x.Price,
                     Description = x.Description,
@@ -49,7 +62,7 @@ namespace TheHotel.Controllers
             }
 
             var rooms = roomsService.GetAll()
-                .Where(x => IsRoomAvailable(x,accommodationDate,departureDate))
+                .Where(x => GlobalMethods.IsRoomAvailable(x,accommodationDate,departureDate))
                 .Select(x => new AllRoomsViewModel()
                 {
                     Id = x.Id,
@@ -58,6 +71,8 @@ namespace TheHotel.Controllers
                     Floor = x.Floor,
                     Price = x.Price,
                     Description = x.Description,
+                    FirstImgUrl = x.Images.FirstOrDefault()?.Url,
+                    MaxGuests = x.RoomType.MaxGuests,
                 });
 
             var model = new AllViewModel()
@@ -90,7 +105,7 @@ namespace TheHotel.Controllers
                 return this.View(model);
             }
 
-            return this.RedirectToAction("Tenancy", "Clients", new { roomId = model.RoomId, clientPin = model.PersonalIdentityNumber });
+            return this.RedirectToAction("Tenancy", "ClientRooms", new { roomId = model.RoomId, clientPin = model.PersonalIdentityNumber });
         }
 
         public IActionResult Details(int roomId)
@@ -105,22 +120,27 @@ namespace TheHotel.Controllers
             return this.View(room);
         }
 
-        private bool IsRoomAvailable(Room room, DateTime? accDate, DateTime? depDate)
+        public IActionResult AddImage(int roomId)
         {
-            foreach (var hireDate in room.HireDates)
-            {
-                if (accDate < hireDate.AccommodationDate.Date && depDate > hireDate.AccommodationDate.Date)
-                {
-                    return false;
-                }
+            var model = new AddImageToRoomViewModel { RoomId = roomId};
 
-                if (accDate >= hireDate.AccommodationDate.Date && accDate.Value.Date < hireDate.DepartureDate.Date)
-                {
-                    return false;
-                }
+            return this.View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddImage(AddImageToRoomViewModel viewModel)
+        {
+            var room = roomsService.GetById(viewModel.RoomId);
+
+            if (room == null)
+            {
+                ModelState.AddModelError("", "Invalid room id.");
+                return this.View(viewModel);
             }
 
-            return true;
+            await roomsService.AddImageToRoomAsync(viewModel.RoomId, viewModel.ImageUrl);
+
+            return this.Redirect($"/Rooms/Details?roomId={viewModel.RoomId}");
         }
     }
 }

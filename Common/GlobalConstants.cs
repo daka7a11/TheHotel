@@ -31,5 +31,15 @@
         public const string InvalidHireDateErrorMsg = "You cannot hire room {0} right now. The room is hired from {1} to {2}";
 
         public const string InvalidTenancyDateErrorMsg = "{0} date is invalid!";
+
+        public const string EmailExistErrorMsg = "{0} е използван от друг клиент!";
+
+        public const string InvalidRoomErrorMsg = "Стая {0} не съществува!";
+
+        public const string ReservationRequest = "Заявка за резервация.";
+
+        public const string ReservationAccepted = "Резервацията ви е приета.";
+
+        public const string ReservationDeclined = "Резервацията ви е отказана.";
     }
 }

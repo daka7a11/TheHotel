@@ -7,53 +7,70 @@
 
 <div class="details">
     <div class="border-bottom text-center">
-        <h1>Room @Model.Id</h1>
+        <h1>Стая @Model.Id</h1>
     </div>
     <br />
     <div class="row" style="background-color: navajowhite">
         <div class="col-sm-6 d-inline-block ">
             <div class="bg-light border border-left-0">
                 <dl class="row m-1">
-                    <dt class="col-md-4">Room type: </dt>
+                    <dt class="col-md-4">Вид: </dt>
                     <dd class="col-sm-8">@Model.RoomType</dd>
                 </dl>
                 <dl class="row m-1">
-                    <dt class="col-md-4">Floor: </dt>
+                    <dt class="col-md-4">Етаж: </dt>
                     <dd class="col-sm-8">@Model.Floor</dd>
                 </dl>
                 <dl class="row m-1">
-                    <dt class="col-md-4">Size: </dt>
+                    <dt class="col-md-4">Размер: </dt>
                     <dd class="col-sm-8">@Model.Size m&sup2;</dd>
                 </dl>
                 <dl class="row m-1">
-                    <dt class="col-md-4">Price: </dt>
-                    <dd class="col-sm-8">@Model.Price$</dd>
+                    <dt class="col-md-4">Цена: </dt>
+                    <dd class="col-sm-8">@Model.Price лв.</dd>
                 </dl>
             </div>
         </div>
         <div class="col-sm-6 d-inline-block bg-light border border-left-0">
             <dl>
-                <dt class="text-center border-bottom">Description</dt>
+                <dt class="text-center border-bottom">Описание</dt>
                 <dd class="text-center m-2">@Model.Description</dd>
+                    
+            </dl>
+            <dl>
+                <div>
+                    <a class="btn btn-success float-right" href="/Rooms/ClientPin?roomId=@Model.Id">Резервирай</a>
+                    <a class="btn btn-danger float-left" href="/Rooms/AddImage?roomId=@Model.Id">Добавяне на снимка</a>
+                </div>
             </dl>
         </div>
     </div>
+
+
+    <div class="row mt-4 mb-2">
+        @foreach (var img in Model.Images)
+        {
+            <div class="col-sm-6 mt-2 mb-2">
+                <img class="img-fluid img-thumbnail" src="@img.Url" alt="Room @Model.Id image." />
+            </div>
+        }
+    </div>
+
     @if (Model.HireDates.Count > 0)
     {
-        <br>
-        <h4 class="text-center border shadow" style="background-color: navajowhite">Hired dates</h4>
+        <h4 class="text-center border shadow" style="background-color: navajowhite">Всички наети дати</h4>
         <div>
             <table class="table table-hover table-striped table-bordered table-responsive-md bg-light shadow">
                 <thead>
                     <tr class="text-center bg-secondary text-light shadow">
-                        <th>Full name</th>
-                        <th>Personal identity number</th>
-                        <th>Accommodation date</th>
-                        <th>Departure date</th>
-                        <th>Overnight/s</th>
+                        <th>Пълно име</th>
+                        <th>ЕГН</th>
+                        <th>Дата на настаняване</th>
+                        <th>Дата на напускане</th>
+                        <th>Нощувки</th>
                     </tr>
                 </thead>
-                @foreach (var item in Model.HireDates.OrderByDescending(x => x.AccommodationDate))
+                @foreach (var item in Model.HireDates.Where(x => x.IsConfirmed).OrderByDescending(x => x.AccommodationDate))
                 {
                     int totalDays = (int)item.DepartureDate.Subtract(item.AccommodationDate).TotalDays;
                     <tbody>

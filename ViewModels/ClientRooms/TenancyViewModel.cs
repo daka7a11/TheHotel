@@ -1,11 +1,14 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using TheHotel.Common;
+using TheHotel.Data.Models;
+using TheHotel.Mapping;
 
 namespace TheHotel.ViewModels.Clients
 {
-    public class TenancyViewModel : IValidatableObject
+    public class TenancyViewModel : IValidatableObject, IMapFrom<Client>, IMapTo<Client>, IMapTo<ClientRoom>, IHaveCustomMappings
     {
         [Required]
         [MinLength(GlobalConstants.ClientNameMinLength, ErrorMessage = GlobalConstants.ClientNameErrorMsg)]
@@ -44,6 +47,7 @@ namespace TheHotel.ViewModels.Clients
         [Display(Name = "Departure date")]
         public DateTime? DepartureDate { get; set; }
 
+
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             if (this.DepartureDate <= this.AccommodationDate)
@@ -51,5 +55,13 @@ namespace TheHotel.ViewModels.Clients
                 yield return new ValidationResult("Departure date cannot be less or equal than accommodation date!");
             }
         }
+        public void CreateMappings(IProfileExpression configuration)
+        {
+            configuration.CreateMap<TenancyViewModel, ClientRoom>()
+                .ForMember(x => x.AccommodationDate, y => y.MapFrom(x => (DateTime)x.AccommodationDate))
+                .ForMember(x => x.DepartureDate, y => y.MapFrom(x => (DateTime)x.DepartureDate));
+        }
     }
+
+
 }

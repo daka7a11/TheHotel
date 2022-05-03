@@ -2,10 +2,11 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using TheHotel.Common;
+using TheHotel.Mapping;
 
 namespace TheHotel.Data.Models
 {
-    public class Room
+    public class Room : IMapFrom<Room>
     {
         public Room()
         {

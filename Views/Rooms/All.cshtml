@@ -7,27 +7,16 @@
 
 <div>
     <form method="post">
-        <div class="row text-center">
-            <div class="d-inline-block col-sm-3">
+        <div class="row text-center mt-4">
+            <div class="d-inline-block col-sm-5">
                 <label class="font-weight-bold" for="accommodationDate">Дата на настаняване: </label>
                 <input type="date" name="accommodationDate" value="" />
             </div>
-            <div class="d-inline-block col-sm-3">
+            <div class="d-inline-block col-sm-5">
                 <label class="font-weight-bold" for="departureDate">Дата на напускане: </label>
                 <input type="date" name="departureDate" value="" />
             </div>
-            <div class="d-inline-block col-sm-3">
-                <label class="font-weight-bold" for="numGuests">Стая за: </label>
-                <br />
-                <select name="numGuests" id="numGuests">
-                    <option value="null"></option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                </select>
-            </div>
-            <div class="d-inline-block col-sm-3">
+            <div class="d-inline-block col-sm-2">
                 <input class="btn btn-success" type="submit" name="searchBtn" value="Търси" />
             </div>
         </div>
@@ -35,36 +24,73 @@
 </div>
 @if (Model.AvailableRoomsViewModel != null)
 {
-    <div class="alert alert-danger text-center">
-        <h3 class="text-success">@Model.AvailableRoomsViewModel.AccommodationDate.Value.ToString("dd.MM.yyyy")г. - @Model.AvailableRoomsViewModel.DepartureDate.Value.ToString("dd.MM.yyyy")г.</h3>
+    <div class="alert alert-danger text-center mt-2">
+        <h3 class="text-light">Търсене от @Model.AvailableRoomsViewModel.AccommodationDate.Value.ToString("dd.MM.yyyy")г. до @Model.AvailableRoomsViewModel.DepartureDate.Value.ToString("dd.MM.yyyy")г.</h3>
     </div>
 }
+<hr />
 <h1 class="text-center">Стаи</h1>
-<table class="table table-hover table-striped shadow">
+<hr />
+@*<table class="table table-hover table-striped shadow">
     <tr class="text-center bg-secondary text-light shadow">
+        <th></th>
         <th>№</th>
         <th>Вид</th>
         <th>Размер</th>
         <th>Етаж</th>
         <th>Цена</th>
-        <th>Описание</th>
         <th></th>
     </tr>
     @foreach (var room in Model.AllRoomsViewModel.OrderBy(x => x.Price))
     {
+        string imgSrc = $"../img/rooms/room{room.Id}.jpg";
+
         <tr class="text-center">
+            <td class="col-sm-3"><img class="img-fluid img-thumbnail" src=@imgSrc alt="Alternate Text" /></td>
             <td>@room.Id</td>
             <td>@room.RoomType</td>
             <td>@room.Size m&sup2;</td>
             <td>@room.Floor</td>
-            <td class="font-weight-bold col-md-2">@room.Price лв.</td>
-            <td>@room.Description</td>
-            <td class="col-sm-2">
+            <td class="font-weight-bold col-sm-2">@room.Price лв.</td>
+            <td class="col-sm-3">
                 <div class="d-inline-block text-center">
-                    <a class="btn btn-warning" href="/Rooms/Details?roomId=@room.Id">Details</a>
-                    <a class="btn btn-success" href="/Rooms/ClientPin?roomId=@room.Id">Hire</a>
+                    <a class="btn btn-warning col-sm-6 mb-2" href="/Rooms/Details?roomId=@room.Id">Детайли</a>
+                    <a class="btn btn-success col-sm-6" href="/Rooms/ClientPin?roomId=@room.Id">Резервирай</a>
                 </div>
             </td>
         </tr>
     }
-</table>
+</table>*@
+@foreach (var room in Model.AllRoomsViewModel)
+{
+    string imgSrc = $"../img/rooms/room{room.Id}.jpg";
+    <div class="roomSection row mb-2">
+        <div class="col-sm-4 ">
+            <a href="/Rooms/Details?roomId=@room.Id">
+                <img class="img-fluid img-thumbnail" src=@imgSrc alt="Alternate Text" />
+            </a>
+        </div>
+        <div class="row col-sm-8 ml-2">
+            <div class="row">
+                <a class="position-absolute fixed-top text-center btn-outline-warning btn-lg border-dark rounded-pill border-top-0 border-bottom-0" href="/Rooms/Details?roomId=@room.Id">Стая @room.Id</a>
+            </div>
+            <div class="row col-sm-12">
+                <div class="col-sm-6 mt-5">
+                    Вид: @room.RoomType
+                    <br />
+                    Етаж: @room.Floor
+                    <br />
+                    Размер: @room.Size m&sup2;
+                    <br />
+                    Макс. брой гости: @room.MaxGuests
+                    <br />
+                    <br />
+                    Цена: @room.Price лв.
+                </div>
+                <div class="col-sm-6 mt-5">
+                    <a class="btn btn-success btn-lg position-absolute mb-2" style="bottom:0; right:0;" href="/Rooms/ClientPin?roomId=@room.Id">Резервирай</a>
+                </div>
+            </div>
+        </div>
+    </div>
+}

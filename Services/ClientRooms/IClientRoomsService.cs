@@ -6,8 +6,23 @@ namespace TheHotel.Services.ClientRooms
 {
     public interface IClientRoomsService
     {
+        ClientRoom GetById(int id);
+        T GetById<T>(int id);
+
         Task AddAsync(ClientRoom clientRoom);
 
-        ICollection<ClientRoom> GetAll();
+        ICollection<ClientRoom> GetAllReservations();
+        ICollection<T> GetAllReservations<T>();
+
+
+        ICollection<ClientRoom> GetConfirmedReservations();
+        ICollection<T> GetConfirmedReservations<T>();
+
+        ICollection<ClientRoom> GetNonConfirmedReservations();
+        ICollection<T> GetNonConfirmedReservations<T>();
+
+        void ConfirmRequest(int id);
+
+        void DeleteRequest(int id);
     }
 }

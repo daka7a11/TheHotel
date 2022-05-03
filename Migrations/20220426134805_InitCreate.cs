@@ -63,19 +63,6 @@ namespace TheHotel.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "FoodCategory",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Category = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_FoodCategory", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "RoomTypes",
                 columns: table => new
                 {
@@ -196,29 +183,6 @@ namespace TheHotel.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Products",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FoodCategoryId = table.Column<int>(type: "int", nullable: false),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Quantity = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Products", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Products_FoodCategory_FoodCategoryId",
-                        column: x => x.FoodCategoryId,
-                        principalTable: "FoodCategory",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Rooms",
                 columns: table => new
                 {
@@ -250,11 +214,20 @@ namespace TheHotel.Migrations
                     AccommodationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DepartureDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     RoomId = table.Column<int>(type: "int", nullable: false),
-                    ClientId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    ClientId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    IsConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    RequestDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    EmployeeId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ClientRooms", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ClientRooms_AspNetUsers_EmployeeId",
+                        column: x => x.EmployeeId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_ClientRooms_Clients_ClientId",
                         column: x => x.ClientId,
@@ -334,6 +307,11 @@ namespace TheHotel.Migrations
                 column: "ClientId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ClientRooms_EmployeeId",
+                table: "ClientRooms",
+                column: "EmployeeId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ClientRooms_RoomId",
                 table: "ClientRooms",
                 column: "RoomId");
@@ -342,11 +320,6 @@ namespace TheHotel.Migrations
                 name: "IX_Images_RoomId",
                 table: "Images",
                 column: "RoomId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Products_FoodCategoryId",
-                table: "Products",
-                column: "FoodCategoryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Rooms_RoomTypeId",
@@ -378,9 +351,6 @@ namespace TheHotel.Migrations
                 name: "Images");
 
             migrationBuilder.DropTable(
-                name: "Products");
-
-            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
@@ -391,9 +361,6 @@ namespace TheHotel.Migrations
 
             migrationBuilder.DropTable(
                 name: "Rooms");
-
-            migrationBuilder.DropTable(
-                name: "FoodCategory");
 
             migrationBuilder.DropTable(
                 name: "RoomTypes");

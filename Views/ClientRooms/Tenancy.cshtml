@@ -1,0 +1,102 @@
+﻿@using TheHotel.ViewModels.Clients
+@model TenancyViewModel
+
+@{
+    this.ViewData["Title"] = "Tenancy";
+}
+
+<div class="jumbotron-fluid border border-top-0" style="background-color: navajowhite; height:50px">
+    <h1 class="text-center">Резервация</h1>
+</div>
+<br>
+<form method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    @{bool isClientExist = !String.IsNullOrWhiteSpace(Model.Email); }
+
+    <div class="row" style="font-size:100%">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="FirstName">Име</label>
+                @if (isClientExist)
+                {
+                    <input class="form-control" asp-for="FirstName" readonly />
+                }
+                else
+                {
+                    <input class="form-control" asp-for="FirstName" />
+                }
+                <span class="text-danger" asp-validation-for="FirstName"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastName">Фамилия</label>
+                @if (isClientExist)
+                {
+                    <input class="form-control" asp-for="LastName" readonly />
+                }
+                else
+                {
+                    <input class="form-control" asp-for="LastName" />
+                }
+                <span class="text-danger" asp-validation-for="LastName"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PersonalIdentityNumber">ЕГН</label>
+                @if (isClientExist)
+                {
+                    <input class="form-control" asp-for="PersonalIdentityNumber" readonly />
+                }
+                else
+                {
+                    <input class="form-control" asp-for="PersonalIdentityNumber" />
+                }
+                <span class="text-danger" asp-validation-for="PersonalIdentityNumber"></span>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="Phone">Телефон</label>
+                @if (isClientExist)
+                {
+                    <input class="form-control" asp-for="Phone" readonly />
+                }
+                else
+                {
+                    <input class="form-control" asp-for="Phone" />
+                }
+                <span class="text-danger" asp-validation-for="Phone"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email">Имейл</label>
+                @if (isClientExist)
+                {
+                    <input class="form-control" asp-for="Email" type="email" readonly />
+                }
+                else
+                {
+                    <input class="form-control" asp-for="Email" type="email" />
+                }
+                <span class="text-danger" asp-validation-for="Email"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RoomId">Номер на стая</label>
+                <input class="form-control" asp-for="RoomId" readonly />
+                <span class="text-danger" asp-validation-for="RoomId"></span>
+            </div>
+        </div>
+        <div class="form-group col-md-6">
+            <label asp-for="AccommodationDate">Дата на настаняване</label>
+            <input class="form-control" asp-for="AccommodationDate" />
+            <span class="text-danger" asp-validation-for="AccommodationDate"></span>
+        </div>
+        <div class="form-group col-md-6">
+            <label asp-for="DepartureDate">Дата на напускане</label>
+            <input class="form-control" asp-for="DepartureDate" />
+            <span class="text-danger" asp-validation-for="DepartureDate"></span>
+        </div>
+        <br>
+        <div class="form-group col-md-12 text-center">
+            <input class="btn btn-primary btn-lg" type="submit" name="confirmBtn" value="Резервирай" />
+        </div>
+    </div>
+</form>

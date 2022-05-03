@@ -1,0 +1,54 @@
+﻿@using TheHotel.ViewModels.Rooms
+
+@model IEnumerable<RoomRequestViewModel>
+
+<h1 class="text-center mt-2 mb-4">Заявки за потвърждение</h1>
+
+<table class="table table-hover table-striped shadow table-sm mt-4 mb-4">
+    <tr class="text-center bg-secondary text-light shadow">
+        <th>Име</th>
+        <th>Фамилия</th>
+        <th>ЕГН</th>
+        <th>Телефон</th>
+        <th>Имейл</th>
+        <th>Стая</th>
+        <th>Дата на настаняване</th>
+        <th>Дата на напускане</th>
+        <th>Дата на заявката</th>
+    </tr>
+    @foreach (var request in Model)
+    {
+        <tr onclick="window.location = '/clientRooms/RequestDetails?clientRoomId=@request.Id'" class="text-center" style="line-height: 200%; cursor:pointer">
+            <td>@request.ClientFirstName</td>
+            <td>@request.ClientLastName</td>
+            <td>@request.ClientPersonalIdentityNumber</td>
+            <td>@request.ClientPhone</td>
+            <td>@request.ClientEmail</td>
+            <td>@request.RoomId</td>
+            <td>@request.AccommodationDate.ToShortDateString()</td>
+            <td>@request.DepartureDate.ToShortDateString()</td>
+            <td>@request.RequestDate.Value</td>
+        </tr>
+        <tr>
+            <td onclick="ConfReq(@request.Id, @request.RoomId);" colspan="6" class="col-sm-8 text-center btn-success">Потвърди</td>
+            <td onclick="RejectReq(@request.Id);" colspan="6" class="col-sm-4 text-center btn-danger">Отхвърли</td>
+        </tr>
+    }
+</table>
+
+<script>
+    function ConfReq(requestId, roomId) {
+        var result = confirm('Сигурни ли сте, че искате да ПОТВЪРДИТЕ резервацията?')
+        if (result) {
+            alert('Потвърдихте резервацията!')
+            window.location = "/ClientRooms/ConfirmReservation?clientRoomId=" + requestId + "&roomId=" + roomId;
+        }
+    }
+    function RejectReq(requestId, roomId) {
+        var result = confirm('Сигурни ли сте, че искате да ОТХВЪРЛИТЕ резервацията?')
+        if (result) {
+            alert('Отхвърлихте резервацията!')
+            window.location = "/ClientRooms/RejectReservation?clientRoomId=" + requestId;
+        }
+    }
+</script>

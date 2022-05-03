@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 
 namespace TheHotel.Data.Models
 {
@@ -17,5 +18,11 @@ namespace TheHotel.Data.Models
         public string ClientId { get; set; }
 
         public Client Client { get; set; }
+
+        public bool IsConfirmed { get; set; } = false;
+
+        public DateTime? RequestDate { get; set; }
+
+        public IdentityUser Employee { get; set; }
     }
 }

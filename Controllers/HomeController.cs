@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using TheHotel.EmailSender;
+using TheHotel.EmailSender.ViewRender;
 using TheHotel.Services.ClientRooms;
 using TheHotel.ViewModels;
 
@@ -7,11 +9,8 @@ namespace TheHotel.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IClientRoomsService clientRoomsService;
-
-        public HomeController(IClientRoomsService clientRoomsService)
+        public HomeController()
         {
-            this.clientRoomsService = clientRoomsService;
         }
 
         public IActionResult Index()

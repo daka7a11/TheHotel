@@ -13,5 +13,8 @@ namespace TheHotel.Services.Clients
         Task AddAsync(Data.Models.Client client);
 
         IEnumerable<Client> GetAll();
+        IEnumerable<T> GetAll<T>();
+
+        bool IsEmailExist(string email);
     }
 }

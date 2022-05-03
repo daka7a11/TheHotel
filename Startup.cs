@@ -14,6 +14,8 @@ using System.Reflection;
 using System.Threading.Tasks;
 using TheHotel.Data;
 using TheHotel.Data.Seeding;
+using TheHotel.EmailSender;
+using TheHotel.EmailSender.ViewRender;
 using TheHotel.Mapping;
 using TheHotel.Services.ClientRooms;
 using TheHotel.Services.Clients;
@@ -46,6 +48,11 @@ namespace TheHotel
             services.AddTransient<IRoomsService, RoomsService>();
             services.AddTransient<IClientsService, ClientsService>();
             services.AddTransient<IClientRoomsService, ClientRoomsService>();
+
+            services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
+            services.AddTransient<IMailService, MailService>();
+
+            services.AddScoped<IViewRenderService, ViewRenderService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
