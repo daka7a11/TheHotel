@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using TheHotel.Data;
+using TheHotel.Data.Models;
 
 [assembly: HostingStartup(typeof(TheHotel.Areas.Identity.IdentityHostingStartup))]
 namespace TheHotel.Areas.Identity

@@ -6,15 +6,12 @@ using TheHotel.Mapping;
 
 namespace TheHotel.Data.Models
 {
-    public class Room : IMapFrom<Room>
+    public class Room : BaseDeletableModel<int>, IMapFrom<Room>
     {
         public Room()
         {
             this.HireDates = new HashSet<ClientRoom>();
         }
-
-        public int Id { get; set; }
-
         [Required]
         [Range(GlobalConstants.RoomMinSize, GlobalConstants.RoomMaxSize)]
         public int Size { get; set; }

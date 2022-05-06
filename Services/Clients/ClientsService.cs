@@ -4,28 +4,29 @@ using System.Linq;
 using System.Threading.Tasks;
 using TheHotel.Data;
 using TheHotel.Data.Models;
+using TheHotel.Data.Repositories;
 using TheHotel.Mapping;
 
 namespace TheHotel.Services.Clients
 {
     public class ClientsService : IClientsService
     {
-        private readonly ApplicationDbContext db;
+        private readonly IDeletableEntityRepository<Client> clientsRepository;
 
-        public ClientsService(ApplicationDbContext db)
+        public ClientsService(IDeletableEntityRepository<Client> clientsRepository)
         {
-            this.db = db;
+            this.clientsRepository = clientsRepository;
         }
 
         public async Task AddAsync(Client client)
         {
-            await db.Clients.AddAsync(client);
-            await db.SaveChangesAsync();
+            await clientsRepository.AddAsync(client);
+            await clientsRepository.SaveChangesAsync();
         }
 
         public IEnumerable<Client> GetAll()
         {
-            return db.Clients
+            return clientsRepository.All()
                 .Include(x => x.Rooms)
                 .ThenInclude(x => x.Room)
                 .ToList();
@@ -33,7 +34,7 @@ namespace TheHotel.Services.Clients
 
         public IEnumerable<T> GetAll<T>()
         {
-            return db.Clients
+            return clientsRepository.All()
                 .Include(x => x.Rooms)
                 .ThenInclude(x => x.Room)
                 .To<T>()
@@ -42,7 +43,7 @@ namespace TheHotel.Services.Clients
 
         public Client GetClientById(string clientId)
         {
-            return db.Clients
+            return clientsRepository.All()
                 .Include(x => x.Rooms)
                 .ThenInclude(x => x.Room)
                 .ThenInclude(x => x.RoomType)
@@ -51,12 +52,13 @@ namespace TheHotel.Services.Clients
 
         public Client GetClientByPIN(string personalIdentityNumber)
         {
-            return db.Clients.FirstOrDefault(x => x.PersonalIdentityNumber == personalIdentityNumber);
+            return clientsRepository.All()
+                .FirstOrDefault(x => x.PersonalIdentityNumber == personalIdentityNumber);
         }
 
         public bool IsEmailExist(string email)
         {
-            return db.Clients.Any(x => x.Email == email);
+            return clientsRepository.All().Any(x => x.Email == email);
         }
     }
 }

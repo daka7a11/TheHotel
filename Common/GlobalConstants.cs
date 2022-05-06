@@ -2,6 +2,8 @@
 {
     public static class GlobalConstants
     {
+        public const string NameSymbolsRegex = "([A-Z][a-z]+)";
+
         public const string SystemName = "TheHotel";
 
         public const int RoomMinSize = 1;

@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TheHotel.Common;
-using TheHotel.Data;
 using TheHotel.Data.Models;
+using TheHotel.Data.Repositories;
 using TheHotel.EmailSender;
 using TheHotel.Mapping;
 
@@ -12,27 +12,29 @@ namespace TheHotel.Services.ClientRooms
 {
     public class ClientRoomsService : IClientRoomsService
     {
-        private readonly ApplicationDbContext db;
+        private readonly IDeletableEntityRepository<ClientRoom> clientRoomsRepository;
         private readonly IMailService mailService;
 
         public ClientRoomsService(
-            ApplicationDbContext db,
+            IDeletableEntityRepository<ClientRoom> clientRoomsRepository,
             IMailService mailService)
         {
-            this.db = db;
+            this.clientRoomsRepository = clientRoomsRepository;
             this.mailService = mailService;
         }
 
         public ClientRoom GetById(int id)
         {
-            return db.ClientRooms.Where(x => x.Id == id)
+            return clientRoomsRepository.All()
+                .Where(x => x.Id == id)
                 .Include(x => x.Room)
                 .Include(x => x.Client)
                 .FirstOrDefault();
         }
         public T GetById<T>(int id)
         {
-            return db.ClientRooms.Where(x => x.Id == id)
+            return clientRoomsRepository.All()
+                .Where(x => x.Id == id)
                 .Include(x => x.Room)
                 .Include(x => x.Client)
                 .To<T>()
@@ -41,20 +43,20 @@ namespace TheHotel.Services.ClientRooms
 
         public async Task AddAsync(ClientRoom clientRoom)
         {
-            await db.ClientRooms.AddAsync(clientRoom);
-            await db.SaveChangesAsync();
+            await clientRoomsRepository.AddAsync(clientRoom);
+            await clientRoomsRepository.SaveChangesAsync();
         }
 
         public ICollection<ClientRoom> GetAllReservations()
         {
-            return db.ClientRooms
+            return clientRoomsRepository.All()
                 .Include(x => x.Client)
                 .Include(x => x.Room)
                 .ToList();
         }
-        public ICollection<T> GetAllReservations<T>()
+        public  ICollection<T> GetAllReservations<T>()
         {
-            return db.ClientRooms
+            return  clientRoomsRepository.All()
                 .Include(x => x.Client)
                 .Include(x => x.Room)
                 .To<T>()
@@ -63,16 +65,16 @@ namespace TheHotel.Services.ClientRooms
 
         public ICollection<ClientRoom> GetConfirmedReservations()
         {
-            return db.ClientRooms
+            return clientRoomsRepository.All()
                 .Include(x => x.Client)
                 .Include(x => x.Room)
                 .Where(x => x.IsConfirmed == true)
                 .ToList();
         }
 
-        public ICollection<T> GetConfirmedReservations<T>()
+        public  ICollection<T> GetConfirmedReservations<T>()
         {
-            return db.ClientRooms
+            return clientRoomsRepository.All()
                 .Include(x => x.Client)
                 .Include(x => x.Room)
                 .Where(x => x.IsConfirmed == true)
@@ -82,7 +84,7 @@ namespace TheHotel.Services.ClientRooms
 
         public ICollection<ClientRoom> GetNonConfirmedReservations()
         {
-            return db.ClientRooms
+            return clientRoomsRepository.All()
                 .Include(x => x.Client)
                 .Include(x => x.Room)
                 .Where(x => x.IsConfirmed == false)
@@ -91,7 +93,7 @@ namespace TheHotel.Services.ClientRooms
 
         public ICollection<T> GetNonConfirmedReservations<T>()
         {
-            return db.ClientRooms
+            return clientRoomsRepository.All()
                 .Include(x => x.Client)
                 .Include(x => x.Room)
                 .Where(x => x.IsConfirmed == false)
@@ -99,15 +101,15 @@ namespace TheHotel.Services.ClientRooms
                 .ToList();
         }
 
-        public void ConfirmRequest(int id)
+        public async Task ConfirmRequestAsync(int id)
         {
-            var reservationRequest = db.ClientRooms
+            var reservationRequest = clientRoomsRepository.All()
                 .Include(x => x.Client)
                 .FirstOrDefault(x => x.Id == id);
             if (reservationRequest != null)
             {
                 reservationRequest.IsConfirmed = true;
-                db.SaveChanges();
+                await clientRoomsRepository.SaveChangesAsync();
             }
 
             MailRequest mailRequest = new MailRequest()
@@ -116,18 +118,18 @@ namespace TheHotel.Services.ClientRooms
                 Subject = GlobalConstants.ReservationAccepted,
                 Body = "Приета",
             };
-            mailService.SendEmailAsync(mailRequest);
+            await mailService.SendEmailAsync(mailRequest);
         }
 
-        public void DeleteRequest(int id)
+        public async Task DeleteRequestAsync(int id)
         {
-            var reservationRequest = db.ClientRooms
+            var reservationRequest = clientRoomsRepository.All()
                 .Include(x => x.Client)
                 .FirstOrDefault(x => x.Id == id);
             if (reservationRequest != null)
             {
-                db.ClientRooms.Remove(reservationRequest);
-                db.SaveChanges();
+                clientRoomsRepository.Delete(reservationRequest);
+                await clientRoomsRepository.SaveChangesAsync();
             }
 
             MailRequest mailRequest = new MailRequest()
@@ -136,7 +138,7 @@ namespace TheHotel.Services.ClientRooms
                 Subject = GlobalConstants.ReservationDeclined,
                 Body = "Отказана",
             };
-            mailService.SendEmailAsync(mailRequest);
+            await mailService.SendEmailAsync(mailRequest);
         }
     }
 }

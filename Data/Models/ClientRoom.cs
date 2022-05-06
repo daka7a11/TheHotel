@@ -3,10 +3,8 @@ using System;
 
 namespace TheHotel.Data.Models
 {
-    public class ClientRoom
+    public class ClientRoom : BaseDeletableModel<int>
     {
-        public int Id { get; set; }
-
         public DateTime AccommodationDate { get; set; }
 
         public DateTime DepartureDate { get; set; }
@@ -23,6 +21,8 @@ namespace TheHotel.Data.Models
 
         public DateTime? RequestDate { get; set; }
 
-        public IdentityUser Employee { get; set; }
+        public string EmployeeId { get; set; }
+
+        public ApplicationUser Employee { get; set; }
     }
 }

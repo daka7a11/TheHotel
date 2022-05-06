@@ -5,16 +5,13 @@ using TheHotel.Common;
 
 namespace TheHotel.Data.Models
 {
-    public class Client
+    public class Client : BaseDeletableModel<string>
     {
         public Client()
         {
             this.Id = Guid.NewGuid().ToString();
             this.Rooms = new HashSet<ClientRoom>();
         }
-
-        public string Id { get; set; }
-
         [Required]
         [MinLength(GlobalConstants.ClientNameMinLength)]
         [MaxLength(GlobalConstants.ClientNameMaxLength)]

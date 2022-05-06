@@ -13,6 +13,8 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using TheHotel.Data;
+using TheHotel.Data.Models;
+using TheHotel.Data.Repositories;
 using TheHotel.Data.Seeding;
 using TheHotel.EmailSender;
 using TheHotel.EmailSender.ViewRender;
@@ -36,17 +38,29 @@ namespace TheHotel
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllersWithViews();
+            services.AddRazorPages();
+
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
+            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
+                .AddRoles<ApplicationRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.Configure<IdentityOptions>(opt =>
+            {
+                opt.Lockout.AllowedForNewUsers = true;
+                opt.User.RequireUniqueEmail = true;
+            });
             services.AddControllersWithViews();
 
+            services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
+            services.AddScoped(typeof(IDeletableEntityRepository<>), typeof(EfDeletableEntityRepository<>));
             services.AddTransient<IRoomsService, RoomsService>();
             services.AddTransient<IClientsService, ClientsService>();
+            services.AddTransient<IClientRoomsService, ClientRoomsService>();
             services.AddTransient<IClientRoomsService, ClientRoomsService>();
 
             services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));

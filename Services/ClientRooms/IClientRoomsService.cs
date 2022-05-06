@@ -14,15 +14,14 @@ namespace TheHotel.Services.ClientRooms
         ICollection<ClientRoom> GetAllReservations();
         ICollection<T> GetAllReservations<T>();
 
-
         ICollection<ClientRoom> GetConfirmedReservations();
         ICollection<T> GetConfirmedReservations<T>();
 
         ICollection<ClientRoom> GetNonConfirmedReservations();
         ICollection<T> GetNonConfirmedReservations<T>();
 
-        void ConfirmRequest(int id);
+        Task ConfirmRequestAsync(int id);
 
-        void DeleteRequest(int id);
+        Task DeleteRequestAsync(int id);
     }
 }

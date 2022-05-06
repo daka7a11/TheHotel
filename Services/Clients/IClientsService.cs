@@ -10,7 +10,7 @@ namespace TheHotel.Services.Clients
 
         Client GetClientById(string clientId);
 
-        Task AddAsync(Data.Models.Client client);
+        Task AddAsync(Client client);
 
         IEnumerable<Client> GetAll();
         IEnumerable<T> GetAll<T>();

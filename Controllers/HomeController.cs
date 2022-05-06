@@ -1,5 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
+using TheHotel.Data.Models;
 using TheHotel.EmailSender;
 using TheHotel.EmailSender.ViewRender;
 using TheHotel.Services.ClientRooms;
@@ -9,8 +13,13 @@ namespace TheHotel.Controllers
 {
     public class HomeController : Controller
     {
-        public HomeController()
+        private readonly UserManager<ApplicationUser> userManager;
+        private readonly RoleManager<ApplicationRole> roleManager;
+
+        public HomeController(UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager)
         {
+            this.userManager = userManager;
+            this.roleManager = roleManager;
         }
 
         public IActionResult Index()

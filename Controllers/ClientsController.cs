@@ -1,19 +1,13 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System;
 using System.Linq;
-using System.Threading.Tasks;
-using TheHotel.Common;
-using TheHotel.Data;
-using TheHotel.Data.Models;
-using TheHotel.Services.ClientRooms;
 using TheHotel.Services.Clients;
-using TheHotel.Services.Rooms;
 using TheHotel.ViewModels.Clients;
 
 namespace TheHotel.Controllers
 {
+    [Authorize(Roles = "Administrator")]
     public class ClientsController : Controller
     {
         private readonly IClientsService clientsService;
@@ -22,11 +16,6 @@ namespace TheHotel.Controllers
             IClientsService clientsService)
         {
             this.clientsService = clientsService;
-        }
-
-        public IActionResult Success(TenancySuccessViewModel model)
-        {
-            return this.View(model);
         }
 
         public IActionResult All()

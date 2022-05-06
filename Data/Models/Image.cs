@@ -1,9 +1,7 @@
 ﻿namespace TheHotel.Data.Models
 {
-    public class Image
+    public class Image : BaseDeletableModel<int>
     {
-        public int Id { get; set; }
-
         public string Url { get; set; }
 
         public int RoomId { get; set; }

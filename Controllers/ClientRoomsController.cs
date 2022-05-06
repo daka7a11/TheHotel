@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -20,18 +22,23 @@ namespace TheHotel.Controllers
         private readonly IClientRoomsService clientRoomsService;
         private readonly IClientsService clientsService;
         private readonly IRoomsService roomsService;
+        private readonly UserManager<ApplicationUser> userManager;
         private readonly IMailService mailService;
 
         public ClientRoomsController(IClientRoomsService clientRoomsService,
             IClientsService clientsService,
             IRoomsService roomsService,
+            UserManager<ApplicationUser> userManager,
             IMailService mailService)
         {
             this.clientRoomsService = clientRoomsService;
             this.clientsService = clientsService;
             this.roomsService = roomsService;
+            this.userManager = userManager;
             this.mailService = mailService;
         }
+
+        [Authorize(Roles = "Administrator")]
         public IActionResult RoomRequests()
         {
             var roomRequests = clientRoomsService
@@ -40,6 +47,7 @@ namespace TheHotel.Controllers
             return this.View(roomRequests);
         }
 
+        [Authorize(Roles = "Administrator")]
         public IActionResult RequestDetails(int clientRoomId)
         {
             var model = clientRoomsService.GetById<RequestDetailsViewModel>(clientRoomId);
@@ -120,16 +128,15 @@ namespace TheHotel.Controllers
                 return this.View(model);
             }
 
-            ClientRoom clientRoom = null;
+            bool isEmployee = User.IsInRole("Administrator") || User.IsInRole("Receptionist");
 
-            bool isEmployee = User.Identity.IsAuthenticated;
-
-            clientRoom = AutoMapperConfig.MapperInstance.Map<ClientRoom>(model);
+            var clientRoom = AutoMapperConfig.MapperInstance.Map<ClientRoom>(model);
             clientRoom.ClientId = currClient.Id;
 
             if (isEmployee)
             {
                 clientRoom.IsConfirmed = true;
+                clientRoom.EmployeeId = userManager.GetUserAsync(User).Result.Id;
             }
             else
             {
@@ -141,7 +148,7 @@ namespace TheHotel.Controllers
             if (isEmployee)
             {
                 return this.Redirect(
-                    $"/Clients/Success?clientName={currClient.FirstName}&roomId={model.RoomId}" +
+                    $"/ClientRooms/Success?clientName={currClient.FirstName}&roomId={model.RoomId}" +
                     $"&accDate={model.AccommodationDate.Value.ToString("dd.MM.yyyy")}&depDate={model.DepartureDate.Value.ToString("dd.MM.yyyy")}");
             }
             else

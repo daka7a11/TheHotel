@@ -15,9 +15,9 @@ namespace TheHotel.Data.Seeding
 
             await db.Clients.AddAsync(new Client()
             {
-                FirstName = "Admin",
-                LastName = "Adminov",
-                Email = "admin@abv.bg",
+                FirstName = "Клиент",
+                LastName = "Клиент",
+                Email = "client@abv.bg",
                 PersonalIdentityNumber = "1111111111",
                 Phone = "0000000000",
             });
