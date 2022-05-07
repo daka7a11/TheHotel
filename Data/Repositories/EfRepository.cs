@@ -39,6 +39,8 @@ namespace TheHotel.Data.Repositories
 
         public Task<int> SaveChangesAsync() => this.Context.SaveChangesAsync();
 
+        public int SaveChanges() => this.Context.SaveChanges();
+
         public void Dispose()
         {
             this.Dispose(true);

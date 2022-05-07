@@ -1,1 +1,120 @@
-﻿
+﻿@using TheHotel.ViewModels.ClientRooms
+@model RequestDetailsViewModel;
+
+@if (TempData["ErrorMsg"] != null)
+{
+    <div class="row mt-4 font-weight-bold border-bottom border-danger text-danger d-inline-block">@TempData["ErrorMsg"]</div>
+}
+<div class="row mt-2">
+    <div class="col-md-6">
+        <dl class="row mt-2">
+            <dt class="mr-2">Име:</dt>
+            <dd>@Model.ClientFirstName</dd>
+        </dl>
+        <dl class="row mt-2">
+            <dt class="mr-2">Фамилия:</dt>
+            <dd>@Model.ClientLastName</dd>
+        </dl>
+        <dl class="row mt-2">
+            <dt class="mr-2">Имейл:</dt>
+            <dd>@Model.ClientEmail</dd>
+        </dl>
+        <dl class="row mt-2">
+            <dt class="mr-2">ЕГН:</dt>
+            <dd>@Model.ClientPersonalIdentityNumber</dd>
+        </dl>
+        <dl class="row mt-2">
+            <dt class="mr-2">Телефон:</dt>
+            <dd>@Model.ClientPhone</dd>
+        </dl>
+    </div>
+    <div class="col-md-6">
+        <dl class="row mt-2">
+            <dt class="mr-2">Дата на настаняване:</dt>
+            <dd>@Model.AccommodationDate.ToShortDateString()</dd>
+        </dl>
+        <dl class="row mt-2">
+            <dt class="mr-2">Дата на напускане:</dt>
+            <dd>@Model.DepartureDate.ToShortDateString()</dd>
+        </dl>
+        <dl class="row mt-2">
+            <dt class="mr-2">Дата на заявката:</dt>
+            <dd>@Model.RequestDate.Value.ToString("g")</dd>
+        </dl>
+        <dl class="row mt-2">
+            <dt class="mr-2">Свободна ли е стаята, все още:</dt>
+            <dd>
+                @if (Model.IsStillAvailable)
+                {
+                    <i class="bi bi-check-circle text-success" style="font-size:22px"></i>
+                }
+                else
+                {
+                    <i class="bi bi-x-circle text-danger" style="font-size:22px"></i>
+                }
+            </dd>
+        </dl>
+    </div>
+</div>
+
+<form id="AcceptRequestForm" action="AcceptRequest" method="post">
+    <input type="hidden" name="clientRoomId" value="@Model.Id" />
+</form>
+
+<form id="RejectRequestForm" action="RejectRequest" method="post">
+    <input type="hidden" name="clientRoomId" value="@Model.Id" />
+</form>
+
+<div class="row">
+    @if (Model.IsStillAvailable == false)
+    {
+        <button class=" col-md-3 btn btn-success" onclick="AccpectModal" data-toggle="modal" data-target="#AcceptModal">Потвърди резервацията</button>
+    }
+    else
+    {
+        <button class=" col-md-3 btn btn-success" onclick="AccpectModal" data-toggle="modal" data-target="#AcceptModal">Потвърди резервацията</button>
+
+    }
+    <button class="offset-3 col-md-3 btn btn-danger" onclick="AccpectModal" data-toggle="modal" data-target="#RejectModal">Отхвърли резервацията</button>
+</div>
+
+
+<div class="modal fade" id="AcceptModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-center" id="exampleModalLabel">Потвърждение</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Сигурни ли сте, че искате да ПОТВЪРДИТЕ резервацията?
+            </div>
+            <div class="modal-footer">
+                <button id="acceptRequestBtn" type="button" class="btn btn-success" onclick="AcceptRequestForm.submit()">Да, потвърждавам</button>
+                <button type="button" class="btn btn-light" data-dismiss="modal">Отказ</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="RejectModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-center" id="exampleModalLabel">Потвърждение</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Сигурни ли сте, че искате да ОТХВЪРЛИТЕ резервацията?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" onclick="RejectRequestForm.submit()">Да, отхвърлям</button>
+                <button type="button" class="btn btn-light" data-dismiss="modal">Отказ</button>
+            </div>
+        </div>
+    </div>
+</div>

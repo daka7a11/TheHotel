@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using TheHotel.Common;
 using TheHotel.Data.Models;
+using TheHotel.Mapping;
 
 namespace TheHotel.ViewModels.Clients
 {
-    public class ClientViewModel
+    public class ClientViewModel : IMapFrom<Client>
     {
         public string Id { get; set; }
 

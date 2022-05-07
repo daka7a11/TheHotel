@@ -38,7 +38,7 @@ namespace TheHotel.Controllers
             this.mailService = mailService;
         }
 
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = GlobalConstants.AdministratorRole + "," + GlobalConstants.ReceptionistRole)]
         public IActionResult RoomRequests()
         {
             var roomRequests = clientRoomsService
@@ -47,13 +47,39 @@ namespace TheHotel.Controllers
             return this.View(roomRequests);
         }
 
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = GlobalConstants.AdministratorRole + "," + GlobalConstants.ReceptionistRole)]
         public IActionResult RequestDetails(int clientRoomId)
         {
             var model = clientRoomsService.GetById<RequestDetailsViewModel>(clientRoomId);
             var room = roomsService.GetById(model.RoomId);
             model.IsStillAvailable = GlobalMethods.IsRoomAvailable(room, model.AccommodationDate, model.DepartureDate);
             return this.View(model);
+        }
+
+        [Authorize(Roles = GlobalConstants.AdministratorRole + "," + GlobalConstants.ReceptionistRole)]
+        [HttpPost]
+        public async Task<IActionResult> AcceptRequest(int clientRoomId)
+        {
+            var clientRoom = clientRoomsService.GetById(clientRoomId);
+            var room = roomsService.GetById(clientRoom.RoomId);
+            if(!GlobalMethods.IsRoomAvailable(room, clientRoom.AccommodationDate, clientRoom.DepartureDate))
+            {
+                TempData["ErrorMsg"] = GlobalConstants.RoomAlreadyHiredErrorMsg;
+                return RedirectToAction(nameof(RequestDetails),"ClientRooms", new { clientRoomId });
+            }
+
+            await clientRoomsService.ConfirmRequestAsync(clientRoomId);
+
+            return this.Redirect($"/Rooms/Details?roomId={room.Id}");
+
+        }
+
+        [Authorize(Roles = GlobalConstants.AdministratorRole + "," + GlobalConstants.ReceptionistRole)]
+        [HttpPost]
+        public async Task<IActionResult> RejectRequest(int clientRoomId)
+        {
+            await clientRoomsService.DeleteRequestAsync(clientRoomId);
+            return this.RedirectToAction(nameof(RoomRequests));
         }
 
         [HttpGet]

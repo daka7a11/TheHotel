@@ -8,6 +8,7 @@
     <title>@this.ViewData["Title"] - @GlobalConstants.SystemName</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/lazy.css">
+    <link href="~/lib/bootstrap-icons-1.8.1/bootstrap-icons.css" rel="stylesheet" />
     <link href="~/css/MyStyle.css?v=1" rel="stylesheet" />
 </head>
 <body class="d-flex flex-column min-vh-100">
@@ -48,26 +49,29 @@
                             <li class="nav-item">
                                 <a class="nav-link text-light" asp-controller="Home" asp-action="Reviews">Отзиви</a>
                             </li>
-                            <li class="nav-item dropdown">
-                                <a href="#" class="nav-link text-danger dropdown-toggle font-weight-bold" data-toggle="dropdown" role="button" aria-expanded="false">Администратор <span class="caret"></span></a>
-                                <ul class="dropdown-menu bg-dark  border-0" role="menu" style="background-color:none">
-                                    <li>
-                                        <a class="btn btn-lg text-light" asp-controller="Restaurant" asp-action="AddCategory">Add food category</a>
-                                    </li>
-                                    <li>
-                                        <a class="btn btn-lg text-light" asp-controller="Restaurant" asp-action="AddFoodItem">Add food item</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-light" asp-controller="Clients" asp-action="All">Clients</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-light" asp-controller="ClientRooms" asp-action="RoomRequests">Заявки</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-light" asp-area="Identity" asp-page="/Account/Register">Регистрация</a>
-                                    </li>
-                                </ul>
-                            </li>
+                            @if (User.IsInRole(GlobalConstants.AdministratorRole) || User.IsInRole(GlobalConstants.ReceptionistRole))
+                            {
+                                <li class="nav-item dropdown">
+                                    <a href="#" class="nav-link text-danger dropdown-toggle font-weight-bold" data-toggle="dropdown" role="button" aria-expanded="false">Администрация <span class="caret"></span></a>
+                                    <ul class="dropdown-menu bg-dark  border-0" role="menu" style="background-color:none">
+                                        <li class="nav-item">
+                                            <a class="nav-link text-light" asp-controller="Clients" asp-action="All">Клиенти</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link text-light" asp-controller="ClientRooms" asp-action="RoomRequests">Заявки</a>
+                                        </li>
+                                        @if (User.IsInRole(GlobalConstants.AdministratorRole))
+                                        {
+                                            <li class="nav-item">
+                                                <a class="nav-link text-light" asp-area="Identity" asp-page="/Account/Register">Регистрация</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link text-light" asp-controller="Rooms" asp-action="Undelete">Изтрити стаи</a>
+                                            </li>
+                                        }
+                                    </ul>
+                                </li>
+                            }
                         </ul>
                     </div>
                 </div>

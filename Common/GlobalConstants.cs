@@ -2,6 +2,10 @@
 {
     public static class GlobalConstants
     {
+        public const string AdministratorRole = "Administrator";
+
+        public const string ReceptionistRole = "Receptionist";
+
         public const string NameSymbolsRegex = "([A-Z][a-z]+)";
 
         public const string SystemName = "TheHotel";
@@ -43,5 +47,8 @@
         public const string ReservationAccepted = "Резервацията ви е приета.";
 
         public const string ReservationDeclined = "Резервацията ви е отказана.";
+
+        public const string RoomAlreadyHiredErrorMsg = "Стаята е резервирана!";
+
     }
 }
