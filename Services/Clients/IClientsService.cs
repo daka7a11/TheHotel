@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using TheHotel.Data.Models;
+using TheHotel.ViewModels.Clients;
 
 namespace TheHotel.Services.Clients
 {
@@ -14,6 +15,16 @@ namespace TheHotel.Services.Clients
 
         IEnumerable<Client> GetAll();
         IEnumerable<T> GetAll<T>();
+
+        void Edit(string clientId, EditClientViewModel model);
+
+        void Delete(string clientId);
+
+        void HardDelete(string clientId);
+
+        void Undelete(string clientId);
+
+        ICollection<T> GetDeleted<T>();
 
         bool IsEmailExist(string email);
     }

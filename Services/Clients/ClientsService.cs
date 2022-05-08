@@ -6,6 +6,7 @@ using TheHotel.Data;
 using TheHotel.Data.Models;
 using TheHotel.Data.Repositories;
 using TheHotel.Mapping;
+using TheHotel.ViewModels.Clients;
 
 namespace TheHotel.Services.Clients
 {
@@ -22,6 +23,18 @@ namespace TheHotel.Services.Clients
         {
             await clientsRepository.AddAsync(client);
             await clientsRepository.SaveChangesAsync();
+        }
+
+        public void Edit(string clientId, EditClientViewModel model)
+        {
+            var client = clientsRepository.All().FirstOrDefault(x => x.Id == clientId);
+            client.FirstName = model.FirstName;
+            client.LastName = model.LastName;
+            client.PersonalIdentityNumber = model.PersonalIdentityNumber;
+            client.Phone = model.Phone;
+            client.Email = model.Email;
+
+            clientsRepository.SaveChanges();
         }
 
         public IEnumerable<Client> GetAll()
@@ -56,9 +69,38 @@ namespace TheHotel.Services.Clients
                 .FirstOrDefault(x => x.PersonalIdentityNumber == personalIdentityNumber);
         }
 
+        public void Delete(string clientId)
+        {
+            var client = clientsRepository.All().FirstOrDefault(x => x.Id == clientId);
+            clientsRepository.Delete(client);
+            clientsRepository.SaveChanges();
+        }
+
+        public void HardDelete(string clientId)
+        {
+            var client = clientsRepository.AllWithDeleted().FirstOrDefault(x => x.Id == clientId);
+            clientsRepository.HardDelete(client);
+            clientsRepository.SaveChanges();
+        }
+
+        public void Undelete(string clientId)
+        {
+            var client = clientsRepository.AllWithDeleted().FirstOrDefault(x => x.Id == clientId);
+            clientsRepository.Undelete(client);
+            clientsRepository.SaveChanges();
+        }
+
         public bool IsEmailExist(string email)
         {
             return clientsRepository.All().Any(x => x.Email == email);
+        }
+
+        public ICollection<T> GetDeleted<T>()
+        {
+            return clientsRepository.AllWithDeleted()
+                .Where(x => x.IsDeleted == true)
+                .To<T>()
+                .ToList();
         }
     }
 }

@@ -7,23 +7,23 @@
 
 <div class="jumbotron-fluid border border-top-0 shadow" style="background-color: navajowhite; height:50px">
     <form class="text-center" method="post">
-        <label class="font-weight-bold">Personal Identity Number: </label>
+        <label class="font-weight-bold">ЕГН: </label>
         <input class="form-control col-sm-2 d-inline-block text-center" style="font-size:115%" type="text" name="clientPIN" />
-        <input class="btn btn-success btn-md" type="submit" name="searchBtn" value="Search" />
+        <input class="btn btn-success btn-md" type="submit" name="searchBtn" value="Търси" />
     </form>
 </div>
-<h1 class="text-center">Clients</h1>
+<h1 class="text-center">Клиенти</h1>
 @if (Model.Any())
 {
     <table class="table table-hover table-striped table-bordered table-responsive-md bg-light">
         <thead class="bg-secondary text-light shadow">
             <tr class="text-center">
-                <th>First name</th>
-                <th>Last name</th>
-                <th>Personal identity number</th>
-                <th>Phone</th>
-                <th>Email</th>
-                <th colspan="2" class="border-right-0">Total rooms hired</th>
+                <th>Име</th>
+                <th>Фамилия</th>
+                <th>ЕГН</th>
+                <th>Телефон</th>
+                <th>Имейл</th>
+                <th colspan="2" class="border-right-0">Брой наети стаи</th>
             </tr>
         </thead>
         @foreach (var item in Model.OrderByDescending(x => x.Rooms.OrderByDescending(y => y.AccommodationDate).FirstOrDefault()?.AccommodationDate))
@@ -35,10 +35,10 @@
                     <td>@item.PersonalIdentityNumber</td>
                     <td>@item.Phone</td>
                     <td>@item.Email</td>
-                    <td class="border-right-0 col-md-1">@item.Rooms.Count</td>
+                    <td class="border-right-0 col-md-1">@item.Rooms.Where(x => x.IsConfirmed == true).Count()</td>
                     <td class="col-sm-1 border-0">
                         <div class="d-inline-block text-center">
-                            <a class="btn btn-warning" href="/Clients/Details?clientId=@item.Id">Details</a>
+                            <a class="btn btn-warning" href="/Clients/Details?clientId=@item.Id">Детайли</a>
                         </div>
                     </td>
                 </tr>

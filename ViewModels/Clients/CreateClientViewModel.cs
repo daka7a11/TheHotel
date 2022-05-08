@@ -1,10 +1,14 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using TheHotel.Common;
+using TheHotel.Data.Models;
+using TheHotel.Mapping;
 
 namespace TheHotel.ViewModels.Clients
 {
-    public class CreateClientViewModel
+    public class CreateClientViewModel : IMapFrom<Client>
     {
+
+
         [Required]
         [MinLength(GlobalConstants.ClientNameMinLength, ErrorMessage = GlobalConstants.ClientNameErrorMsg)]
         [MaxLength(GlobalConstants.ClientNameMaxLength, ErrorMessage = GlobalConstants.ClientNameErrorMsg)]

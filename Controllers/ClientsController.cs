@@ -53,5 +53,49 @@ namespace TheHotel.Controllers
 
             return this.View(model);
         }
+
+        public IActionResult Edit(string clientId)
+        {
+            var model = AutoMapperConfig.MapperInstance.Map<EditClientViewModel>(clientsService.GetClientById(clientId));
+            return this.View(model);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(EditClientViewModel model)
+        {
+            clientsService.Edit(model.Id, model);
+
+            return this.Redirect($"/Clients/Details?clientId={model.Id}");
+        }
+
+        public IActionResult Delete(string clientId)
+        {
+            clientsService.Delete(clientId);
+
+            return this.RedirectToAction(nameof(All));
+        }
+
+        public IActionResult Undelete()
+        {
+            var model = clientsService.GetDeleted<UndeleteClientsViewModel>();
+
+            return this.View(model);
+        }
+
+        [HttpPost]
+        public IActionResult Undelete(string clientId)
+        {
+            clientsService.Undelete(clientId);
+
+            return this.Redirect($"/Clients/Details?clientId={clientId}");
+        }
+
+        [HttpPost]
+        public IActionResult HardDelete(string clientId)
+        {
+            clientsService.HardDelete(clientId);
+
+            return this.RedirectToAction(nameof(All));
+        }
     }
 }

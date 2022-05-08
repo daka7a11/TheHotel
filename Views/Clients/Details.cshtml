@@ -7,22 +7,26 @@
 
 <div class="details">
     <div class="border-bottom text-center">
-        <h1>@Model.FirstName @Model.LastName</h1>
+        <h1 class="mt-2 mb-2">@Model.FirstName @Model.LastName</h1>
     </div>
     <br />
+    <div class="row mb-2 mt-2 ml-1">
+        <a class="btn btn-warning mr-2 text-info" href="/Clients/Edit?clientId=@Model.Id">Редактиране</a>
+        <a class="btn btn-danger mr-2 text-light" onclick="DeleteModal" data-toggle="modal" data-target="#DeleteModal" style="cursor:pointer">Изтриване</a>
+    </div>
     <div class="row">
         <div class="col-sm-8 d-inline-block ">
             <div class="bg-light border">
                 <dl class="row m-1">
-                    <dt class="col-md-5">Personal identity number:</dt>
+                    <dt class="col-md-5">ЕГН:</dt>
                     <dd class="col-sm-7">@Model.PersonalIdentityNumber</dd>
                 </dl>
                 <dl class="row m-1">
-                    <dt class="col-md-5">Phone:</dt>
+                    <dt class="col-md-5">Телефон:</dt>
                     <dd class="col-sm-7">@Model.Phone</dd>
                 </dl>
                 <dl class="row m-1">
-                    <dt class="col-md-5">Email:</dt>
+                    <dt class="col-md-5">Имейл:</dt>
                     <dd class="col-sm-7">@Model.Email</dd>
                 </dl>
             </div>
@@ -31,23 +35,23 @@
     @if (Model.Rooms.Count > 0)
     {
         <br>
-        <h4 class="text-center border shadow" style="background-color: navajowhite">Hired rooms</h4>
+        <h4 class="text-center border shadow" style="background-color: navajowhite">Наети стаи</h4>
         <div>
             <table class="table table-hover table-striped table-bordered table-responsive-md bg-light shadow">
                 <thead>
                     <tr class="text-center bg-secondary text-light shadow">
                         <th>№</th>
-                        <th>Room type</th>
-                        <th>Floor</th>
-                        <th>Size</th>
-                        <th>Price</th>
-                        <th>Accommodation date</th>
-                        <th>Departure date</th>
-                        <th>Overnight/s</th>
-                        <th>Total in $</th>
+                        <th>Вид</th>
+                        <th>Етаж</th>
+                        <th>Размер</th>
+                        <th>Цена</th>
+                        <th>Дата на настаняване</th>
+                        <th>Дата на напускане</th>
+                        <th>Нощувки</th>
+                        <th>Крайна цена</th>
                     </tr>
                 </thead>
-                @foreach (var item in Model.Rooms.OrderByDescending(x => x.AccommodationDate))
+                @foreach (var item in Model.Rooms.Where(x => x.IsConfirmed == true).OrderByDescending(x => x.AccommodationDate))
                 {
                     var totalDays = (int)(item.DepartureDate - item.AccommodationDate).TotalDays;
                     <tbody>
@@ -60,11 +64,31 @@
                             <td class="font-weight-bold">@item.AccommodationDate.ToString("dd.MM.yyyy")</td>
                             <td class="font-weight-bold">@item.DepartureDate.ToString("dd.MM.yyyy")</td>
                             <td>@totalDays</td>
-                            <td>@(item.Room.Price * totalDays)$</td>
+                            <td>@(item.Room.Price * totalDays) лв.</td>
                         </tr>
                     </tbody>
                 }
             </table>
         </div>
     }
+</div>
+
+<div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-center" id="exampleModalLabel">Потвърждение</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Сигурни ли сте, че искате да ИЗТРИЕТЕ клиента?
+            </div>
+            <div class="modal-footer">
+                <button id="deleteBtn" class="btn btn-success" onclick=" window.location.href = '/Clients/Delete?clientId=' + '@Model.Id';">Да, изтривам</button>
+                <button type="button" class="btn btn-light" data-dismiss="modal">Отказ</button>
+            </div>
+        </div>
+    </div>
 </div>

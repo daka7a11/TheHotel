@@ -1,0 +1,62 @@
+﻿@using TheHotel.ViewModels.Clients
+
+@model EditClientViewModel
+
+
+<form id="EditRoomForm" method="post">
+    <div class="col-md-4 offset-4" style="font-size:x-large">
+        <div class="form-group">
+            <label asp-for="FirstName">Име</label>
+            <input class="form-control" asp-for="FirstName" />
+            <span asp-validation-for="FirstName"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="LastName">Фамилия</label>
+            <input class="form-control" asp-for="LastName" />
+            <span asp-validation-for="LastName"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="PersonalIdentityNumber">ЕГН</label>
+            <input class="form-control" asp-for="PersonalIdentityNumber" />
+            <span asp-validation-for="PersonalIdentityNumber"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Email">Имейл</label>
+            <input class="form-control" asp-for="Email" />
+            <span asp-validation-for="Email"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Phone">Телефон</label>
+            <input class="form-control" asp-for="Phone" />
+            <span asp-validation-for="Phone"></span>
+        </div>
+        <div>
+            <input type="hidden" name="Id" value="@Model.Id" />
+        </div>
+
+        <div class="text-center">
+            <a class="btn-lg btn-success text-light" onclick="EditModal" data-toggle="modal" data-target="#EditModal" style="cursor:pointer">Редактирай</a>
+        </div>
+    </div>
+</form>
+
+
+<div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-center" id="exampleModalLabel">Потвърждение</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Сигурни ли сте, че искате да РЕДАКТИРАТЕ клиента?
+            </div>
+            <div class="modal-footer">
+                <button id="editBtn" type="button" class="btn btn-success" onclick="EditRoomForm.submit()">Да, редактирам</button>
+                <button type="button" class="btn btn-light" data-dismiss="modal">Отказ</button>
+            </div>
+        </div>
+    </div>
+</div>
