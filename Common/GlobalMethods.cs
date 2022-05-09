@@ -8,7 +8,7 @@ namespace TheHotel.Common
     {
         public static bool IsRoomAvailable(Room room, DateTime? accDate, DateTime? depDate)
         {
-            foreach (var hireDate in room.HireDates.Where(x => x.IsConfirmed == true))
+            foreach (var hireDate in room.HireDates.Where(x => x.IsConfirmed == true && x.IsDeleted == false))
             {
                 if (accDate < hireDate.AccommodationDate.Date && depDate > hireDate.AccommodationDate.Date)
                 {

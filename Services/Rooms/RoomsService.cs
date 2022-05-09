@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -45,6 +46,7 @@ namespace TheHotel.Services.Rooms
             room.Price = model.Price;
             room.RoomTypeId = int.Parse(model.RoomTypeId);
             room.Description = model.Description;
+            room.ModifiedOn = DateTime.UtcNow;
 
             roomsRepository.SaveChanges();
         }

@@ -1,0 +1,124 @@
+﻿@using TheHotel.ViewModels.ClientRooms
+@using TheHotel.Common
+
+@model ReservationDetailsViewModel
+
+<div>
+    <div class="row" style="background-color: navajowhite">
+        <div class="col-md-4 d-inline-block ">
+            <h3 class="text-center">Клиент</h3>
+            <div class="bg-light">
+                <dl class="row m-1">
+                    <dt class="col-md-4">Име: </dt>
+                    <dd class="col-md-8">@Model.ClientFirstName</dd>
+                </dl>
+                <dl class="row m-1">
+                    <dt class="col-md-4">Фамилия: </dt>
+                    <dd class="col-md-8">@Model.ClientLastName</dd>
+                </dl>
+                <dl class="row m-1">
+                    <dt class="col-md-4">ЕГН: </dt>
+                    <dd class="col-md-8">@Model.ClientPersonalIdentityNumber</dd>
+                </dl>
+                <dl class="row m-1">
+                    <dt class="col-md-4">Телефон: </dt>
+                    <dd class="col-md-8">@Model.ClientPhone</dd>
+                </dl>
+                <dl class="row m-1">
+                    <dt class="col-md-4">Имейл: </dt>
+                    <dd class="col-md-8">@Model.ClientEmail</dd>
+                </dl>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <h3 class="text-center">Стая</h3>
+            <div class="bg-light">
+                <dl class="row m-1">
+                    <dt class="col-md-4">№: </dt>
+                    <dd class="col-md-8">@Model.RoomId</dd>
+                </dl>
+                <dl class="row m-1">
+                    <dt class="col-md-4">Етаж: </dt>
+                    <dd class="col-md-8">@Model.RoomFloor</dd>
+                </dl>
+                <dl class="row m-1">
+                    <dt class="col-md-4">Вид: </dt>
+                    <dd class="col-md-8">@Model.RoomType</dd>
+                </dl>
+                <dl class="row m-1">
+                    <dt class="col-md-4">Цена: </dt>
+                    <dd class="col-md-8">@Model.RoomPrice</dd>
+                </dl>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <h3 class="text-center">Резервация</h3>
+            <div class="bg-light">
+                <dl class="row m-1">
+                    <dt class="col-md-4">Дата на настаняване: </dt>
+                    <dd class="col-md-8">@Model.AccommodationDate.ToShortDateString()</dd>
+                </dl>
+                <dl class="row m-1">
+                    <dt class="col-md-4">Дата на напускане: </dt>
+                    <dd class="col-md-8">@Model.DepartureDate.ToShortDateString()</dd>
+                </dl>
+                <dl class="row m-1">
+                    <dt class="col-md-4">Потвърдена ли е? </dt>
+                    <dd class="col-md-8">
+                        @if (Model.IsConfirmed)
+                        {
+                            <i class="bi bi-check-circle text-success" style="font-size:30px"></i>
+                        }
+                        else
+                        {
+                            <i class="bi bi-x-circle text-danger" style="font-size:30px"></i>
+                        }
+                    </dd>
+                </dl>
+                <dl class="row m-1">
+                    <dt class="col-md-4">Изтрита ли е? </dt>
+                    <dd class="col-md-8">
+                        @if (Model.IsDeleted)
+                        {
+                            <i class="bi bi-check-circle text-success" style="font-size:30px"></i>
+                        }
+                        else
+                        {
+                            <i class="bi bi-x-circle text-danger" style="font-size:30px"></i>
+                        }
+                    </dd>
+                </dl>
+                <dl class="row m-1">
+                    <dt class="col-md-4">Обслужена от: </dt>
+                    <dd class="col-md-8">@Model.EmployeeNames</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+    @if (User.IsInRole(GlobalConstants.AdministratorRole))
+    {
+        <div class="row mb-2 mt-2 float-md-right">
+            <a class="btn btn-danger mr-2 text-light" onclick="DeleteModal" data-toggle="modal" data-target="#DeleteModal" style="cursor:pointer">Изтриване</a>
+        </div>
+    }
+</div>
+
+<div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-center" id="exampleModalLabel">Потвърждение</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Сигурни ли сте, че искате да ИЗТРИЕТЕ резервацията?
+            </div>
+            <div class="modal-footer">
+                <button id="deleteBtn" class="btn btn-success" onclick=" window.location.href = '/ClientRooms/Delete?clientRoomId=' + '@Model.Id';">Да, изтривам</button>
+                <button type="button" class="btn btn-light" data-dismiss="modal">Отказ</button>
+            </div>
+        </div>
+    </div>
+</div>

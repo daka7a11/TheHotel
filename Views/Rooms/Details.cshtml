@@ -64,7 +64,8 @@
         }
     </div>
 
-    @if (Model.HireDates.Count > 0 && (User.IsInRole(GlobalConstants.AdministratorRole) || User.IsInRole(GlobalConstants.ReceptionistRole)))
+    @if (Model.HireDates.Where(x => x.IsConfirmed == true && x.IsDeleted == false).Count() > 0 
+        && (User.IsInRole(GlobalConstants.AdministratorRole) || User.IsInRole(GlobalConstants.ReceptionistRole)))
     {
         <h4 class="text-center border shadow" style="background-color: navajowhite">Всички наети дати</h4>
         <div>
@@ -78,11 +79,14 @@
                         <th>Нощувки</th>
                     </tr>
                 </thead>
-                @foreach (var item in Model.HireDates.Where(x => x.IsConfirmed).OrderByDescending(x => x.AccommodationDate))
+                @foreach (var item in Model.HireDates
+                    .Where(x => x.IsConfirmed)
+                    .Where(x => x.IsDeleted == false)
+                    .OrderByDescending(x => x.AccommodationDate))
                 {
                     int totalDays = (int)item.DepartureDate.Subtract(item.AccommodationDate).TotalDays;
                     <tbody>
-                        <tr class="text-center">
+                        <tr class="text-center" onclick="window.location.href = '/ClientRooms/ReservationDetails?clientRoomId=' + '@item.Id'" style="cursor:pointer">
                             <td>@item.Client.FirstName @item.Client.LastName</td>
                             <td>@item.Client.PersonalIdentityNumber</td>
                             <td class="font-weight-bold">@item.AccommodationDate.ToString("dd.MM.yyyy")</td>

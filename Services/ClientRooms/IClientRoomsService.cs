@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using TheHotel.Data.Models;
+using TheHotel.ViewModels.ClientRooms;
 
 namespace TheHotel.Services.ClientRooms
 {
@@ -20,8 +21,10 @@ namespace TheHotel.Services.ClientRooms
         ICollection<ClientRoom> GetNonConfirmedReservations();
         ICollection<T> GetNonConfirmedReservations<T>();
 
-        Task ConfirmRequestAsync(int id);
+        Task ConfirmRequestAsync(int id, string employeeId);
 
-        Task DeleteRequestAsync(int id);
+        Task DeleteRequestAsync(int id, string employeeId);
+
+        void Delete(int reservationId);
     }
 }

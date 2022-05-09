@@ -2,6 +2,19 @@
     ViewData["Title"] = "Home Page";
 }
 
+@if (TempData["SuccessRequest"] != null)
+{
+    <div id="ale" class="alert alert-success alert-dismissible fade show mt-2" role="alert">
+        <strong>Успешно изпратихте заявка за резервация!</strong>
+        <br />
+        Ще ви уведомим на
+        <strong class="border-bottom">
+            @TempData["SuccessRequest"]
+        </strong>, когато наш служител потвърди заявката!
+        <button onclick="ale.style.display = 'none';" type="button" class=" bi-x-lg bg-success border-0 float-md-right" data-bs-dismiss="alert" aria-label="Close" style="background-color:"></button>
+    </div>
+}
+
 <div style="margin: 0 auto; height: 500px;">
     <h1 class="jumbotron-fluid text-center border border-top-0 shadow" style="background-color: navajowhite;height:55px">Добре дошли в ... !</h1>
 </div>

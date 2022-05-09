@@ -55,7 +55,7 @@
                 {
                     var totalDays = (int)(item.DepartureDate - item.AccommodationDate).TotalDays;
                     <tbody>
-                        <tr class="text-center">
+                        <tr class="text-center" onclick="window.location.href = '/ClientRooms/ReservationDetails?clientRoomId=' + '@item.Id'" style="cursor:pointer">
                             <td>@item.Room.Id</td>
                             <td>@item.Room.RoomType.Type</td>
                             <td>@item.Room.Floor</td>

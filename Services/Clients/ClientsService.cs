@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -33,6 +34,7 @@ namespace TheHotel.Services.Clients
             client.PersonalIdentityNumber = model.PersonalIdentityNumber;
             client.Phone = model.Phone;
             client.Email = model.Email;
+            client.ModifiedOn = DateTime.UtcNow;
 
             clientsRepository.SaveChanges();
         }

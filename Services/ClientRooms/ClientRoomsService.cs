@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,6 +9,7 @@ using TheHotel.Data.Models;
 using TheHotel.Data.Repositories;
 using TheHotel.EmailSender;
 using TheHotel.Mapping;
+using TheHotel.ViewModels.ClientRooms;
 
 namespace TheHotel.Services.ClientRooms
 {
@@ -17,7 +20,7 @@ namespace TheHotel.Services.ClientRooms
 
         public ClientRoomsService(
             IDeletableEntityRepository<ClientRoom> clientRoomsRepository,
-            IMailService mailService)
+            IMailService mailService )
         {
             this.clientRoomsRepository = clientRoomsRepository;
             this.mailService = mailService;
@@ -25,7 +28,7 @@ namespace TheHotel.Services.ClientRooms
 
         public ClientRoom GetById(int id)
         {
-            return clientRoomsRepository.All()
+            return clientRoomsRepository.AllWithDeleted()
                 .Where(x => x.Id == id)
                 .Include(x => x.Room)
                 .Include(x => x.Client)
@@ -33,7 +36,7 @@ namespace TheHotel.Services.ClientRooms
         }
         public T GetById<T>(int id)
         {
-            return clientRoomsRepository.All()
+            return clientRoomsRepository.AllWithDeleted()
                 .Where(x => x.Id == id)
                 .Include(x => x.Room)
                 .Include(x => x.Client)
@@ -101,7 +104,7 @@ namespace TheHotel.Services.ClientRooms
                 .ToList();
         }
 
-        public async Task ConfirmRequestAsync(int id)
+        public async Task ConfirmRequestAsync(int id, string employeeId)
         {
             var reservationRequest = clientRoomsRepository.All()
                 .Include(x => x.Client)
@@ -109,6 +112,8 @@ namespace TheHotel.Services.ClientRooms
             if (reservationRequest != null)
             {
                 reservationRequest.IsConfirmed = true;
+                reservationRequest.EmployeeId = employeeId;
+                reservationRequest.CreatedOn = System.DateTime.UtcNow;
                 await clientRoomsRepository.SaveChangesAsync();
             }
 
@@ -121,7 +126,7 @@ namespace TheHotel.Services.ClientRooms
             await mailService.SendEmailAsync(mailRequest);
         }
 
-        public async Task DeleteRequestAsync(int id)
+        public async Task DeleteRequestAsync(int id, string employeeId)
         {
             var reservationRequest = clientRoomsRepository.All()
                 .Include(x => x.Client)
@@ -129,6 +134,8 @@ namespace TheHotel.Services.ClientRooms
             if (reservationRequest != null)
             {
                 clientRoomsRepository.Delete(reservationRequest);
+                reservationRequest.EmployeeId = employeeId;
+                reservationRequest.CreatedOn = System.DateTime.UtcNow;
                 await clientRoomsRepository.SaveChangesAsync();
             }
 
@@ -139,6 +146,16 @@ namespace TheHotel.Services.ClientRooms
                 Body = "Отказана",
             };
             await mailService.SendEmailAsync(mailRequest);
+        }
+
+        public void Delete(int reservationId)
+        {
+            var reservation = clientRoomsRepository.All().FirstOrDefault(x => x.Id == reservationId);
+            if (reservation != null)
+            {
+                clientRoomsRepository.Delete(reservation);
+                clientRoomsRepository.SaveChanges();
+            }
         }
     }
 }

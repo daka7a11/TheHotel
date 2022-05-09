@@ -27,10 +27,11 @@ namespace TheHotel.Data.Models
         [Column(TypeName = "decimal(18,2)")]
         public decimal Price { get; set; }
 
+        public string Description { get; set; }
+
         public ICollection<ClientRoom> HireDates { get; set; }
 
         public ICollection<Image> Images { get; set; }
 
-        public string Description { get; set; }
     }
 }

@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TheHotel.Common;
@@ -17,6 +19,7 @@ using TheHotel.ViewModels.Rooms;
 
 namespace TheHotel.Controllers
 {
+    [Authorize(Roles = GlobalConstants.AdministratorRole + "," + GlobalConstants.ReceptionistRole)]
     public class ClientRoomsController : Controller
     {
         private readonly IClientRoomsService clientRoomsService;
@@ -38,51 +41,7 @@ namespace TheHotel.Controllers
             this.mailService = mailService;
         }
 
-        [Authorize(Roles = GlobalConstants.AdministratorRole + "," + GlobalConstants.ReceptionistRole)]
-        public IActionResult RoomRequests()
-        {
-            var roomRequests = clientRoomsService
-                .GetNonConfirmedReservations<RoomRequestViewModel>();
-
-            return this.View(roomRequests);
-        }
-
-        [Authorize(Roles = GlobalConstants.AdministratorRole + "," + GlobalConstants.ReceptionistRole)]
-        public IActionResult RequestDetails(int clientRoomId)
-        {
-            var model = clientRoomsService.GetById<RequestDetailsViewModel>(clientRoomId);
-            var room = roomsService.GetById(model.RoomId);
-            model.IsStillAvailable = GlobalMethods.IsRoomAvailable(room, model.AccommodationDate, model.DepartureDate);
-            return this.View(model);
-        }
-
-        [Authorize(Roles = GlobalConstants.AdministratorRole + "," + GlobalConstants.ReceptionistRole)]
-        [HttpPost]
-        public async Task<IActionResult> AcceptRequest(int clientRoomId)
-        {
-            var clientRoom = clientRoomsService.GetById(clientRoomId);
-            var room = roomsService.GetById(clientRoom.RoomId);
-            if(!GlobalMethods.IsRoomAvailable(room, clientRoom.AccommodationDate, clientRoom.DepartureDate))
-            {
-                TempData["ErrorMsg"] = GlobalConstants.RoomAlreadyHiredErrorMsg;
-                return RedirectToAction(nameof(RequestDetails),"ClientRooms", new { clientRoomId });
-            }
-
-            await clientRoomsService.ConfirmRequestAsync(clientRoomId);
-
-            return this.Redirect($"/Rooms/Details?roomId={room.Id}");
-
-        }
-
-        [Authorize(Roles = GlobalConstants.AdministratorRole + "," + GlobalConstants.ReceptionistRole)]
-        [HttpPost]
-        public async Task<IActionResult> RejectRequest(int clientRoomId)
-        {
-            await clientRoomsService.DeleteRequestAsync(clientRoomId);
-            return this.RedirectToAction(nameof(RoomRequests));
-        }
-
-        [HttpGet]
+        [AllowAnonymous]
         public IActionResult Tenancy(int roomId, string clientPin)
         {
             var client = this.clientsService.GetClientByPIN(clientPin);
@@ -95,6 +54,7 @@ namespace TheHotel.Controllers
             return this.View(model);
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> Tenancy(TenancyViewModel model)
         {
@@ -111,7 +71,7 @@ namespace TheHotel.Controllers
                 return this.View(model);
             }
 
-            foreach (var hireDate in selectedRoom.HireDates.Where(x => x.IsConfirmed == true))
+            foreach (var hireDate in selectedRoom.HireDates.Where(x => x.IsConfirmed == true && x.IsDeleted == false))
             {
                 if (model.AccommodationDate < hireDate.AccommodationDate && model.DepartureDate > hireDate.AccommodationDate)
                 {
@@ -173,9 +133,7 @@ namespace TheHotel.Controllers
 
             if (isEmployee)
             {
-                return this.Redirect(
-                    $"/ClientRooms/Success?clientName={currClient.FirstName}&roomId={model.RoomId}" +
-                    $"&accDate={model.AccommodationDate.Value.ToString("dd.MM.yyyy")}&depDate={model.DepartureDate.Value.ToString("dd.MM.yyyy")}");
+                return this.Redirect($"/ClientRooms/ReservationDetails?clientRoomId={clientRoom.Id}");
             }
             else
             {
@@ -188,8 +146,67 @@ namespace TheHotel.Controllers
 
                 await mailService.SendEmailAsync(mailRequest);
 
-                return this.Redirect("/");
+                TempData.Add("SuccessRequest", currClient.Email);
+
+                return this.Redirect($"/");
             }
+        }
+
+        public IActionResult RoomRequests()
+        {
+            var roomRequests = clientRoomsService
+                .GetNonConfirmedReservations<RoomRequestViewModel>();
+
+            return this.View(roomRequests);
+        }
+
+        public IActionResult RequestDetails(int clientRoomId)
+        {
+            var model = clientRoomsService.GetById<RequestDetailsViewModel>(clientRoomId);
+            var room = roomsService.GetById(model.RoomId);
+            model.IsStillAvailable = GlobalMethods.IsRoomAvailable(room, model.AccommodationDate, model.DepartureDate);
+            return this.View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AcceptRequest(int clientRoomId)
+        {
+            var clientRoom = clientRoomsService.GetById(clientRoomId);
+            var room = roomsService.GetById(clientRoom.RoomId);
+            if (!GlobalMethods.IsRoomAvailable(room, clientRoom.AccommodationDate, clientRoom.DepartureDate))
+            {
+                TempData["ErrorMsg"] = GlobalConstants.RoomAlreadyHiredErrorMsg;
+                return RedirectToAction(nameof(RequestDetails), "ClientRooms", new { clientRoomId });
+            }
+
+            var employeeId = userManager.GetUserId(User);
+
+            await clientRoomsService.ConfirmRequestAsync(clientRoomId, employeeId);
+
+            return this.Redirect($"/Rooms/Details?roomId={room.Id}");
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RejectRequest(int clientRoomId)
+        {
+            var employeeId = userManager.GetUserId(User);
+
+            await clientRoomsService.DeleteRequestAsync(clientRoomId, employeeId);
+            return this.RedirectToAction(nameof(RoomRequests));
+        }
+
+        public IActionResult ReservationDetails(int clientRoomId)
+        {
+            var model = clientRoomsService.GetById<ReservationDetailsViewModel>(clientRoomId);
+
+            return this.View(model);
+        }
+
+        public IActionResult Delete(int clientRoomId)
+        {
+            clientRoomsService.Delete(clientRoomId);
+            return this.Redirect($"/ClientRooms/ReservationDetails?clientRoomId={clientRoomId}");
         }
     }
 }
