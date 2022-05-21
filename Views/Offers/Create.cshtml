@@ -1,0 +1,48 @@
+﻿@using TheHotel.ViewModels.Offers
+
+@model CreateOfferViewModel
+
+    <div>
+        <h1 class="text-light text-center m-4">Добави нова оферта</h1>
+    </div>
+
+<form method="post">
+    <div class="text-danger text-center border-danger" asp-validation-summary="ModelOnly"></div>
+    <div class="col-md-4 offset-4">
+
+        <div class="form-group">
+            <label asp-for="Name">Име</label>
+            <input class="form-control" asp-for="Name" />
+            <span class="text-danger" asp-validation-for="Name"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="StartDate">Начална дата</label>
+            <input class="form-control" asp-for="StartDate" />
+            <span class="text-danger" asp-validation-for="StartDate"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="EndDate">Дата на изтичане</label>
+            <input class="form-control" asp-for="EndDate" />
+            <span class="text-danger" asp-validation-for="EndDate"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="ImageUrl">Пътят към снимката</label>
+            <input class="form-control" asp-for="ImageUrl" />
+            <span class="text-danger" asp-validation-for="ImageUrl"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Discount">Отстъпка в %</label>
+            <input class="form-control" type="number" min="1" max="100" asp-for="Discount" />
+            <span class="text-danger" asp-validation-for="Discount"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Description">Описание</label>
+            <textarea rows="3" class="form-control" asp-for="Description"></textarea>
+            <span class="text-danger" asp-validation-for="Description"></span>
+        </div>
+
+        <div class="text-center">
+            <button type="submit" class="btn-lg btn-success text-light">Добави</button>
+        </div>
+    </div>
+</form>

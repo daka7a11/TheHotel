@@ -1,0 +1,66 @@
+﻿@using TheHotel.ViewModels.Offers
+
+@model AllOffersViewModel
+
+<form id="EditOfferForm" method="post">
+    <div class="col-md-4 offset-4" style="font-size:x-large">
+        <div class="form-group">
+            <label asp-for="Name">Име</label>
+            <input class="form-control" asp-for="Name" />
+            <span class="text-danger" asp-validation-for="Name"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Discount">Отстъпка в %</label>
+            <input class="form-control" asp-for="Discount" />
+            <span class="text-danger" asp-validation-for="Discount"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="StartDate">Начална дата</label>
+            <input class="form-control" asp-for="StartDate" />
+            <span class="text-danger" asp-validation-for="StartDate"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="EndDate">Изтича на</label>
+            <input class="form-control" asp-for="EndDate" />
+            <span class="text-danger" asp-validation-for="EndDate"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="ImageUrl">Път към изображение</label>
+            <input class="form-control" asp-for="ImageUrl" />
+            <span class="text-danger" asp-validation-for="ImageUrl"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Description">Описание</label>
+            <textarea rows="4" class="form-control" asp-for="Description"></textarea>
+            <span class="text-danger" asp-validation-for="Description"></span>
+        </div>
+        <div>
+            <input type="hidden" name="Id" value="@Model.Id" />
+        </div>
+
+        <div class="text-center">
+            <a class="btn-lg btn-success text-light" onclick="EditModal" data-toggle="modal" data-target="#EditModal" style="cursor:pointer">Редактирай</a>
+        </div>
+    </div>
+</form>
+
+
+<div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-center" id="exampleModalLabel">Потвърждение</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Сигурни ли сте, че искате да РЕДАКТИРАТЕ офертата?
+            </div>
+            <div class="modal-footer">
+                <button id="editBtn" type="button" class="btn btn-success" onclick="EditOfferForm.submit()">Да, редактирам</button>
+                <button type="button" class="btn btn-light" data-dismiss="modal">Отказ</button>
+            </div>
+        </div>
+    </div>
+</div>

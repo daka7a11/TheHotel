@@ -1,0 +1,82 @@
+﻿@using TheHotel.Common
+@using TheHotel.ViewModels.Offers
+
+@model IEnumerable<AllOffersViewModel>
+
+<h1 class="text-light text-center m-4">Оферти</h1>
+
+@if (User.IsInRole(GlobalConstants.AdministratorRole))
+{
+    <div class="m-4">
+        <a class="btn btn-success" asp-controller="Offers" asp-action="Create">Създай оферта</a>
+    </div>
+}
+
+<div class="row">
+    @foreach (var offer in Model)
+    {
+        if (User.IsInRole(GlobalConstants.AdministratorRole))
+        {
+            <div class="col-md-6 d-inline-block border"
+                 style="cursor:pointer;height:350px; background-image: linear-gradient(rgb(0,0,0,0.8), rgba(0,0,0,0.8)), url(@offer.ImageUrl); background-size:contain;"
+                 onclick="window.location.href = 'Offers/Details?offerId=@offer.Id'">
+                <div>
+                    <h5 class="m-3 text-center text-light">@offer.Name</h5>
+                </div>
+                <div>
+                    <h5 class="m-3 text-center text-light">@offer.Discount%</h5>
+                </div>
+                <div>
+                    <p class="text-center text-light">@offer.Description</p>
+                </div>
+                <div class="m-4 position-absolute fixed-bottom text-left">
+                    <p>От: @offer.StartDate.ToString("g")</p>
+                </div>
+                <div class="m-4 position-absolute fixed-bottom text-right">
+                    <p>
+                        До:
+                        @if (offer.EndDate == null)
+                        {
+                            <i class="bi-infinity"></i>
+                        }
+                        else
+                        {
+                            @offer.EndDate
+                        }
+                    </p>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="col-md-6 d-inline-block border"
+                 style="height:350px; background-image: linear-gradient(rgb(0,0,0,0.8), rgba(0,0,0,0.8)), url(@offer.ImageUrl); background-size:contain;">
+                <div>
+                    <h5 class="m-3 text-center text-light">@offer.Name</h5>
+                </div>
+                <div>
+                    <h5 class="m-3 text-center text-light">@offer.Discount%</h5>
+                </div>
+                <div>
+                    <p class="text-center text-light">@offer.Description</p>
+                </div>
+                <div class="m-4 position-absolute fixed-bottom text-left">
+                    <p>От: @offer.StartDate.ToString("g")</p>
+                </div>
+                <div class="m-4 position-absolute fixed-bottom text-right">
+                    <p>
+                        До:
+                        @if (offer.EndDate == null)
+                        {
+                            <i class="bi-infinity"></i>
+                        }
+                        else
+                        {
+                            @offer.EndDate
+                        }
+                    </p>
+                </div>
+            </div>
+        }
+    }
+</div>

@@ -4,10 +4,10 @@
 @model ReservationDetailsViewModel
 
 <div>
-    <div class="row" style="background-color: navajowhite">
-        <div class="col-md-4 d-inline-block ">
-            <h3 class="text-center">Клиент</h3>
-            <div class="bg-light">
+    <div class="row">
+        <div class="col-md-4 d-inline-block border-left">
+            <h3 class="text-center text-light">Клиент</h3>
+            <div>
                 <dl class="row m-1">
                     <dt class="col-md-4">Име: </dt>
                     <dd class="col-md-8">@Model.ClientFirstName</dd>
@@ -30,9 +30,9 @@
                 </dl>
             </div>
         </div>
-        <div class="col-md-3">
-            <h3 class="text-center">Стая</h3>
-            <div class="bg-light">
+        <div class="col-md-3 border-left">
+            <h3 class="text-center text-light">Стая</h3>
+            <div>
                 <dl class="row m-1">
                     <dt class="col-md-4">№: </dt>
                     <dd class="col-md-8">@Model.RoomId</dd>
@@ -51,9 +51,9 @@
                 </dl>
             </div>
         </div>
-        <div class="col-md-5">
-            <h3 class="text-center">Резервация</h3>
-            <div class="bg-light">
+        <div class="col-md-5 border-left">
+            <h3 class="text-center text-light">Резервация</h3>
+            <div>
                 <dl class="row m-1">
                     <dt class="col-md-4">Дата на настаняване: </dt>
                     <dd class="col-md-8">@Model.AccommodationDate.ToShortDateString()</dd>

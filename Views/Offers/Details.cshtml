@@ -1,0 +1,67 @@
+﻿@using TheHotel.ViewModels.Offers
+
+@model AllOffersViewModel
+
+<h1 class="text-light text-center">Оферта</h1>
+
+<div class="m-4">
+    <a class="btn btn-warning" asp-controller="Offers" asp-action="Edit" asp-route-offerId="@Model.Id">Редактирай</a>
+    <a class="btn btn-danger" onclick="DeleteModal" data-toggle="modal" data-target="#DeleteModal">Изтрий</a>
+</div>
+
+<div class="row">
+    <div class="col-sm-6 d-inline-block ">
+        <div class="border-left">
+            <dl class="row m-1">
+                <dt class="col-md-4">Име: </dt>
+                <dd class="col-sm-8">@Model.Name</dd>
+            </dl>
+            <dl class="row m-1">
+                <dt class="col-md-4">Отстъпка: </dt>
+                <dd class="col-sm-8">@Model.Discount%</dd>
+            </dl>
+            <dl class="row m-1">
+                <dt class="col-md-4">Начална дата: </dt>
+                <dd class="col-sm-8">@Model.StartDate</dd>
+            </dl>
+            <dl class="row m-1">
+                <dt class="col-md-4">Изтича на: </dt>
+                @if (Model.EndDate == null)
+                {
+                    <dd class="col-sm-8"><i class="bi-infinity"></i></dd>
+                }
+                else
+                {
+                    <dd class="col-sm-8">@Model.EndDate</dd>
+                }
+            </dl>
+        </div>
+    </div>
+    <div class="col-sm-6 d-inline-block">
+        <dl>
+            <dt class="text-center border-bottom">Описание</dt>
+            <dd class="text-center m-2">@Model.Description</dd>
+
+        </dl>
+    </div>
+</div>
+
+<div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-center" id="exampleModalLabel">Потвърждение</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Сигурни ли сте, че искате да ИЗТРИЕТЕ офертата?
+            </div>
+            <div class="modal-footer">
+                <button id="editBtn" type="button" class="btn btn-danger" onclick="window.location.href = '/Offers/Delete?offerId=@Model.Id'">Да, изтривам</button>
+                <button type="button" class="btn btn-light" data-dismiss="modal">Отказ</button>
+            </div>
+        </div>
+    </div>
+</div>

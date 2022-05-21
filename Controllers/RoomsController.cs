@@ -32,34 +32,27 @@ namespace TheHotel.Controllers
             this.mailService = mailService;
         }
 
-        public IActionResult All()
-        {
-            var allRooms = this.roomsService.GetAll()
-                .Select(x => new AllRoomsViewModel()
-                {
-                    Id = x.Id,
-                    Size = x.Size,
-                    RoomType = x.RoomType.Type,
-                    MaxGuests = x.RoomType.MaxGuests,
-                    Floor = x.Floor,
-                    Price = x.Price,
-                    Description = x.Description,
-                });
-
-            var model = new AllViewModel()
-            {
-                AllRoomsViewModel = allRooms,
-            };
-
-            return this.View(model);
-        }
-
-        [HttpPost]
         public IActionResult All(DateTime? accommodationDate, DateTime? departureDate, int? numGuests)
         {
+            var model = new AllViewModel();
+
             if (accommodationDate == null || departureDate == null)
             {
-                return Redirect("/Rooms/All");
+                var allRooms = this.roomsService.GetAll()
+                    .Select(x => new AllRoomsViewModel()
+                    {
+                        Id = x.Id,
+                        Size = x.Size,
+                        RoomType = x.RoomType.Type,
+                        MaxGuests = x.RoomType.MaxGuests,
+                        Floor = x.Floor,
+                        Price = x.Price,
+                        Description = x.Description,
+                    });
+
+                model.AllRoomsViewModel = allRooms;
+
+                return this.View(model);
             }
 
             var rooms = roomsService.GetAll()
@@ -76,7 +69,7 @@ namespace TheHotel.Controllers
                     MaxGuests = x.RoomType.MaxGuests,
                 });
 
-            var model = new AllViewModel()
+            model = new AllViewModel()
             {
                 AllRoomsViewModel = rooms,
                 AvailableRoomsViewModel = new AvailableRoomsViewModel()

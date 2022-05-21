@@ -50,5 +50,10 @@
 
         public const string RoomAlreadyHiredErrorMsg = "Стаята е резервирана!";
 
+        public const string TenancyDateValidateErrorMsg = "Датата на напускане не може да е по-малка или равна на датата на настаняване!";
+
+        public const string OfferDateValidateErrorMsg = "Датата на изтичане на офертата не може да е по-малка или равна на началната дата!";
+
+        public const string RequiredPropertyErrorMsg = "Това поле е задължително!";
     }
 }

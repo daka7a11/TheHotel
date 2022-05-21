@@ -7,8 +7,8 @@
 }
 
 <div class="details">
-    <div class="border-bottom text-center">
-        <h1>Стая @Model.Id</h1>
+    <div class=" text-center">
+        <h1 class="text-light">Стая @Model.Id</h1>
     </div>
     <br />
     @if (User.IsInRole(GlobalConstants.AdministratorRole))
@@ -19,9 +19,9 @@
             <a class="btn btn-danger mr-2 text-light" onclick="DeleteModal" data-toggle="modal" data-target="#DeleteModal" style="cursor:pointer">Изтриване</a>
         </div>
     }
-    <div class="row" style="background-color: navajowhite">
+    <div class="row">
         <div class="col-sm-6 d-inline-block ">
-            <div class="bg-light border border-left-0">
+            <div class="border-left">
                 <dl class="row m-1">
                     <dt class="col-md-4">Вид: </dt>
                     <dd class="col-sm-8">@Model.RoomType</dd>
@@ -40,7 +40,7 @@
                 </dl>
             </div>
         </div>
-        <div class="col-sm-6 d-inline-block bg-light border border-left-0">
+        <div class="col-sm-6 d-inline-block">
             <dl>
                 <dt class="text-center border-bottom">Описание</dt>
                 <dd class="text-center m-2">@Model.Description</dd>
@@ -67,9 +67,9 @@
     @if (Model.HireDates.Where(x => x.IsConfirmed == true && x.IsDeleted == false).Count() > 0 
         && (User.IsInRole(GlobalConstants.AdministratorRole) || User.IsInRole(GlobalConstants.ReceptionistRole)))
     {
-        <h4 class="text-center border shadow" style="background-color: navajowhite">Всички наети дати</h4>
+        <h4 class="text-center text-light">Всички наети дати</h4>
         <div>
-            <table class="table table-hover table-striped table-bordered table-responsive-md bg-light shadow">
+            <table class="table table-hover table-striped table-responsive-md shadow">
                 <thead>
                     <tr class="text-center bg-secondary text-light shadow">
                         <th>Пълно име</th>
@@ -86,7 +86,7 @@
                 {
                     int totalDays = (int)item.DepartureDate.Subtract(item.AccommodationDate).TotalDays;
                     <tbody>
-                        <tr class="text-center" onclick="window.location.href = '/ClientRooms/ReservationDetails?clientRoomId=' + '@item.Id'" style="cursor:pointer">
+                        <tr onmouseover="this.style.backgroundColor = 'green'" onmouseout="this.style.backgroundColor = 'transparent'" class="text-center text-light" onclick="window.location.href = '/ClientRooms/ReservationDetails?clientRoomId=' + '@item.Id'" style="cursor:pointer">
                             <td>@item.Client.FirstName @item.Client.LastName</td>
                             <td>@item.Client.PersonalIdentityNumber</td>
                             <td class="font-weight-bold">@item.AccommodationDate.ToString("dd.MM.yyyy")</td>
@@ -100,11 +100,11 @@
     }
 </div>
 
-<div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="DeleteModal" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title text-center" id="exampleModalLabel">Потвърждение</h5>
+                <h5 class="modal-title text-center" id="selectModal">Потвърждение</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>

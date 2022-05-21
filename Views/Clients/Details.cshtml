@@ -6,28 +6,27 @@
 }
 
 <div class="details">
-    <div class="border-bottom text-center">
-        <h1 class="mt-2 mb-2">@Model.FirstName @Model.LastName</h1>
+    <div class="text-center">
+        <h1 class="text-light mt-2 mb-4">@Model.FirstName @Model.LastName</h1>
     </div>
-    <br />
     <div class="row mb-2 mt-2 ml-1">
         <a class="btn btn-warning mr-2 text-info" href="/Clients/Edit?clientId=@Model.Id">Редактиране</a>
         <a class="btn btn-danger mr-2 text-light" onclick="DeleteModal" data-toggle="modal" data-target="#DeleteModal" style="cursor:pointer">Изтриване</a>
     </div>
     <div class="row">
-        <div class="col-sm-8 d-inline-block ">
-            <div class="bg-light border">
+        <div class="col-md-8 d-inline-block ">
+            <div>
                 <dl class="row m-1">
-                    <dt class="col-md-5">ЕГН:</dt>
-                    <dd class="col-sm-7">@Model.PersonalIdentityNumber</dd>
+                    <dt class="col-md-4">ЕГН:</dt>
+                    <dd class="col-md-6">@Model.PersonalIdentityNumber</dd>
                 </dl>
                 <dl class="row m-1">
-                    <dt class="col-md-5">Телефон:</dt>
-                    <dd class="col-sm-7">@Model.Phone</dd>
+                    <dt class="col-md-4">Телефон:</dt>
+                    <dd class="col-md-6">@Model.Phone</dd>
                 </dl>
                 <dl class="row m-1">
-                    <dt class="col-md-5">Имейл:</dt>
-                    <dd class="col-sm-7">@Model.Email</dd>
+                    <dt class="col-md-4">Имейл:</dt>
+                    <dd class="col-md-6">@Model.Email</dd>
                 </dl>
             </div>
         </div>
@@ -35,9 +34,9 @@
     @if (Model.Rooms.Count > 0)
     {
         <br>
-        <h4 class="text-center border shadow" style="background-color: navajowhite">Наети стаи</h4>
+        <h4 class="text-center">Наети стаи</h4>
         <div>
-            <table class="table table-hover table-striped table-bordered table-responsive-md bg-light shadow">
+            <table class="table table-hover table-striped table-bordered table-responsive-md">
                 <thead>
                     <tr class="text-center bg-secondary text-light shadow">
                         <th>№</th>
@@ -48,14 +47,13 @@
                         <th>Дата на настаняване</th>
                         <th>Дата на напускане</th>
                         <th>Нощувки</th>
-                        <th>Крайна цена</th>
                     </tr>
                 </thead>
                 @foreach (var item in Model.Rooms.Where(x => x.IsConfirmed == true).OrderByDescending(x => x.AccommodationDate))
                 {
                     var totalDays = (int)(item.DepartureDate - item.AccommodationDate).TotalDays;
-                    <tbody>
-                        <tr class="text-center" onclick="window.location.href = '/ClientRooms/ReservationDetails?clientRoomId=' + '@item.Id'" style="cursor:pointer">
+                    <tbody class="text-light">
+                        <tr onmouseover="this.style.color = 'green'" onmouseout="this.style.color = 'white'" class="text-center" onclick="window.location.href = '/ClientRooms/ReservationDetails?clientRoomId=' + '@item.Id'" style="cursor:pointer">
                             <td>@item.Room.Id</td>
                             <td>@item.Room.RoomType.Type</td>
                             <td>@item.Room.Floor</td>
@@ -64,7 +62,6 @@
                             <td class="font-weight-bold">@item.AccommodationDate.ToString("dd.MM.yyyy")</td>
                             <td class="font-weight-bold">@item.DepartureDate.ToString("dd.MM.yyyy")</td>
                             <td>@totalDays</td>
-                            <td>@(item.Room.Price * totalDays) лв.</td>
                         </tr>
                     </tbody>
                 }

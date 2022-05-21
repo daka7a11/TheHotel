@@ -8,11 +8,11 @@
 
         public string RoomType { get; set; }
 
-        public int MaxGuests { get; set; }
-
         public int Floor { get; set; }
 
         public decimal Price { get; set; }
+
+        public int MaxGuests { get; set; }
 
         public string Description { get; set; }
 

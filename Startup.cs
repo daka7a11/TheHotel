@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using TheHotel.Common;
 using TheHotel.Data;
 using TheHotel.Data.Models;
 using TheHotel.Data.Repositories;
@@ -21,6 +22,7 @@ using TheHotel.EmailSender.ViewRender;
 using TheHotel.Mapping;
 using TheHotel.Services.ClientRooms;
 using TheHotel.Services.Clients;
+using TheHotel.Services.Offers;
 using TheHotel.Services.Rooms;
 using TheHotel.ViewModels;
 
@@ -39,7 +41,11 @@ namespace TheHotel
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            services.AddRazorPages();
+            services.AddRazorPages()
+                .AddMvcOptions(opt =>
+                {
+                    opt.ModelBindingMessageProvider.SetValueMustNotBeNullAccessor(x => GlobalConstants.RequiredPropertyErrorMsg);
+                });
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
@@ -67,6 +73,8 @@ namespace TheHotel
             services.AddTransient<IMailService, MailService>();
 
             services.AddScoped<IViewRenderService, ViewRenderService>();
+
+            services.AddTransient<IOffersService, OffersService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -32,6 +32,9 @@
     <Content Update="wwwroot\css\MyStyle.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Update="wwwroot\img\restaurant\restaurantBgImg.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Update="wwwroot\img\rooms\room1.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

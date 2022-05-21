@@ -6,12 +6,14 @@
 }
 
 <form class="col-4 offset-4" method="post">
-    <div class="form-group">
-        <label class="font-weight-bold col-sm-10" style="font-size:150%;  text-align:center" asp-for="PersonalIdentityNumber">ЕГН</label>
-        <input class="form-control text-center" style="width:88%; font-size:150%;" asp-for="PersonalIdentityNumber" />
+    <div class="form-group text-center" style="font-size:30px">
+        <label class="font-weight-bold" asp-for="PersonalIdentityNumber">ЕГН</label>
+        <input class="form-control text-center" style="font-size:30px" asp-for="PersonalIdentityNumber" />
         <span class="text-danger" asp-validation-for="PersonalIdentityNumber"></span>
     </div>
-    <input class="btn btn-primary btn-lg" style="width:88%" type="submit" name="getPIN" value="Потвърди" />
+    <div class="text-center">
+        <input class="btn btn-lg btn-success text-center" type="submit" name="getPIN" value="Потвърди" />
+    </div>
 </form>
 
 

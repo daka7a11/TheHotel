@@ -2,54 +2,61 @@
 
 @model ICollection<UndeleteViewModel>
 
-<table class="table table-hover table-striped shadow">
-    <tr class="text-center bg-secondary text-light shadow">
-        <th>№</th>
-        <th>Размер</th>
-        <th>Етаж</th>
-        <th>Цена</th>
-        <th>Описание</th>
-        <th>Изтрита на</th>
-        <th></th>
-    </tr>
-    @foreach (var room in Model)
-    {
-        <tr class="text-center">
-            <td>@room.Id</td>
-            <td>@room.Size m&sup2;</td>
-            <td>@room.Floor</td>
-            <td>@room.Price лв.</td>
-            <td>@room.Description</td>
-            <td>@room.DeletedOn.ToString("g")</td>
-            <td class="col-md-2">
-                <div class="d-inline-block text-center">
-                    <a class="btn btn-lg btn-success text-light" onclick="UndeleteModal" data-toggle="modal" data-target="#UndeleteModal" style="cursor:pointer">Възстановяване</a>
-                </div>
-            </td>
+@if (Model.Count == 0)
+{
+    <h2 class="text-center text-light">Няма изтрити стаи!</h2>
+}
+else
+{
+    <table class="table table-hover table-striped shadow">
+        <tr class="text-center bg-secondary text-light shadow">
+            <th>№</th>
+            <th>Размер</th>
+            <th>Етаж</th>
+            <th>Цена</th>
+            <th>Описание</th>
+            <th>Изтрита на</th>
+            <th></th>
         </tr>
-
-        <form name="theForm" id="theForm" method="post">
-            <input type="hidden" name="roomId" value="@room.Id" />
-        </form>
-
-        <div class="modal fade" id="UndeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title text-center" id="exampleModalLabel">Потвърждение</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+        @foreach (var room in Model)
+        {
+            <tr class="text-center">
+                <td>@room.Id</td>
+                <td>@room.Size m&sup2;</td>
+                <td>@room.Floor</td>
+                <td>@room.Price лв.</td>
+                <td>@room.Description</td>
+                <td>@room.DeletedOn.ToString("g")</td>
+                <td class="col-md-2">
+                    <div class="d-inline-block text-center">
+                        <a class="btn btn-lg btn-success text-light" onclick="UndeleteModal" data-toggle="modal" data-target="#UndeleteModal" style="cursor:pointer">Възстановяване</a>
                     </div>
-                    <div class="modal-body">
-                        Сигурни ли сте, че искате да ВЪЗСТАНОВИТЕ изтритата стая?
-                    </div>
-                    <div class="modal-footer">
-                        <button id="btnUndelete" class="btn btn-success" onclick="theForm.submit();">Да, възстановявам</button>
-                        <button type="button" class="btn btn-light" data-dismiss="modal">Отказ</button>
+                </td>
+            </tr>
+
+            <form name="theForm" id="theForm" method="post">
+                <input type="hidden" name="roomId" value="@room.Id" />
+            </form>
+
+            <div class="modal fade" id="UndeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title text-center" id="exampleModalLabel">Потвърждение</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            Сигурни ли сте, че искате да ВЪЗСТАНОВИТЕ изтритата стая?
+                        </div>
+                        <div class="modal-footer">
+                            <button id="btnUndelete" class="btn btn-success" onclick="theForm.submit();">Да, възстановявам</button>
+                            <button type="button" class="btn btn-light" data-dismiss="modal">Отказ</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    }
-</table>
+        }
+    </table>
+}

@@ -1,15 +1,16 @@
-﻿body {
-    font-family:cursive;
-    font-size:18px
+﻿html, body {
+    height: 100%;
+} 
+
+body {
+    font-family: cursive;
+    font-size: 18px;
+    background-image: linear-gradient(rgb(0,0,0,0.7), rgba(0,0,0,0.8)), url("../img/bgImg.jpg"); background-size:contain;
 }
 
 .validation-summary-errors ul {
     list-style: none;
     margin-left: -40px
-}
-
-footer {
-    background-color: navajowhite;
 }
 
 div.restaurantWelcomeText {
@@ -20,4 +21,8 @@ div.restaurantWelcomeDiv {
     background-image: linear-gradient(rgb(0,0,0,0.3), rgba(0,0,0,0.3)), url(https://cdn3.vectorstock.com/i/1000x1000/98/62/vintage-restaurant-background-with-food-icons-vector-1909862.jpg);
     background-repeat: no-repeat;
     background-size: cover;
+}
+
+div.modal-body{
+    color:black;
 }

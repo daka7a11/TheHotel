@@ -52,7 +52,7 @@ namespace TheHotel.ViewModels.Clients
         {
             if (this.DepartureDate <= this.AccommodationDate)
             {
-                yield return new ValidationResult("Departure date cannot be less or equal than accommodation date!");
+                yield return new ValidationResult(GlobalConstants.TenancyDateValidateErrorMsg);
             }
         }
         public void CreateMappings(IProfileExpression configuration)

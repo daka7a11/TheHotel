@@ -21,5 +21,6 @@ namespace TheHotel.Data
 
         public virtual DbSet<Image> Images { get; set; }
 
+        public virtual DbSet<Offer> Offers { get; set; }
     }
 }

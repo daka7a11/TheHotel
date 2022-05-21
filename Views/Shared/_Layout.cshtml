@@ -9,12 +9,12 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/lazy.css">
     <link href="~/lib/bootstrap-icons-1.8.1/bootstrap-icons.css" rel="stylesheet" />
-    <link href="~/css/MyStyle.css?v=1" rel="stylesheet" />
+    <link href="~/css/MyStyle.css" rel="stylesheet" />
 </head>
-<body class="d-flex flex-column min-vh-100">
+<body class="d-flex flex-column min-vh-100 text-light">
     <div class="page-container">
-        <header class="card-header border-bottom-0" style="background-color: navajowhite">
-            <nav class=" navbar navbar-expand-sm navbar-dark bg-dark border-bottom box-shadow mb-3">
+        <header class="card-header border-bottom-0">
+            <nav class=" navbar navbar-expand-sm navbar-dark bg-dark box-shadow mb-3">
                 <div class="container">
                     <a class="navbar-brand" style="font-size:130%" asp-area="" asp-controller="Home" asp-action="Index">@GlobalConstants.SystemName</a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -30,15 +30,11 @@
                             <li class="nav-item">
                                 <a class="nav-link text-light" asp-controller="Rooms" asp-action="All">Настаняване</a>
                             </li>
-                            <li class="nav-item dropdown">
-                                <a href="#" class="nav-link text-light dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Ресторант <span class="caret"></span></a>
-                                <ul class="dropdown-menu bg-dark  border-0" role="menu" style="background-color:none">
-                                    <li><a class="btn btn-lg text-light" asp-controller="Restaurant" asp-action="Home">Начало</a></li>
-                                    <li><a class="btn btn-lg text-light" asp-controller="Restaurant" asp-action="Menu">Меню</a></li>
-                                </ul>
+                            <li class="nav-item">
+                            <a class="nav-link text-light" asp-controller="Restaurant" asp-action="Home">Ресторант</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-light" asp-controller="Home" asp-action="Offers">Оферти</a>
+                                <a class="nav-link text-light" asp-controller="Offers" asp-action="Index">Оферти</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-light" asp-controller="Home" asp-action="Gallery">Галерия</a>
@@ -55,10 +51,10 @@
                                     <a href="#" class="nav-link text-danger dropdown-toggle font-weight-bold" data-toggle="dropdown" role="button" aria-expanded="false">Администрация <span class="caret"></span></a>
                                     <ul class="dropdown-menu bg-dark  border-0" role="menu" style="background-color:none">
                                         <li class="nav-item">
-                                            <a class="nav-link text-light" asp-controller="Clients" asp-action="All">Клиенти</a>
+                                            <a class="nav-link text-light" asp-controller="ClientRooms" asp-action="RoomRequests">Заявки</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link text-light" asp-controller="ClientRooms" asp-action="RoomRequests">Заявки</a>
+                                            <a class="nav-link text-light" asp-controller="Clients" asp-action="All">Клиенти</a>
                                         </li>
                                         @if (User.IsInRole(GlobalConstants.AdministratorRole))
                                         {
@@ -66,10 +62,13 @@
                                                 <a class="nav-link text-light" asp-area="Identity" asp-page="/Account/Register">Регистрация</a>
                                             </li>
                                             <li class="nav-item">
-                                                <a class="nav-link text-light" asp-controller="Rooms" asp-action="Undelete">Изтрити стаи</a>
+                                                <a class="nav-link text-light" asp-controller="Offers" asp-action="Undelete">Изтрити оферти</a>
                                             </li>
                                             <li class="nav-item">
                                                 <a class="nav-link text-light" asp-controller="Clients" asp-action="Undelete">Изтрити клиенти</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link text-light" asp-controller="Rooms" asp-action="Undelete">Изтрити стаи</a>
                                             </li>
                                         }
                                     </ul>
@@ -87,7 +86,7 @@
             </main>
         </div>
     </div>
-    <footer class="mt-auto border-top">
+    <footer class="mt-auto bg-dark">
         <div class="container font-weight-bolder">
             &copy; @DateTime.Now.Year - @GlobalConstants.SystemName -
             <a asp-area="" asp-controller="Home" asp-action="Index">Начало</a>
