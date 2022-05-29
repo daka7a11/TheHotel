@@ -98,6 +98,51 @@ namespace TheHotel.Services.Offers
                 .ToList();
         }
 
+        public decimal GetTotalDiscount(ClientRoom reservation)
+        {
+            var offers = offersRepository.All().ToList();
+
+            decimal totalDiscount = 0;
+
+            int overnights = (int)(reservation.DepartureDate - reservation.AccommodationDate).TotalDays;
+
+            decimal totalPrice = overnights * reservation.Room.Price;
+
+            foreach (var offer in offers)
+            {
+                if (offer.Id == 1)
+                {
+                    
+                    if (overnights > 5)
+                    {
+                        if (offer.EndDate == null)
+                        {
+                            if (offer.StartDate <= reservation.AccommodationDate)
+                            {
+                                totalDiscount += totalPrice * (decimal)(offer.Discount/ 100.00);
+                            }
+                        }
+                        else
+                        {
+                            if (offer.StartDate <= reservation.AccommodationDate && reservation.DepartureDate <= offer.EndDate)
+                            {
+                                totalDiscount += totalPrice * (offer.Discount / 100);
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    if (offer.StartDate <= reservation.AccommodationDate && reservation.DepartureDate <= offer.EndDate)
+                    {
+                        totalDiscount += totalPrice * (offer.Discount / 100);
+                    }
+                }
+            }
+
+            return totalDiscount;
+        }
+
         public void Undelete(int offerId)
         {
             var offer = offersRepository.AllWithDeleted().FirstOrDefault(x => x.IsDeleted == true && x.Id == offerId);

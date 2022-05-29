@@ -55,5 +55,7 @@
         public const string OfferDateValidateErrorMsg = "Датата на изтичане на офертата не може да е по-малка или равна на началната дата!";
 
         public const string RequiredPropertyErrorMsg = "Това поле е задължително!";
+
+        public const string InvalidCaptchaErrorMsg = "Моля въведете валиден код!";
     }
 }

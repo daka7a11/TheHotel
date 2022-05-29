@@ -3,6 +3,10 @@
 
 @model IEnumerable<AllOffersViewModel>
 
+@{
+    ViewData["Title"] = "Offers";
+}
+
 <h1 class="text-light text-center m-4">Оферти</h1>
 
 @if (User.IsInRole(GlobalConstants.AdministratorRole))

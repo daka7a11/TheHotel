@@ -38,8 +38,6 @@ namespace TheHotel.Data.Seeding
                 await db.UserRoles.AddAsync(new IdentityUserRole<string>() { UserId = user.Id, RoleId = role.Entity.Id });
 
                 await db.SaveChangesAsync();
-
-
             }
         }
     }

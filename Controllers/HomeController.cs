@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,13 +16,11 @@ namespace TheHotel.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly UserManager<ApplicationUser> userManager;
-        private readonly RoleManager<ApplicationRole> roleManager;
+        private readonly IHttpContextAccessor httpContextAccessor;
 
-        public HomeController(UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager)
+        public HomeController(IHttpContextAccessor httpContextAccessor)
         {
-            this.userManager = userManager;
-            this.roleManager = roleManager;
+            this.httpContextAccessor = httpContextAccessor;
         }
 
         public IActionResult Index()
@@ -27,9 +28,19 @@ namespace TheHotel.Controllers
             return View();
         }
 
-        public IActionResult Offers()
+        public IActionResult CreateCookie()
         {
-            return View();
+            string key = "Key_Cookie";
+            string value = "Value_Cookie";
+
+            CookieOptions option = new CookieOptions
+            {
+                Expires = DateTime.UtcNow.AddMinutes(2)
+            };
+
+            httpContextAccessor.HttpContext.Response.Cookies.Append(key,value,option);
+
+            return View("Index");
         }
 
         public IActionResult Gallery()

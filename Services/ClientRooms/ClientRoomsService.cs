@@ -131,13 +131,15 @@ namespace TheHotel.Services.ClientRooms
             var reservationRequest = clientRoomsRepository.All()
                 .Include(x => x.Client)
                 .FirstOrDefault(x => x.Id == id);
-            if (reservationRequest != null)
+            if (reservationRequest == null)
             {
-                clientRoomsRepository.Delete(reservationRequest);
-                reservationRequest.EmployeeId = employeeId;
-                reservationRequest.CreatedOn = System.DateTime.UtcNow;
-                await clientRoomsRepository.SaveChangesAsync();
+                return;
             }
+
+            clientRoomsRepository.Delete(reservationRequest);
+            reservationRequest.EmployeeId = employeeId;
+            reservationRequest.CreatedOn = System.DateTime.UtcNow;
+            await clientRoomsRepository.SaveChangesAsync();
 
             MailRequest mailRequest = new MailRequest()
             {

@@ -12,6 +12,8 @@ namespace TheHotel.Services.Offers
         IEnumerable<Offer> GetDeleted();
         IEnumerable<T> GetDeleted<T>();
 
+        decimal GetTotalDiscount(ClientRoom reservation);
+
         Offer GetById(int id);
         Task AddAsync(CreateOfferViewModel model);
         void Edit(int offerId, AllOffersViewModel model);

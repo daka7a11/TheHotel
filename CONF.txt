@@ -1,0 +1,3 @@
+db: 
+username: whotel-server-admin
+pass: K7TQS7A45H0JQ4PV$

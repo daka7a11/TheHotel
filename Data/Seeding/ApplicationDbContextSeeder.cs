@@ -20,6 +20,7 @@ namespace TheHotel.Data.Seeding
                               new ClientSeeder(),
                               new ImageSeeder(),
                               new AdministratorSeeder(),
+                              new OffersSeeder(),
                           };
 
             foreach (var seeder in seeders)

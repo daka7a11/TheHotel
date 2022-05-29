@@ -1,18 +1,20 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+﻿using DNTCaptcha.Core;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TheHotel.Common;
 using TheHotel.Data.Models;
 using TheHotel.EmailSender;
+using TheHotel.EmailSender.ViewRender;
 using TheHotel.Mapping;
 using TheHotel.Services.ClientRooms;
 using TheHotel.Services.Clients;
+using TheHotel.Services.Offers;
 using TheHotel.Services.Rooms;
+using TheHotel.ViewModels;
 using TheHotel.ViewModels.ClientRooms;
 using TheHotel.ViewModels.Clients;
 using TheHotel.ViewModels.Rooms;
@@ -25,20 +27,29 @@ namespace TheHotel.Controllers
         private readonly IClientRoomsService clientRoomsService;
         private readonly IClientsService clientsService;
         private readonly IRoomsService roomsService;
+        private readonly IOffersService offersService;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IMailService mailService;
+        private readonly IViewRenderService renderService;
+        private readonly IDNTCaptchaValidatorService captchaValidatorService;
 
         public ClientRoomsController(IClientRoomsService clientRoomsService,
             IClientsService clientsService,
             IRoomsService roomsService,
+            IOffersService offersService,
             UserManager<ApplicationUser> userManager,
-            IMailService mailService)
+            IMailService mailService,
+            IViewRenderService renderService,
+            IDNTCaptchaValidatorService captchaValidatorService)
         {
             this.clientRoomsService = clientRoomsService;
             this.clientsService = clientsService;
             this.roomsService = roomsService;
+            this.offersService = offersService;
             this.userManager = userManager;
             this.mailService = mailService;
+            this.renderService = renderService;
+            this.captchaValidatorService = captchaValidatorService;
         }
 
         [AllowAnonymous]
@@ -58,6 +69,11 @@ namespace TheHotel.Controllers
         [HttpPost]
         public async Task<IActionResult> Tenancy(TenancyViewModel model)
         {
+            if (!captchaValidatorService.HasRequestValidCaptchaEntry(Language.English, DisplayMode.ShowDigits))
+            {
+                ModelState.AddModelError(string.Empty, GlobalConstants.InvalidCaptchaErrorMsg);
+            }
+
             if (!this.ModelState.IsValid)
             {
                 return this.View(model);
@@ -137,11 +153,17 @@ namespace TheHotel.Controllers
             }
             else
             {
+                var reservationModel = AutoMapperConfig.MapperInstance.Map<MailReservationViewModel>(clientRoom);
+                reservationModel.TotalDiscount = offersService.GetTotalDiscount(clientRoom);
+                reservationModel.TotalPrice = ((int)(clientRoom.DepartureDate - clientRoom.AccommodationDate).TotalDays * clientRoom.Room.Price) - reservationModel.TotalDiscount;
+
+                var mailBody = await renderService.RenderToStringAsync("MailReservation", reservationModel);
+
                 MailRequest mailRequest = new MailRequest()
                 {
                     ToEmail = currClient.Email,
                     Subject = GlobalConstants.ReservationRequest,
-                    Body = "Бла бла",
+                    Body = mailBody,
                 };
 
                 await mailService.SendEmailAsync(mailRequest);
