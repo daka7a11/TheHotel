@@ -21,6 +21,10 @@ namespace TheHotel.Services.ClientRooms
         ICollection<ClientRoom> GetNonConfirmedReservations();
         ICollection<T> GetNonConfirmedReservations<T>();
 
+        ICollection<T> GetRejectedRequests<T>();
+
+        ICollection<T> GetDeletedReservations<T>();
+
         Task ConfirmRequestAsync(int id, string employeeId);
 
         Task DeleteRequestAsync(int id, string employeeId);

@@ -1,5 +1,4 @@
-﻿using DNTCaptcha.Core;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -31,7 +30,6 @@ namespace TheHotel.Controllers
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IMailService mailService;
         private readonly IViewRenderService renderService;
-        private readonly IDNTCaptchaValidatorService captchaValidatorService;
 
         public ClientRoomsController(IClientRoomsService clientRoomsService,
             IClientsService clientsService,
@@ -39,8 +37,7 @@ namespace TheHotel.Controllers
             IOffersService offersService,
             UserManager<ApplicationUser> userManager,
             IMailService mailService,
-            IViewRenderService renderService,
-            IDNTCaptchaValidatorService captchaValidatorService)
+            IViewRenderService renderService)
         {
             this.clientRoomsService = clientRoomsService;
             this.clientsService = clientsService;
@@ -49,7 +46,6 @@ namespace TheHotel.Controllers
             this.userManager = userManager;
             this.mailService = mailService;
             this.renderService = renderService;
-            this.captchaValidatorService = captchaValidatorService;
         }
 
         [AllowAnonymous]
@@ -69,11 +65,6 @@ namespace TheHotel.Controllers
         [HttpPost]
         public async Task<IActionResult> Tenancy(TenancyViewModel model)
         {
-            if (!captchaValidatorService.HasRequestValidCaptchaEntry(Language.English, DisplayMode.ShowDigits))
-            {
-                ModelState.AddModelError(string.Empty, GlobalConstants.InvalidCaptchaErrorMsg);
-            }
-
             if (!this.ModelState.IsValid)
             {
                 return this.View(model);
@@ -139,6 +130,7 @@ namespace TheHotel.Controllers
             {
                 clientRoom.IsConfirmed = true;
                 clientRoom.EmployeeId = userManager.GetUserAsync(User).Result.Id;
+                clientRoom.CreatedOn = DateTime.UtcNow;
             }
             else
             {
@@ -229,6 +221,36 @@ namespace TheHotel.Controllers
         {
             clientRoomsService.Delete(clientRoomId);
             return this.Redirect($"/ClientRooms/ReservationDetails?clientRoomId={clientRoomId}");
+        }
+
+        public IActionResult RejectedRequests()
+        {
+            var rejectedRequests = clientRoomsService.GetRejectedRequests<DeletedClientRoomsViewModel>();
+
+            return View(rejectedRequests);
+        }
+
+        [HttpPost]
+        public IActionResult RejectedRequests(int clientRoomId)
+        {
+            var rejectedRequests = clientRoomsService.GetRejectedRequests<DeletedClientRoomsViewModel>();
+
+            return View(rejectedRequests);
+        }
+
+        public IActionResult DeletedReservations()
+        {
+            var deletedReservations = clientRoomsService.GetDeletedReservations<DeletedClientRoomsViewModel>();
+
+            return View(deletedReservations);
+        }
+
+        [HttpPost]
+        public IActionResult DeletedReservations(int clientRoomId)
+        {
+            var rejectedRequests = clientRoomsService.GetRejectedRequests<DeletedClientRoomsViewModel>();
+
+            return View(rejectedRequests);
         }
     }
 }

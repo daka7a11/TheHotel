@@ -1,5 +1,3 @@
-using DNTCaptcha.Core;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -36,11 +34,6 @@ namespace TheHotel
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDNTCaptcha(opt =>
-            opt.UseCookieStorageProvider()
-            .ShowThousandsSeparators(false)
-            .WithEncryptionKey("123456"));
-
             services.AddControllersWithViews();
             services.AddRazorPages()
                 .AddMvcOptions(opt =>
@@ -97,9 +90,12 @@ namespace TheHotel
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
+                app.UseDeveloperExceptionPage();
+                app.UseMigrationsEndPoint();
+
+                //app.UseExceptionHandler("/Home/Error");
+                //// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                //app.UseHsts();
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
@@ -108,8 +104,6 @@ namespace TheHotel
 
             app.UseAuthentication();
             app.UseAuthorization();
-
-            app.UseCookiePolicy();
 
             app.UseEndpoints(endpoints =>
             {

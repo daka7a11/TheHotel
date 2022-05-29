@@ -159,5 +159,21 @@ namespace TheHotel.Services.ClientRooms
                 clientRoomsRepository.SaveChanges();
             }
         }
+
+        public ICollection<T> GetRejectedRequests<T>()
+        {
+            return clientRoomsRepository.AllWithDeleted()
+                .Where(x => x.IsConfirmed == false && x.IsDeleted == true)
+                .To<T>()
+                .ToList();
+        }
+
+        public ICollection<T> GetDeletedReservations<T>()
+        {
+            return clientRoomsRepository.AllWithDeleted()
+                .Where(x => x.IsConfirmed == true && x.IsDeleted == true)
+                .To<T>()
+                .ToList();
+        }
     }
 }

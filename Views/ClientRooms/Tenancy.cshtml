@@ -9,7 +9,7 @@
 <h1 class="text-light text-center">Резервация</h1>
 
 <br>
-<form method="post" asp-antiforgery="true">
+<form method="post">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
     @{bool isClientExist = !String.IsNullOrWhiteSpace(Model.Email); }
@@ -94,16 +94,8 @@
             <input class="form-control" asp-for="DepartureDate" />
             <span class="text-danger" asp-validation-for="DepartureDate"></span>
         </div>
-        <div>
-            <partial name="_Captcha"/>
-        </div>
         <div class="form-group col-md-12 text-center">
             <input id="btnsubmit" class="btn btn-success btn-lg" type="submit" name="confirmBtn" value="Резервирай" />
         </div>
     </div>
 </form>
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
-<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
-<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
-<script src="~/js/jquery.unobtrusive-ajax.js"></script>
