@@ -26,13 +26,19 @@
 
         public const int PINMaxLegth = 12;
 
-        public const string PersonalIdentityNumberErrorMsg = "Value shoud be between 10 and 12 characters!";
-
         public const int ClientNameMinLength = 3;
 
         public const int ClientNameMaxLength = 30;
 
-        public const string ClientNameErrorMsg = "Value shoud be between 3 and 30 characters!";
+        public const int TitleMinLength = 3;
+
+        public const int MessageTextMinLength = 10;
+
+        public const string PersonalIdentityNumberErrorMsg = "Value shoud be between 10 and 12 characters!";
+
+        public const string ClientNameLengthErrorMsg = "Value shoud be between 3 and 30 characters!";
+
+        public const string ClientNameRegexErrorMsg = "Името трябва да съдържа само букви!";
 
         public const string InvalidHireDateErrorMsg = "You cannot hire room {0} right now. The room is hired from {1} to {2}";
 
@@ -57,5 +63,9 @@
         public const string RequiredPropertyErrorMsg = "Това поле е задължително!";
 
         public const string InvalidCaptchaErrorMsg = "Моля въведете валиден код!";
+
+        public const string MessageLengthErrorMsg = "Полето трябва да съдържа поне 10 символа!";
+
+        public const string TitleLengthErrorMsg = "Заглавието трябва да съдържа поне 3 символа!";
     }
 }

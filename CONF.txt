@@ -1,3 +1,9 @@
-db: 
-username: whotel-server-admin
-pass: K7TQS7A45H0JQ4PV$
+
+Data Source=tcp:whotel-server.database.windows.net,1433;Initial Catalog=whotel-database;
+User Id=whotel-server-admin@whotel-server.database.windows.net;Password=HSIM007S4OHA27N4$
+
+
+xhotel-admin
+Azure123!
+Data Source=tcp:xhotel-dbserver.database.windows.net,1433;Initial Catalog=xhotel-db;
+User Id=xhotel-admin@xhotel-dbserver;Password=Azure123!

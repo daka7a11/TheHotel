@@ -47,19 +47,19 @@ namespace TheHotel.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required(ErrorMessage = GlobalConstants.ClientNameErrorMsg)]
+            [Required(ErrorMessage = GlobalConstants.ClientNameLengthErrorMsg)]
             [MinLength(GlobalConstants.ClientNameMinLength)]
             [MaxLength(GlobalConstants.ClientNameMaxLength)]
             [RegularExpression(GlobalConstants.NameSymbolsRegex)]
             public string FirstName { get; set; }
 
-            [Required(ErrorMessage = GlobalConstants.ClientNameErrorMsg)]
+            [Required(ErrorMessage = GlobalConstants.ClientNameLengthErrorMsg)]
             [MinLength(GlobalConstants.ClientNameMinLength)]
             [MaxLength(GlobalConstants.ClientNameMaxLength)]
             [RegularExpression(GlobalConstants.NameSymbolsRegex)]
             public string MiddleName { get; set; }
 
-            [Required(ErrorMessage = GlobalConstants.ClientNameErrorMsg)]
+            [Required(ErrorMessage = GlobalConstants.ClientNameLengthErrorMsg)]
             [MinLength(GlobalConstants.ClientNameMinLength)]
             [MaxLength(GlobalConstants.ClientNameMaxLength)]
             [RegularExpression(GlobalConstants.NameSymbolsRegex)]
