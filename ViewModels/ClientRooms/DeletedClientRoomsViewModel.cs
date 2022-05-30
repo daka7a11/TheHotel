@@ -1,8 +1,10 @@
 ﻿using System;
+using TheHotel.Data.Models;
+using TheHotel.Mapping;
 
 namespace TheHotel.ViewModels.ClientRooms
 {
-    public class DeletedClientRoomsViewModel
+    public class DeletedClientRoomsViewModel : IMapFrom<ClientRoom>
     {
         public int Id { get; set; }
 

@@ -23,8 +23,8 @@ namespace TheHotel.Data
 
         public virtual DbSet<Offer> Offers { get; set; }
 
-        //public virtual DbSet<Question> Questions { get; set; }
+        public virtual DbSet<Question> Questions { get; set; }
 
-        //public virtual DbSet<Review> Reviews { get; set; }
+        public virtual DbSet<Review> Reviews { get; set; }
     }
 }

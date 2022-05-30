@@ -1,0 +1,53 @@
+﻿@using TheHotel.ViewModels.ClientRooms
+
+@model IEnumerable<DeletedClientRoomsViewModel>
+
+@{
+    ViewData["Title"] = "Deleted Reservations";
+}
+
+@if (Model.Count() == 0)
+{
+    <h2 class="text-center text-light">Няма изтрити резервации!</h2>
+}
+else
+{
+    <h2 class="text-center text-light ">Изтрити резервации</h2>
+
+    <table class="table table-hover table-striped shadow">
+        <tr class="text-center bg-secondary text-light shadow">
+            <th>Име</th>
+            <th>Фамилия</th>
+            <th>Стая №</th>
+            <th>Дата на настаняване</th>
+            <th>Дата на напускане</th>
+            <th>Направена заявка на</th>
+            <th>Изтрит на</th>
+        </tr>
+        @foreach (var reservation in Model.OrderByDescending(x => x.DeletedOn))
+        {
+            <tr class="text-center text-light"
+                onclick="window.location.href = '/ClientRooms/ReservationDetails?clientRoomId=@reservation.Id'"
+                onmouseover="this.style.backgroundColor='gray'"
+                onmouseout="this.style.backgroundColor='transparent'"
+                style="cursor:pointer">
+                <td>@reservation.ClientFirstName</td>
+                <td>@reservation.ClientLastName</td>
+                <td>@reservation.RoomId</td>
+                <td>@reservation.AccommodationDate.ToShortDateString()</td>
+                <td>@reservation.DepartureDate.ToShortDateString()</td>
+                <td>
+                    @if (reservation.RequestDate.HasValue)
+                    {
+                        @reservation.RequestDate.Value.ToString("g")
+                    }
+                    else
+                    {
+                        <i>-</i>
+                    }
+                </td>
+                <td>@reservation.DeletedOn.Value.ToString("g")</td>
+            </tr>
+        }
+    </table>
+}
