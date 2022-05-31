@@ -69,6 +69,7 @@ namespace TheHotel
             services.AddScoped<IViewRenderService, ViewRenderService>();
 
             services.AddTransient<IOffersService, OffersService>();
+            services.AddApplicationInsightsTelemetry(Configuration["APPINSIGHTS_CONNECTIONSTRING"]);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

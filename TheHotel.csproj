@@ -4,11 +4,13 @@
 		<TargetFramework>net5.0</TargetFramework>
 		<UserSecretsId>aspnet-TheHotel-4ACFC8CF-C333-42EC-B62D-303C0D6C4EC5</UserSecretsId>
 		<CopyRefAssembliesToPublishDirectory>false</CopyRefAssembliesToPublishDirectory>
+		<ApplicationInsightsResourceId>/subscriptions/026a1c80-773a-4ccc-894c-ecfd3e01c36d/resourcegroups/xhotel/providers/Microsoft.Insights/components/xhotel</ApplicationInsightsResourceId>
 	</PropertyGroup>
 
 	<ItemGroup>
 		<PackageReference Include="AutoMapper" Version="11.0.1" />
 		<PackageReference Include="MailKit" Version="3.2.0" />
+		<PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.15.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="5.0.11" />
 		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.16" />
 		<PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="5.0.16" />
@@ -95,6 +97,11 @@
 		<Content Update="wwwroot\js\lazy.js">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="ViewModels\Reviews\" />
+	  <Folder Include="Views\Reviews\" />
 	</ItemGroup>
 
 </Project>

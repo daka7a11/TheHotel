@@ -40,10 +40,10 @@
                                 <a class="nav-link text-light" asp-controller="Home" asp-action="Gallery">Галерия</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-light" asp-controller="Home" asp-action="Contacts">Контакти</a>
+                                <a class="nav-link text-light" asp-controller="Contacts" asp-action="Index">Контакти</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-light" asp-controller="Home" asp-action="Reviews">Отзиви</a>
+                                <a class="nav-link text-light" asp-controller="Reviews" asp-action="Index">Отзиви</a>
                             </li>
                             @if (User.IsInRole(GlobalConstants.AdministratorRole) || User.IsInRole(GlobalConstants.ReceptionistRole))
                             {
