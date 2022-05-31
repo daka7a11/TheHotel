@@ -16,6 +16,7 @@ using TheHotel.EmailSender.ViewRender;
 using TheHotel.Mapping;
 using TheHotel.Services.ClientRooms;
 using TheHotel.Services.Clients;
+using TheHotel.Services.Contacts;
 using TheHotel.Services.Offers;
 using TheHotel.Services.Rooms;
 using TheHotel.ViewModels;
@@ -70,6 +71,9 @@ namespace TheHotel
 
             services.AddTransient<IOffersService, OffersService>();
             services.AddApplicationInsightsTelemetry(Configuration["APPINSIGHTS_CONNECTIONSTRING"]);
+
+            services.AddTransient<IContactsService, ContactsService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
