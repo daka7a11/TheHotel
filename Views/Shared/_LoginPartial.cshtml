@@ -10,15 +10,19 @@
         <a  class="nav-link text-light" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Здравей, @User.Identity.Name!</a>
     </li>
     <li class="nav-item">
-        <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-            <button  type="submit" class="nav-link btn btn-link btn-lg text-light">Излизане</button>
+        <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+            <a class="nav-link text-light"
+               onclick="logoutForm.submit()"
+               style="cursor:pointer"><i class="bi bi-door-closed"
+                                         style="font-size:larger"></i></a>
         </form>
     </li>
 }
 else
 {
     <li class="nav-item">
-        <a class="nav-link text-light" asp-area="Identity" asp-page="/Account/Login">Влизане</a>
+        <a class="nav-link text-light" asp-area="Identity" asp-page="/Account/Login"><i class="bi bi-door-open"
+                                                                                        style="font-size:larger"></i></a>
     </li>
 }
 </ul>

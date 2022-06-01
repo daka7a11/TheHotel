@@ -15,34 +15,37 @@
     <div class="page-container">
         <header class="card-header border-bottom-0">
             <nav class=" navbar navbar-expand-sm navbar-dark bg-dark box-shadow mb-3">
+                <div>
+                    <partial name="_SocialMedia"/>
+                </div>
                 <div class="container">
-                    <a class="navbar-brand" style="font-size:130%" asp-area="" asp-controller="Home" asp-action="Index">@GlobalConstants.SystemName</a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                            aria-expanded="false" aria-label="Toggle navigation">
+                    <a class="navbar-brand" style="font-size:120%" asp-area="" asp-controller="home" asp-action="index">@GlobalConstants.SystemName</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarsupportedcontent"
+                            aria-expanded="false" aria-label="toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                        <partial name="_LoginPartial" />
+                        <partial name="_LoginPartial"/>
                         <ul class="navbar-nav flex-grow-1 justify-content-md-center">
-                            <li class="nav-item">
+                            <li class="nav-item mr-1">
                                 <a class="nav-link text-light" asp-controller="Home" asp-action="Index">Начало</a>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item mr-1">
                                 <a class="nav-link text-light" asp-controller="Rooms" asp-action="All">Настаняване</a>
                             </li>
-                            <li class="nav-item">
-                            <a class="nav-link text-light" asp-controller="Restaurant" asp-action="Home">Ресторант</a>
+                            <li class="nav-item mr-1">
+                                <a class="nav-link text-light" asp-controller="Restaurant" asp-action="Home">Ресторант</a>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item mr-1">
                                 <a class="nav-link text-light" asp-controller="Offers" asp-action="Index">Оферти</a>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item mr-1">
                                 <a class="nav-link text-light" asp-controller="Home" asp-action="Gallery">Галерия</a>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item mr-1">
                                 <a class="nav-link text-light" asp-controller="Contacts" asp-action="Index">Контакти</a>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item mr-1">
                                 <a class="nav-link text-light" asp-controller="Reviews" asp-action="Index">Отзиви</a>
                             </li>
                             @if (User.IsInRole(GlobalConstants.AdministratorRole) || User.IsInRole(GlobalConstants.ReceptionistRole))
@@ -93,10 +96,14 @@
         </div>
     </div>
     <footer class="mt-auto bg-dark">
+        
         <div class="container font-weight-bolder">
             &copy; @DateTime.Now.Year - @GlobalConstants.SystemName -
-            <a asp-area="" asp-controller="Home" asp-action="Index">Начало</a>
-            <a asp-area="" asp-controller="Home" asp-action="Privacy">Поверителност</a>
+            <a class="border-bottom-0 text-light" asp-area="" asp-controller="Home" asp-action="Index">Начало</a>
+            <a class="border-bottom-0 text-light" asp-area="" asp-controller="Home" asp-action="Privacy">Поверителност</a>
+            <div class="d-inline-block float-md-right">
+                <partial name="_SocialMedia" />
+            </div>
         </div>
     </footer>
 
