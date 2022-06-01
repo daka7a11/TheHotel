@@ -160,7 +160,7 @@ namespace TheHotel.Controllers
 
                 await mailService.SendEmailAsync(mailRequest);
 
-                TempData.Add("SuccessRequest", currClient.Email);
+                TempData.Add("SuccessfullyRequest", currClient.Email);
 
                 return this.Redirect($"/");
             }

@@ -19,13 +19,13 @@ else
         </tr>
         @foreach (var client in Model)
         {
-            <tr class="text-center">
+            <tr class="text-center text-light">
                 <td>@client.FirstName</td>
                 <td>@client.LastName</td>
                 <td>@client.PersonalIdentityNumber</td>
                 <td>@client.Phone</td>
                 <td>@client.Email</td>
-                <td>@client.DeletedOn.ToString("g")</td>
+                <td>@client.DeletedOn.ToLocalTime().ToString("g")</td>
                 <td class="col-sm-2">
                     <div class="d-inline-block text-center">
                         <a class="btn btn-success text-light mb-2" onclick="UndeleteModal" data-toggle="modal" data-target="#UndeleteModal" style="cursor:pointer">Възстановяване</a>

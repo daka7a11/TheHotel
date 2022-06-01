@@ -33,9 +33,9 @@ else
                 <td>@request.ClientPhone</td>
                 <td>@request.ClientEmail</td>
                 <td>@request.RoomId</td>
-                <td>@request.AccommodationDate.ToShortDateString()</td>
-                <td>@request.DepartureDate.ToShortDateString()</td>
-                <td>@request.RequestDate.Value.ToString("g")</td>
+                <td>@request.AccommodationDate.ToLocalTime().ToShortDateString()</td>
+                <td>@request.DepartureDate.ToLocalTime().ToShortDateString()</td>
+                <td>@request.RequestDate.Value.ToLocalTime().ToString("g")</td>
             </tr>
         }
     </table>

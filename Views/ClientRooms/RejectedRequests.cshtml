@@ -34,10 +34,10 @@ else
                 <td>@request.ClientFirstName</td>
                 <td>@request.ClientLastName</td>
                 <td>@request.RoomId</td>
-                <td>@request.AccommodationDate.ToShortDateString()</td>
-                <td>@request.DepartureDate.ToShortDateString()</td>
-                <td>@request.RequestDate.Value.ToString("g")</td>
-                <td>@request.DeletedOn.Value.ToString("g")</td>
+                <td>@request.AccommodationDate.ToLocalTime().ToShortDateString()</td>
+                <td>@request.DepartureDate.ToLocalTime().ToShortDateString()</td>
+                <td>@request.RequestDate.Value.ToLocalTime().ToString("g")</td>
+                <td>@request.DeletedOn.Value.ToLocalTime().ToString("g")</td>
             </tr>
         }
     </table>

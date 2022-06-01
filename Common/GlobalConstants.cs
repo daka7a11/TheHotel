@@ -50,9 +50,9 @@
 
         public const string ReservationRequest = "Заявка за резервация.";
 
-        public const string ReservationAccepted = "Резервацията ви е приета.";
+        public const string ReservationAccepted = "Резервацията Ви е приета.";
 
-        public const string ReservationDeclined = "Резервацията ви е отказана.";
+        public const string ReservationDeclined = "Резервацията Ви е отказана.";
 
         public const string RoomAlreadyHiredErrorMsg = "Стаята е резервирана!";
 
@@ -67,5 +67,7 @@
         public const string MessageLengthErrorMsg = "Полето трябва да съдържа поне 10 символа!";
 
         public const string TitleLengthErrorMsg = "Заглавието трябва да съдържа поне 3 символа!";
+
+        public const string SuccessfullySubmittedQuestion = "Вие успешно изпратихте запитване към нас!";
     }
 }

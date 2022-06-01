@@ -31,15 +31,15 @@
     <div class="col-md-6">
         <dl class="row mt-2">
             <dt class="mr-2">Дата на настаняване:</dt>
-            <dd>@Model.AccommodationDate.ToShortDateString()</dd>
+            <dd>@Model.AccommodationDate.ToLocalTime().ToShortDateString()</dd>
         </dl>
         <dl class="row mt-2">
             <dt class="mr-2">Дата на напускане:</dt>
-            <dd>@Model.DepartureDate.ToShortDateString()</dd>
+            <dd>@Model.DepartureDate.ToLocalTime().ToShortDateString()</dd>
         </dl>
         <dl class="row mt-2">
             <dt class="mr-2">Дата на заявката:</dt>
-            <dd>@Model.RequestDate.Value.ToString("g")</dd>
+            <dd>@Model.RequestDate.Value.ToLocalTime().ToString("g")</dd>
         </dl>
         <dl class="row mt-2">
             <dt class="mr-2">Свободна ли е стаята, все още:</dt>

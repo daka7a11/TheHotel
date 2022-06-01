@@ -1,4 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
+using TheHotel.Common;
+using TheHotel.Data;
+using TheHotel.Data.Models;
+using TheHotel.Mapping;
 using TheHotel.Services.Contacts;
 using TheHotel.ViewModels.Contacts;
 
@@ -19,11 +26,21 @@ namespace TheHotel.Controllers
         }
 
         [HttpPost]
-        public IActionResult Index(QuestionViewModel model)
+        public async Task<IActionResult> Index(QuestionViewModel model)
         {
-            //Add question to db.
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
 
-            return View();
+            var question = AutoMapperConfig.MapperInstance.Map<Question>(model);
+            question.CreatedOn = DateTime.UtcNow;
+
+            await contactsService.AddQuestionAsync(question);
+
+            TempData.Add("QuestionSuccessfully",GlobalConstants.SuccessfullySubmittedQuestion);
+
+            return Redirect("/");
         }
     }
 }

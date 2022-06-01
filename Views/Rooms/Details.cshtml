@@ -89,8 +89,8 @@
                         <tr onmouseover="this.style.backgroundColor = 'green'" onmouseout="this.style.backgroundColor = 'transparent'" class="text-center text-light" onclick="window.location.href = '/ClientRooms/ReservationDetails?clientRoomId=' + '@item.Id'" style="cursor:pointer">
                             <td>@item.Client.FirstName @item.Client.LastName</td>
                             <td>@item.Client.PersonalIdentityNumber</td>
-                            <td class="font-weight-bold">@item.AccommodationDate.ToString("dd.MM.yyyy")</td>
-                            <td class="font-weight-bold">@item.DepartureDate.ToString("dd.MM.yyyy")</td>
+                            <td class="font-weight-bold">@item.AccommodationDate.ToLocalTime().ToString("dd.MM.yyyy")</td>
+                            <td class="font-weight-bold">@item.DepartureDate.ToLocalTime().ToString("dd.MM.yyyy")</td>
                             <td>@totalDays</td>
                         </tr>
                     </tbody>

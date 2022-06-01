@@ -34,7 +34,7 @@
                     <p class="text-center text-light">@offer.Description</p>
                 </div>
                 <div class="m-4 position-absolute fixed-bottom text-left">
-                    <p>От: @offer.StartDate.ToString("g")</p>
+                    <p>От: @offer.StartDate.ToLocalTime().ToString("g")</p>
                 </div>
                 <div class="m-4 position-absolute fixed-bottom text-right">
                     <p>
@@ -45,7 +45,7 @@
                         }
                         else
                         {
-                            @offer.EndDate
+                            @offer.EndDate.Value.ToLocalTime()
                         }
                     </p>
                 </div>

@@ -34,19 +34,19 @@ else
                 <td>@reservation.ClientFirstName</td>
                 <td>@reservation.ClientLastName</td>
                 <td>@reservation.RoomId</td>
-                <td>@reservation.AccommodationDate.ToShortDateString()</td>
-                <td>@reservation.DepartureDate.ToShortDateString()</td>
+                <td>@reservation.AccommodationDate.ToLocalTime().ToShortDateString()</td>
+                <td>@reservation.DepartureDate.ToLocalTime().ToShortDateString()</td>
                 <td>
                     @if (reservation.RequestDate.HasValue)
                     {
-                        @reservation.RequestDate.Value.ToString("g")
+                        @reservation.RequestDate.Value.ToLocalTime().ToString("g")
                     }
                     else
                     {
                         <i>-</i>
                     }
                 </td>
-                <td>@reservation.DeletedOn.Value.ToString("g")</td>
+                <td>@reservation.DeletedOn.Value.ToLocalTime().ToString("g")</td>
             </tr>
         }
     </table>

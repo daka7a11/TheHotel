@@ -19,6 +19,7 @@ namespace TheHotel.Services.Contacts
         public async Task AddQuestionAsync(Question question)
         {
             await questionsRepository.AddAsync(question);
+            await questionsRepository.SaveChangesAsync();
         }
 
         public IEnumerable<Question> GetAllQuestions()

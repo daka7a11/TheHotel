@@ -26,7 +26,7 @@ else
                 <td>@room.Floor</td>
                 <td>@room.Price лв.</td>
                 <td>@room.Description</td>
-                <td>@room.DeletedOn.ToString("g")</td>
+                <td>@room.DeletedOn.ToLocalTime().ToString("g")</td>
                 <td class="col-md-2">
                     <div class="d-inline-block text-center">
                         <a class="btn btn-lg btn-success text-light" onclick="UndeleteModal" data-toggle="modal" data-target="#UndeleteModal" style="cursor:pointer">Възстановяване</a>

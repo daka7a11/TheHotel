@@ -59,8 +59,8 @@
                             <td>@item.Room.Floor</td>
                             <td>@item.Room.Size</td>
                             <td>@item.Room.Price</td>
-                            <td class="font-weight-bold">@item.AccommodationDate.ToString("dd.MM.yyyy")</td>
-                            <td class="font-weight-bold">@item.DepartureDate.ToString("dd.MM.yyyy")</td>
+                            <td class="font-weight-bold">@item.AccommodationDate.ToLocalTime().ToString("dd.MM.yyyy")</td>
+                            <td class="font-weight-bold">@item.DepartureDate.ToLocalTime().ToString("dd.MM.yyyy")</td>
                             <td>@totalDays</td>
                         </tr>
                     </tbody>

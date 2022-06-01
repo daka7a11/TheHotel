@@ -56,11 +56,11 @@
             <div>
                 <dl class="row m-1">
                     <dt class="col-md-4">Дата на настаняване: </dt>
-                    <dd class="col-md-8">@Model.AccommodationDate.ToShortDateString()</dd>
+                    <dd class="col-md-8">@Model.AccommodationDate.ToLocalTime().ToShortDateString()</dd>
                 </dl>
                 <dl class="row m-1">
                     <dt class="col-md-4">Дата на напускане: </dt>
-                    <dd class="col-md-8">@Model.DepartureDate.ToShortDateString()</dd>
+                    <dd class="col-md-8">@Model.DepartureDate.ToLocalTime().ToShortDateString()</dd>
                 </dl>
                 <dl class="row m-1">
                     <dt class="col-md-4">Потвърдена ли е? </dt>
