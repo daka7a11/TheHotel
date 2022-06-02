@@ -86,7 +86,11 @@
                 {
                     int totalDays = (int)item.DepartureDate.Subtract(item.AccommodationDate).TotalDays;
                     <tbody>
-                        <tr onmouseover="this.style.backgroundColor = 'green'" onmouseout="this.style.backgroundColor = 'transparent'" class="text-center text-light" onclick="window.location.href = '/ClientRooms/ReservationDetails?clientRoomId=' + '@item.Id'" style="cursor:pointer">
+                        <tr onmouseover="this.style.backgroundColor = 'orange'" 
+                            onmouseout="this.style.backgroundColor = 'transparent'" 
+                            class="text-center text-light" 
+                            onclick="window.location.href = '/ClientRooms/ReservationDetails?clientRoomId=' + '@item.Id'" 
+                            style="cursor:pointer">
                             <td>@item.Client.FirstName @item.Client.LastName</td>
                             <td>@item.Client.PersonalIdentityNumber</td>
                             <td class="font-weight-bold">@item.AccommodationDate.ToLocalTime().ToString("dd.MM.yyyy")</td>

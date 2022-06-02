@@ -12,7 +12,7 @@ else
 {
     <h1 class="text-center text-light mt-2 mb-4">Заявки за потвърждение</h1>
 
-    <table class="table table-hover table-striped table-lg table-bordered mt-4 mb-4 text-light">
+    <table class="table table-hover table-striped table-lg mt-4 mb-4 text-light">
         <tr class="text-center bg-secondary text-light shadow">
             <th>Име</th>
             <th>Фамилия</th>
@@ -26,7 +26,11 @@ else
         </tr>
         @foreach (var request in Model)
         {
-            <tr onmouseover="this.style.backgroundColor = 'green'" onmouseout="this.style.backgroundColor = 'transparent'" onclick="window.location = '/ClientRooms/RequestDetails?clientRoomId=@request.Id'" class="text-center" style="line-height: 200%; cursor:pointer">
+            <tr onmouseover="this.style.backgroundColor = 'orange'" 
+                onmouseout="this.style.backgroundColor = 'transparent'" 
+                onclick="window.location = '/ClientRooms/RequestDetails?clientRoomId=@request.Id'" 
+                class="text-center" 
+                style="line-height: 200%; cursor:pointer">
                 <td>@request.ClientFirstName</td>
                 <td>@request.ClientLastName</td>
                 <td>@request.ClientPersonalIdentityNumber</td>

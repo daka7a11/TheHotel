@@ -34,5 +34,10 @@ namespace TheHotel.Services.Contacts
                 .ToList();
 
         }
+
+        public Question GetById(int questionId)
+        {
+            return questionsRepository.AllWithDeleted().FirstOrDefault(x => x.Id == questionId);
+        }
     }
 }

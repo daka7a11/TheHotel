@@ -1,9 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 using TheHotel.Common;
-using TheHotel.Data;
 using TheHotel.Data.Models;
 using TheHotel.Mapping;
 using TheHotel.Services.Contacts;
@@ -11,6 +10,7 @@ using TheHotel.ViewModels.Contacts;
 
 namespace TheHotel.Controllers
 {
+    [Authorize(Roles = GlobalConstants.AdministratorRole)]
     public class ContactsController : Controller
     {
         private readonly IContactsService contactsService;
@@ -20,11 +20,13 @@ namespace TheHotel.Controllers
             this.contactsService = contactsService;
         }
 
+        [AllowAnonymous]
         public IActionResult Index()
         {
             return View();
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> Index(QuestionViewModel model)
         {
@@ -41,6 +43,27 @@ namespace TheHotel.Controllers
             TempData.Add("QuestionSuccessfully",GlobalConstants.SuccessfullySubmittedQuestion);
 
             return Redirect("/");
+        }
+
+        public IActionResult AllQuestions()
+        {
+            var questions = contactsService.GetAllQuestions<AllQuestionsViewModel>();
+
+            return View(questions);
+        }
+
+        public IActionResult QuestionDetails(int questionId)
+        {
+            Question question = contactsService.GetById(questionId);
+
+            if (question == null)
+            {
+                return Redirect("/Contacts/AllQuestions");
+            }
+
+            var model = AutoMapperConfig.MapperInstance.Map<QuestionDetailsViewModel>(question);
+
+            return View(model);
         }
     }
 }

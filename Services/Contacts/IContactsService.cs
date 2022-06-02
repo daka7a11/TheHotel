@@ -10,5 +10,7 @@ namespace TheHotel.Services.Contacts
 
         IEnumerable<Question> GetAllQuestions();
         IEnumerable<T> GetAllQuestions<T>();
+
+        Question GetById(int questionId);
     }
 }

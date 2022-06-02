@@ -1,0 +1,61 @@
+﻿@using TheHotel.ViewModels.Contacts
+
+@model QuestionDetailsViewModel
+
+@{
+    ViewData["Title"] = "Question Details";
+}
+
+<h1 class="text-light text-center m-4">Запитване</h1>
+
+<div class="m-4">
+    <a class="btn btn-danger" onclick="DeleteModal" data-toggle="modal" data-target="#DeleteModal">Изтрий</a>
+</div>
+
+<div class="row">
+    <div class="col-md-5 d-inline-block border-right border-warning">
+        <div>
+            <dl class="row m-1">
+                <dt class="col-md-4 text-warning">Име: </dt>
+                <dd class="col-md-8">@Model.FirstName</dd>
+            </dl>
+            <dl class="row m-1">
+                <dt class="col-md-4 text-warning">Имейл: </dt>
+                <dd class="col-md-8">@Model.Email</dd>
+            </dl>
+            <dl class="row m-1">
+                <dt class="col-md-4 text-warning">Телефон: </dt>
+                <dd class="col-md-8">@Model.Phone</dd>
+            </dl>
+        </div>
+    </div>
+    <div class="col-md-7 d-inline-block">
+        <dl class="text-center border-bottom border-warning">
+            <dt>@Model.Title</dt>
+        </dl>
+        <dl>
+            <dd class="m-2">@Model.Text</dd>
+
+        </dl>
+    </div>
+</div>
+
+<div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-center" id="exampleModalLabel">Потвърждение</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Сигурни ли сте, че искате да ИЗТРИЕТЕ офертата?
+            </div>
+            <div class="modal-footer">
+                <button id="editBtn" type="button" class="btn btn-danger" onclick="window.location.href = '/Offers/Delete?offerId=@Model.Id'">Да, изтривам</button>
+                <button type="button" class="btn btn-light" data-dismiss="modal">Отказ</button>
+            </div>
+        </div>
+    </div>
+</div>
