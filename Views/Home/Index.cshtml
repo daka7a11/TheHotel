@@ -2,8 +2,9 @@
     ViewData["Title"] = "Home Page";
 }
 
-<partial name="_UnderConstruction" />
 
+
+<partial name="_UnderConstruction" />
 <div>
     @if (TempData["SuccessfullyRequest"] != null)
     {
@@ -27,3 +28,6 @@
     }
     <h1 class="text-center text-light">Добре дошли в ... !</h1>
 </div>
+
+<div id="map" class="col-md-6" style="height:400px; width:contain"></div>
+<partial name="_GoogleMap"/>

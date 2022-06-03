@@ -1,15 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using TheHotel.Data.Models;
-using TheHotel.EmailSender;
-using TheHotel.EmailSender.ViewRender;
-using TheHotel.Services.ClientRooms;
+using System.Net.Http;
 using TheHotel.ViewModels;
 
 namespace TheHotel.Controllers
@@ -17,14 +11,26 @@ namespace TheHotel.Controllers
     public class HomeController : Controller
     {
         private readonly IHttpContextAccessor httpContextAccessor;
+        private readonly HttpClient httpClient;
+        private readonly IConfiguration configuration;
 
-        public HomeController(IHttpContextAccessor httpContextAccessor)
+        public HomeController(IHttpContextAccessor httpContextAccessor,
+            HttpClient httpClient,
+            IConfiguration configuration)
         {
             this.httpContextAccessor = httpContextAccessor;
+            this.httpClient = httpClient;
+            this.configuration = configuration;
         }
 
         public IActionResult Index()
         {
+            httpClient.BaseAddress = new Uri(@"https://localhost:44375");
+
+            var response = httpClient.GetAsync($"https://api.openweathermap.org/data/2.5/forecast/daily?lat=1&lon=1&cnt=5&appid={configuration.GetSection("OpenWeatherApiKey").Value}").GetAwaiter().GetResult();
+
+            var msg = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+
             return View();
         }
 
