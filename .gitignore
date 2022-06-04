@@ -122,3 +122,4 @@ $tf/
 TODO.txt
 WebHotelSystem.txt
 *.pdf
+/appsettings.Production.json
