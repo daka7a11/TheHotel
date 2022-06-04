@@ -123,3 +123,4 @@ TODO.txt
 WebHotelSystem.txt
 *.pdf
 /appsettings.Development.json
+/appsettings.Production.json

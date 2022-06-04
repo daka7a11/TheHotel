@@ -43,7 +43,7 @@ namespace TheHotel.EmailSender
             email.Body = builder.ToMessageBody();
 
             using var smtp = new SmtpClient();
-            smtp.Connect(mailSettings.Host, mailSettings.Port, MailKit.Security.SecureSocketOptions.StartTls);
+            smtp.Connect(mailSettings.Host, mailSettings.Port);
             smtp.Authenticate(mailSettings.Mail, mailSettings.Password);
             await smtp.SendAsync(email);
             smtp.Disconnect(true);

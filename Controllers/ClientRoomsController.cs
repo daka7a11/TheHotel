@@ -142,28 +142,28 @@ namespace TheHotel.Controllers
             if (isEmployee)
             {
                 return this.Redirect($"/ClientRooms/ReservationDetails?clientRoomId={clientRoom.Id}");
+
+                //TODO: Notify client with mail that reservation is successfuly created.
             }
-            else
+
+            var reservationModel = AutoMapperConfig.MapperInstance.Map<MailReservationViewModel>(clientRoom);
+            reservationModel.TotalDiscount = offersService.GetTotalDiscount(clientRoom);
+            reservationModel.TotalPrice = ((int)(clientRoom.DepartureDate - clientRoom.AccommodationDate).TotalDays * clientRoom.Room.Price) - reservationModel.TotalDiscount;
+
+            var mailBody = await renderService.RenderToStringAsync("MailReservation", reservationModel);
+
+            MailRequest mailRequest = new MailRequest()
             {
-                var reservationModel = AutoMapperConfig.MapperInstance.Map<MailReservationViewModel>(clientRoom);
-                reservationModel.TotalDiscount = offersService.GetTotalDiscount(clientRoom);
-                reservationModel.TotalPrice = ((int)(clientRoom.DepartureDate - clientRoom.AccommodationDate).TotalDays * clientRoom.Room.Price) - reservationModel.TotalDiscount;
+                ToEmail = currClient.Email,
+                Subject = GlobalConstants.ReservationRequest,
+                Body = mailBody,
+            };
 
-                var mailBody = await renderService.RenderToStringAsync("MailReservation", reservationModel);
+            await mailService.SendEmailAsync(mailRequest);
 
-                MailRequest mailRequest = new MailRequest()
-                {
-                    ToEmail = currClient.Email,
-                    Subject = GlobalConstants.ReservationRequest,
-                    Body = mailBody,
-                };
+            TempData.Add("SuccessfullyRequest", currClient.Email);
 
-                await mailService.SendEmailAsync(mailRequest);
-
-                TempData.Add("SuccessfullyRequest", currClient.Email);
-
-                return this.Redirect($"/");
-            }
+            return this.Redirect($"/");
         }
 
         public IActionResult RoomRequests()

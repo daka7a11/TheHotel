@@ -65,5 +65,20 @@ namespace TheHotel.Controllers
 
             return View(model);
         }
+
+        [HttpPost]
+        public IActionResult QuestionDetails(int questionId,string title, string message)
+        {
+            Question question = contactsService.GetById(questionId);
+
+            if (question == null)
+            {
+                return Redirect("/Contacts/AllQuestions");
+            }
+
+            var model = AutoMapperConfig.MapperInstance.Map<QuestionDetailsViewModel>(question);
+
+            return View(model);
+        }
     }
 }
