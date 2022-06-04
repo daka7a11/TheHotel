@@ -76,9 +76,18 @@ namespace TheHotel.Controllers
                 return Redirect("/Contacts/AllQuestions");
             }
 
-            var model = AutoMapperConfig.MapperInstance.Map<QuestionDetailsViewModel>(question);
+            //var mailBody = await renderService.RenderToStringAsync("MailReservation", reservationModel);
 
-            return View(model);
+            //MailRequest mailRequest = new MailRequest()
+            //{
+            //    ToEmail = currClient.Email,
+            //    Subject = GlobalConstants.ReservationRequest,
+            //    Body = mailBody,
+            //};
+
+            //await mailService.SendEmailAsync(mailRequest);
+
+            return View();
         }
     }
 }

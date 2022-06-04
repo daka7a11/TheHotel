@@ -163,6 +163,8 @@ namespace TheHotel.Controllers
 
             TempData.Add("SuccessfullyRequest", currClient.Email);
 
+            var a = TempData["SuccessfullyRequest"];
+
             return this.Redirect($"/");
         }
 

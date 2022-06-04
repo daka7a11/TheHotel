@@ -42,6 +42,21 @@
 
 <div>
     <h3 class="text-center text-warning m-4">Бърз отговор</h3>
+    <form method="post">
+        <div class="form-group text-center">
+            <label class="d-block" for="messageArea">Съобщение</label>
+            <textarea class="rounded" rows="4" cols="50" id="messageArea" name="message"></textarea>
+        </div>
+
+        <div>
+            <input type="hidden" name="title" value="@Model.Title" />
+            <input type="hidden" name="questionId" value="@Model.Id" />
+        </div>
+
+        <div class="form-group text-center">
+            <button class="btn btn-warning" type="submit">Отговори</button>
+        </div>
+    </form>
 </div>
 
 <div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -54,10 +69,10 @@
                 </button>
             </div>
             <div class="modal-body">
-                Сигурни ли сте, че искате да ИЗТРИЕТЕ офертата?
+                Сигурни ли сте, че искате да ИЗТРИЕТЕ запитването?
             </div>
             <div class="modal-footer">
-                <button id="editBtn" type="button" class="btn btn-danger" onclick="window.location.href = '/Offers/Delete?offerId=@Model.Id'">Да, изтривам</button>
+                <button type="button" class="btn btn-danger" onclick="window.location.href = '/Contacts/Delete?contactId=@Model.Id'">Да, изтривам</button>
                 <button type="button" class="btn btn-light" data-dismiss="modal">Отказ</button>
             </div>
         </div>
