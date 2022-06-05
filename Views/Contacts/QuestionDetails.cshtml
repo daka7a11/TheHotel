@@ -42,21 +42,21 @@
 
 <div>
     <h3 class="text-center text-warning m-4">Бърз отговор</h3>
-    <form method="post">
+    <form id="responseForm" method="post">
         <div class="form-group text-center">
             <label class="d-block" for="messageArea">Съобщение</label>
             <textarea class="rounded" rows="4" cols="50" id="messageArea" name="message"></textarea>
         </div>
 
         <div>
-            <input type="hidden" name="title" value="@Model.Title" />
             <input type="hidden" name="questionId" value="@Model.Id" />
         </div>
-
-        <div class="form-group text-center">
-            <button class="btn btn-warning" type="submit">Отговори</button>
-        </div>
     </form>
+
+    <div class="form-group text-center">
+        <button class="btn btn-warning" onclick="ResponseModal" data-toggle="modal" data-target="#ResponseModal">Отговори</button>
+    </div>
+
 </div>
 
 <div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -72,7 +72,28 @@
                 Сигурни ли сте, че искате да ИЗТРИЕТЕ запитването?
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" onclick="window.location.href = '/Contacts/Delete?contactId=@Model.Id'">Да, изтривам</button>
+                <button type="button" class="btn btn-danger" onclick="window.location.href = '/Contacts/Delete?questionId=@Model.Id'">Да, изтривам</button>
+                <button type="button" class="btn btn-light" data-dismiss="modal">Отказ</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ResponseModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-center" id="exampleModalLabel">Потвърждение</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Сигурни ли сте, че искате да ОТГОВОРИТЕ на запитването?
+                Това ще изпрати имейл на клиента и ще <strong>изтрие</strong> запитването!
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-warning" onclick="responseForm.submit()">Да, отговори</button>
                 <button type="button" class="btn btn-light" data-dismiss="modal">Отказ</button>
             </div>
         </div>

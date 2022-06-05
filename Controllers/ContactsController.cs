@@ -4,8 +4,11 @@ using System;
 using System.Threading.Tasks;
 using TheHotel.Common;
 using TheHotel.Data.Models;
+using TheHotel.EmailSender;
+using TheHotel.EmailSender.ViewRender;
 using TheHotel.Mapping;
 using TheHotel.Services.Contacts;
+using TheHotel.ViewModels;
 using TheHotel.ViewModels.Contacts;
 
 namespace TheHotel.Controllers
@@ -14,10 +17,16 @@ namespace TheHotel.Controllers
     public class ContactsController : Controller
     {
         private readonly IContactsService contactsService;
+        private readonly IViewRenderService renderService;
+        private readonly IMailService mailService;
 
-        public ContactsController(IContactsService contactsService)
+        public ContactsController(IContactsService contactsService,
+           IViewRenderService renderService,
+           IMailService mailService)
         {
             this.contactsService = contactsService;
+            this.renderService = renderService;
+            this.mailService = mailService;
         }
 
         [AllowAnonymous]
@@ -67,7 +76,7 @@ namespace TheHotel.Controllers
         }
 
         [HttpPost]
-        public IActionResult QuestionDetails(int questionId,string title, string message)
+        public async Task<IActionResult> QuestionDetails(int questionId, string message)
         {
             Question question = contactsService.GetById(questionId);
 
@@ -76,18 +85,31 @@ namespace TheHotel.Controllers
                 return Redirect("/Contacts/AllQuestions");
             }
 
-            //var mailBody = await renderService.RenderToStringAsync("MailReservation", reservationModel);
+            var responseModel = AutoMapperConfig.MapperInstance.Map<MailQuestionResponseViewModel>(question);
+            responseModel.Response = message;
 
-            //MailRequest mailRequest = new MailRequest()
-            //{
-            //    ToEmail = currClient.Email,
-            //    Subject = GlobalConstants.ReservationRequest,
-            //    Body = mailBody,
-            //};
+            var mailBody = await renderService.RenderToStringAsync("MailQuestionResponse", responseModel);
 
-            //await mailService.SendEmailAsync(mailRequest);
+            MailRequest mailRequest = new MailRequest()
+            {
+                ToEmail = question.Email,
+                Subject = $"RE: {question.Title}",
+                Body = mailBody,
+            };
 
-            return View();
+            await mailService.SendEmailAsync(mailRequest);
+
+            await contactsService.DeleteAsync(questionId);
+
+            return Redirect("/Contacts/AllQuestions");
         }
+
+        public async Task<IActionResult> Delete(int questionId)
+        {
+            await contactsService.DeleteAsync(questionId);
+
+            return Redirect("/Contacts/AllQuestions");
+        }
+
     }
 }

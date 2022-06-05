@@ -1,0 +1,14 @@
+﻿@using TheHotel.ViewModels
+
+@model MailQuestionResponseViewModel
+
+<div>
+    <h3>Вашето запитване относно @Model.Title:</h3>
+    <p>@Model.Text</p>
+</div>
+<hr />
+<div>
+    <h3>Отговор:</h3>
+    <p>@Model.FirstName, благодарим Ви, че се свързахте с нас.</p>
+    <p>@Model.Response</p>
+</div>

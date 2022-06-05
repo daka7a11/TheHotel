@@ -22,6 +22,17 @@ namespace TheHotel.Services.Contacts
             await questionsRepository.SaveChangesAsync();
         }
 
+        public async Task DeleteAsync(int questionId)
+        {
+            var question = questionsRepository.All().FirstOrDefault(x => x.Id == questionId);
+
+            if (question != null)
+            {
+                questionsRepository.Delete(question);
+                await questionsRepository.SaveChangesAsync();
+            }
+        }
+
         public IEnumerable<Question> GetAllQuestions()
         {
             return questionsRepository.All().ToList();
