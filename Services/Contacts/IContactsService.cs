@@ -14,5 +14,7 @@ namespace TheHotel.Services.Contacts
         Question GetById(int questionId);
 
         Task DeleteAsync(int questionId);
+
+        IEnumerable<T> GetAnsweredQuestions<T>();
     }
 }

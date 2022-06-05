@@ -111,5 +111,11 @@ namespace TheHotel.Controllers
             return Redirect("/Contacts/AllQuestions");
         }
 
+        public IActionResult AnsweredQuestions()
+        {
+            var answeredQuestions = contactsService.GetAnsweredQuestions<AnsweredQuestionViewModel>();
+
+            return View(answeredQuestions);
+        }
     }
 }

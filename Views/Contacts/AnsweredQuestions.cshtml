@@ -1,0 +1,66 @@
+﻿@using TheHotel.ViewModels.Contacts
+
+@model IEnumerable<AnsweredQuestionViewModel>
+
+@{
+    ViewData["Title"] = "Answered Questions";
+}
+
+@if (Model.Count() == 0)
+{
+    <h2 class="text-center text-light">Няма отговорени запитвания!</h2>
+}
+else
+{
+    <table class="table table-hover table-striped text-light" style="table-layout:fixed">
+        <tr class="text-center text-warning">
+            <th>Име</th>
+            <th>Имейл</th>
+            <th>Относно</th>
+            <th>Отговор на</th>
+            <th>Запитване</th>
+        </tr>
+        @foreach (var question in Model)
+        {
+            <tr class="text-center"
+                onmouseover="this.style.backgroundColor = 'orange'" 
+                onmouseout="this.style.backgroundColor = 'transparent'" 
+                onclick="window.location.href = '/Contacts/QuestionDetails?questionId=@question.Id'" 
+                style="cursor:pointer">
+                @if (question.FirstName.Length > 18)
+                {
+                    <td>@question.FirstName.Substring(0, 18) ...</td>
+                }
+                else
+                {
+                    <td>@question.FirstName</td>
+                }
+                @if (question.Email.Length > 18)
+                {
+                    <td>@question.Email.Substring(0, 18) ...</td>
+                }
+                else
+                {
+                    <td>@question.Email</td>
+                }
+                @if (question.Title.Length > 18)
+                {
+                    <td>@question.Title.Substring(0, 18) ...</td>
+                }
+                else
+                {
+                    <td>@question.Title</td>
+                }
+                <td>@question.DeletedOn.Value.ToLocalTime().ToString("g")</td>
+                @if (question.Text.Length > 18)
+                {
+                    <td>@question.Text.Substring(0, 18) ...</td>
+                }
+                else
+                {
+                    <td>@question.Text</td>
+                }
+            </tr>
+        }
+    </table>
+}

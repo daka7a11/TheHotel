@@ -216,6 +216,11 @@ namespace TheHotel.Controllers
         {
             var model = clientRoomsService.GetById<ReservationDetailsViewModel>(clientRoomId);
 
+            if (model == null)
+            {
+                return NotFound();
+            }
+
             return this.View(model);
         }
 

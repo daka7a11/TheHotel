@@ -46,6 +46,14 @@ namespace TheHotel.Services.Contacts
 
         }
 
+        public IEnumerable<T> GetAnsweredQuestions<T>()
+        {
+            return questionsRepository.AllWithDeleted()
+                .Where(x => x.IsDeleted == true)
+                .To<T>()
+                .ToList();
+        }
+
         public Question GetById(int questionId)
         {
             return questionsRepository.AllWithDeleted().FirstOrDefault(x => x.Id == questionId);
