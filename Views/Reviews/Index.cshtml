@@ -51,16 +51,26 @@
     </div>
 }
 
-<nav>
+@{
+    int prevPage = Model.Page - 1;
+    int currPage = Model.Page;
+    int nextPage = Model.Page + 1;
+}
+
+<nav class="m-4" style="position:page; left:0; right:0; text-align:center; bottom:0">
     <ul class="pagination justify-content-center">
-        <li class="page-item disabled">
-            <a class="page-link" href="#" tabindex="-1"><<</a>
-        </li>
-        <li class="page-item"><a class="page-link" href="#">@(Model.Page-1)</a></li>
-        <li class="page-item"><a class="page-link" href="#">@(Model.Page)</a></li>
-        <li class="page-item"><a class="page-link" href="#">@(Model.Page+1)</a></li>
+        @if (prevPage > 0)
+        {
+            <li class="page-item">
+                <a class="page-link" href="/Reviews?page=@prevPage">@Html.Raw("<<")</a>
+            </li>
+
+            <li class="page-item"><a class="page-link" href="/Reviews?page=@prevPage">@prevPage</a></li>
+        }
+        <li class="page-item"><a class="page-link" href="/Reviews?page=@currPage">@currPage</a></li>
+        <li class="page-item"><a class="page-link" href="/Reviews?page=@nextPage">@nextPage</a></li>
         <li class="page-item">
-            <a class="page-link" href="#">>></a>
+            <a class="page-link" href="/Reviews?page=@nextPage">@Html.Raw(">>")</a>
         </li>
     </ul>
 </nav>
