@@ -69,5 +69,8 @@
         public const string TitleLengthErrorMsg = "Заглавието трябва да съдържа поне 3 символа!";
 
         public const string SuccessfullySubmittedQuestion = "Вие успешно изпратихте запитване към нас!";
+
+        public const string SuccessfullyCreatedReview = "Благодарим Ви за вашия отзив!";
+
     }
 }

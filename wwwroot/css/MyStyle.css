@@ -26,3 +26,7 @@ div.restaurantWelcomeDiv {
 div.modal-body{
     color:black;
 }
+
+input, textarea {
+    opacity: 0.9;
+}

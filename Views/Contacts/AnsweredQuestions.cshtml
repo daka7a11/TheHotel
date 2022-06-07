@@ -23,34 +23,13 @@ else
         @foreach (var question in Model)
         {
             <tr class="text-center"
-                onmouseover="this.style.backgroundColor = 'orange'" 
-                onmouseout="this.style.backgroundColor = 'transparent'" 
-                onclick="window.location.href = '/Contacts/QuestionDetails?questionId=@question.Id'" 
-                style="cursor:pointer">
-                @if (question.FirstName.Length > 18)
-                {
-                    <td>@question.FirstName.Substring(0, 18) ...</td>
-                }
-                else
-                {
-                    <td>@question.FirstName</td>
-                }
-                @if (question.Email.Length > 18)
-                {
-                    <td>@question.Email.Substring(0, 18) ...</td>
-                }
-                else
-                {
-                    <td>@question.Email</td>
-                }
-                @if (question.Title.Length > 18)
-                {
-                    <td>@question.Title.Substring(0, 18) ...</td>
-                }
-                else
-                {
-                    <td>@question.Title</td>
-                }
+                onmouseover="this.style.backgroundColor = 'orange'"
+                onmouseout="this.style.backgroundColor = 'transparent'"
+                onclick="window.location.href = '/Contacts/QuestionDetails?questionId=@question.Id'"
+                style="cursor:pointer; overflow-wrap:break-word">
+                <td>@question.FirstName</td>
+                <td>@question.Email</td>
+                <td>@question.Title</td>
                 <td>@question.DeletedOn.Value.ToLocalTime().ToString("g")</td>
                 @if (question.Text.Length > 18)
                 {

@@ -1,0 +1,48 @@
+﻿@using TheHotel.ViewModels.Reviews
+
+@model CreateReviewViewModel
+
+<div>
+    <h1 class="text-light text-center m-4">Напишете отзив</h1>
+</div>
+
+<form method="post">
+    <div class="text-danger text-center border-danger" asp-validation-summary="ModelOnly"></div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group text-warning">
+                <label asp-for="FirstName">Име</label>
+                <input class="form-control" asp-for="FirstName" />
+                <span class="text-danger" asp-validation-for="FirstName"></span>
+            </div>
+            <div class="form-group text-warning">
+                <label asp-for="LastName">Фамилия</label>
+                <input class="form-control" asp-for="LastName" />
+                <span class="text-danger" asp-validation-for="LastName"></span>
+            </div>
+            <div class="form-group text-warning">
+                <label asp-for="Email">Имейл</label>
+                <input class="form-control" asp-for="Email" />
+                <span class="text-danger" asp-validation-for="Email"></span>
+            </div>
+
+        </div>
+        <div class="col-md-8">
+            <div class="form-group text-warning">
+                <label asp-for="Rating">Рейтинг</label>
+                <input class="form-control" asp-for="Rating" />
+                <span class="text-danger" asp-validation-for="Rating"></span>
+            </div>
+            <div class="form-group text-warning">
+                <label asp-for="Text">Отзив</label>
+                <textarea rows="5" class="form-control" asp-for="Text"></textarea>
+                <span class="text-danger" asp-validation-for="Text"></span>
+            </div>
+        </div>
+        <div class="col-md-12 text-center">
+            <div class="text-center">
+                <button type="submit" class="btn-lg btn-warning">Добави</button>
+            </div>
+        </div>
+    </div>
+</form>

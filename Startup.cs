@@ -19,6 +19,7 @@ using TheHotel.Services.ClientRooms;
 using TheHotel.Services.Clients;
 using TheHotel.Services.Contacts;
 using TheHotel.Services.Offers;
+using TheHotel.Services.Reviews;
 using TheHotel.Services.Rooms;
 using TheHotel.ViewModels;
 
@@ -78,6 +79,8 @@ namespace TheHotel
             services.AddTransient<IContactsService, ContactsService>();
 
             services.AddSingleton(new HttpClient());
+
+            services.AddTransient<IReviewsService, ReviewsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

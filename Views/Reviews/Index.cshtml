@@ -1,7 +1,66 @@
-﻿
+﻿@using TheHotel.ViewModels.Reviews
 
-
+@model IndexReviewsViewModel
 
 @{
     ViewData["Title"] = "Reviews";
 }
+
+<div>
+    @if (TempData["SuccessfullyCreatedReview"] != null)
+    {
+        <div id="ale" class="alert alert-success alert-dismissible fade show mt-2" role="alert">
+            <strong>@TempData["SuccessfullyCreatedReview"]</strong>
+            <button onclick="ale.style.display = 'none';" type="button" class=" bi-x-lg bg-success border-0 float-md-right" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+</div>
+
+<div>
+    <h1 class="text-center text-light m-4">Отзиви</h1>
+</div>
+
+<div class="row m-4">
+    <div class="col-md-6">
+        <h4 class="text-warning">
+            Средният рейтинг е @((Model.Reviews.Sum(x => x.Rating) * 1.00 / Model.Reviews.Count()).ToString("F1"))/5
+        </h4>
+    </div>
+    <div class="col-md-6">
+        <a class="btn btn-warning float-md-right" href="/Reviews/CreateReview">Напиши отзив</a>
+    </div>
+</div>
+
+@foreach (var review in Model.Reviews)
+{
+    <div class="row m-4">
+        <div class="col-md-4 border border-warning rounded">
+            <dl>
+                <dt>@review.FirstName @review.LastName</dt>
+            </dl>
+            <dl>
+                <dt>@review.Rating/5</dt>
+            </dl>
+            <dl>
+                <dt>@review.CreatedOn.ToLocalTime()</dt>
+            </dl>
+        </div>
+        <div class="col-md-8 border border-warning rounded">
+            <p style="overflow-wrap:break-word">@review.Text</p>
+        </div>
+    </div>
+}
+
+<nav>
+    <ul class="pagination justify-content-center">
+        <li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1"><<</a>
+        </li>
+        <li class="page-item"><a class="page-link" href="#">@(Model.Page-1)</a></li>
+        <li class="page-item"><a class="page-link" href="#">@(Model.Page)</a></li>
+        <li class="page-item"><a class="page-link" href="#">@(Model.Page+1)</a></li>
+        <li class="page-item">
+            <a class="page-link" href="#">>></a>
+        </li>
+    </ul>
+</nav>
