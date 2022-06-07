@@ -26,11 +26,20 @@ namespace TheHotel.Controllers
             }
 
             var reviews = reviewsService.Get5Reviews<ReviewsViewModel>(page);
+            var totalPages = reviewsService.GetTotalPages();
+            var averageRating = reviewsService.GetAverageRating();
+
+            if (page > totalPages)
+            {
+                return Redirect($"/Reviews?page={totalPages}");
+            }
 
             var model = new IndexReviewsViewModel
             {
                 Reviews = reviews,
-                Page = page,
+                CurrentPage = page,
+                TotalPages = totalPages,
+                AverageRating = averageRating,
             };
 
             return View(model);
@@ -44,6 +53,11 @@ namespace TheHotel.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateReview(CreateReviewViewModel model)
         {
+            if (model.Rating <= 0 || model.Rating > 5)
+            {
+                ModelState.AddModelError(string.Empty, GlobalConstants.InvalidRating);
+            }
+
             if (!ModelState.IsValid)
             {
                 return View(model);

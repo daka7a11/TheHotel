@@ -9,5 +9,9 @@ namespace TheHotel.Services.Reviews
         IEnumerable<T> Get5Reviews<T>(int page);
 
         Task AddAsync(CreateReviewViewModel model);
+
+        int GetTotalPages();
+
+        double GetAverageRating();
     }
 }

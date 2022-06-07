@@ -9,10 +9,10 @@
 <div>
     @if (TempData["SuccessfullyCreatedReview"] != null)
     {
-        <div id="ale" class="alert alert-success alert-dismissible fade show mt-2" role="alert">
-            <strong>@TempData["SuccessfullyCreatedReview"]</strong>
-            <button onclick="ale.style.display = 'none';" type="button" class=" bi-x-lg bg-success border-0 float-md-right" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
+    <div id="ale" class="alert alert-success alert-dismissible fade show mt-2" role="alert">
+        <strong>@TempData["SuccessfullyCreatedReview"]</strong>
+        <button onclick="ale.style.display = 'none';" type="button" class=" bi-x-lg bg-success border-0 float-md-right" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
     }
 </div>
 
@@ -23,7 +23,7 @@
 <div class="row m-4">
     <div class="col-md-6">
         <h4 class="text-warning">
-            Средният рейтинг е @((Model.Reviews.Sum(x => x.Rating) * 1.00 / Model.Reviews.Count()).ToString("F1"))/5
+            Средният рейтинг е @(Model.AverageRating.ToString("F1"))/5
         </h4>
     </div>
     <div class="col-md-6">
@@ -33,44 +33,53 @@
 
 @foreach (var review in Model.Reviews)
 {
-    <div class="row m-4">
-        <div class="col-md-4 border border-warning rounded">
-            <dl>
-                <dt>@review.FirstName @review.LastName</dt>
-            </dl>
-            <dl>
-                <dt>@review.Rating/5</dt>
-            </dl>
-            <dl>
-                <dt>@review.CreatedOn.ToLocalTime()</dt>
-            </dl>
-        </div>
-        <div class="col-md-8 border border-warning rounded">
-            <p style="overflow-wrap:break-word">@review.Text</p>
-        </div>
+<div class="row m-4">
+    <div class="col-md-4 border border-warning rounded">
+        <dl>
+            <dt>@review.FirstName @review.LastName</dt>
+        </dl>
+        <dl>
+            <dt class="d-inline-block">@review.Rating/5</dt>
+            <dd class="d-inline-block ml-4">
+                @for (int i = 0; i < review.Rating; i++)
+            {
+                <i class="bi bi-star-fill text-warning"></i>
+            }
+            </dd>
+        </dl>
+        <dl>
+            <dt>@review.CreatedOn.ToLocalTime()</dt>
+        </dl>
     </div>
+    <div class="col-md-8 border border-warning rounded">
+        <p style="overflow-wrap:break-word">@review.Text</p>
+    </div>
+</div>
 }
 
 @{
-    int prevPage = Model.Page - 1;
-    int currPage = Model.Page;
-    int nextPage = Model.Page + 1;
+    int prevPage = Model.CurrentPage - 1;
+    int currPage = Model.CurrentPage;
+    int nextPage = Model.CurrentPage + 1;
 }
 
 <nav class="m-4" style="position:page; left:0; right:0; text-align:center; bottom:0">
     <ul class="pagination justify-content-center">
         @if (prevPage > 0)
         {
-            <li class="page-item">
-                <a class="page-link" href="/Reviews?page=@prevPage">@Html.Raw("<<")</a>
-            </li>
+        <li class="page-item">
+            <a class="page-link" href="/Reviews?page=@prevPage">@Html.Raw("<<")</a>
+        </li>
 
-            <li class="page-item"><a class="page-link" href="/Reviews?page=@prevPage">@prevPage</a></li>
+        <li class="page-item"><a class="page-link" href="/Reviews?page=@prevPage">@prevPage</a></li>
         }
-        <li class="page-item"><a class="page-link" href="/Reviews?page=@currPage">@currPage</a></li>
+        <li class="page-item"><a class="page-link font-weight-bolder text-warning" href="/Reviews?page=@currPage">@currPage</a></li>
+        @if (nextPage <= Model.TotalPages)
+        {
         <li class="page-item"><a class="page-link" href="/Reviews?page=@nextPage">@nextPage</a></li>
         <li class="page-item">
             <a class="page-link" href="/Reviews?page=@nextPage">@Html.Raw(">>")</a>
         </li>
+        }
     </ul>
 </nav>

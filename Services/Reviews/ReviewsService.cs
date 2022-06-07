@@ -37,10 +37,23 @@ namespace TheHotel.Services.Reviews
         public IEnumerable<T> Get5Reviews<T>(int page)
         {
             return reviewsRepository.All()
+                .OrderByDescending(x => x.CreatedOn)
                 .Skip((page * 5) - 5)
                 .Take(5)
                 .To<T>()
                 .ToList();
+        }
+
+        public double GetAverageRating()
+        {
+            return reviewsRepository.All().Average(x => x.Rating);
+        }
+
+        public int GetTotalPages()
+        {
+            int totalReviews = reviewsRepository.All().Count();
+            int totalPages = (int)Math.Ceiling((decimal)totalReviews / 5);
+            return totalPages;
         }
 
         private async Task ReplaceAsync(Review review)

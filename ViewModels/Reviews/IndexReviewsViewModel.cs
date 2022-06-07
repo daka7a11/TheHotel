@@ -6,6 +6,10 @@ namespace TheHotel.ViewModels.Reviews
     {
         public IEnumerable<ReviewsViewModel> Reviews { get; set; }
 
-        public int Page { get; set; }
+        public int CurrentPage { get; set; }
+
+        public int TotalPages { get; set; }
+
+        public double AverageRating { get; set; }
     }
 }

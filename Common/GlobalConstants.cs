@@ -72,5 +72,6 @@
 
         public const string SuccessfullyCreatedReview = "Благодарим Ви за вашия отзив!";
 
+        public const string InvalidRating = "Моля въведете валиден рейтинг!";
     }
 }
