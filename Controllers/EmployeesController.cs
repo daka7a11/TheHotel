@@ -67,7 +67,22 @@ namespace TheHotel.Controllers
         {
             await employeesService.Delete(employeeId);
 
-            return Redirect("/Employees");
+            return Redirect($"/Employees/Details?employeeId={employeeId}");
+        }
+
+        public IActionResult Undelete()
+        {
+            var deletedEmployees = employeesService.GetDeletedEmployees<EmployeeViewModel>();
+
+            return View(deletedEmployees);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult>Undelete(string employeeId)
+        {
+            await employeesService.Undelete(employeeId);
+
+            return Redirect($"/Employees/Details?employeeId={employeeId}");
         }
     }
 }
