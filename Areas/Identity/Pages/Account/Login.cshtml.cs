@@ -78,6 +78,8 @@ namespace TheHotel.Areas.Identity.Pages.Account
 
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         
+            
+
             if (ModelState.IsValid)
             {
                 // This doesn't count login failures towards account lockout
@@ -85,6 +87,12 @@ namespace TheHotel.Areas.Identity.Pages.Account
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
+                    if ((await _userManager.FindByNameAsync(Input.Email)).IsDeleted)
+                    {
+                        ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                        return Page();
+                    }
+
                     _logger.LogInformation("User logged in.");
                     return LocalRedirect(returnUrl);
                 }

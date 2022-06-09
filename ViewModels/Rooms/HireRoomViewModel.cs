@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using TheHotel.Common;
 
 namespace TheHotel.ViewModels.Rooms
@@ -7,10 +8,12 @@ namespace TheHotel.ViewModels.Rooms
     {
         public int RoomId { get; set; }
 
-        [Required(ErrorMessage = "Personal Identity Number is required!")]
-        [MinLength(GlobalConstants.PINMinLegth, ErrorMessage = GlobalConstants.PersonalIdentityNumberErrorMsg)]
-        [MaxLength(GlobalConstants.PINMaxLegth, ErrorMessage = GlobalConstants.PersonalIdentityNumberErrorMsg)]
-        [Display(Name = "Personal Identity Number")]
+        [Required(ErrorMessage = GlobalConstants.RequiredPINErrorMsg)]
+        [MinLength(GlobalConstants.PINMinLegth,
+            ErrorMessage = GlobalConstants.PersonalIdentityNumberErrorMsg)]
+        [MaxLength(GlobalConstants.PINMaxLegth, 
+            ErrorMessage = GlobalConstants.PersonalIdentityNumberErrorMsg)]
+        [RegularExpression("[0-9]*", ErrorMessage = GlobalConstants.PersonalIdentityNumberErrorMsg)]
         public string PersonalIdentityNumber { get; set; }
     }
 }

@@ -22,9 +22,9 @@
 
         public const double RoomMaxPrice = 1000;
 
-        public const int PINMinLegth = 10;
+        public const int PINMinLegth = 9;
 
-        public const int PINMaxLegth = 12;
+        public const int PINMaxLegth = 10;
 
         public const int ClientNameMinLength = 3;
 
@@ -34,7 +34,7 @@
 
         public const int MessageTextMinLength = 10;
 
-        public const string PersonalIdentityNumberErrorMsg = "Value shoud be between 10 and 12 characters!";
+        public const string PersonalIdentityNumberErrorMsg = "Стойността трябва да е между 9 и 10 цифри!";
 
         public const string ClientNameLengthErrorMsg = "Value shoud be between 3 and 30 characters!";
 
@@ -73,5 +73,20 @@
         public const string SuccessfullyCreatedReview = "Благодарим Ви за вашия отзив!";
 
         public const string InvalidRating = "Моля въведете валиден рейтинг!";
+
+        public const string RequiredPINErrorMsg = "Полето ЕГН е задължително!";
+
+        public const string RequiredFirstNameErrorMsg = "Полето Име е задължително!";
+
+        public const string RequiredLastNameErrorMsg = "Полето Фамилия е задължително!";
+
+        public const string RequiredPhoneErrorMsg = "Полето Телефон е задължително!";
+
+        public const string RequiredEmailErrorMsg = "Полето Имейл е задължително!";
+
+        public const string RequiredAccommodationDateErrorMsg = "Датата на настаняване е задължителна!";
+
+        public const string RequiredDepartureDateErrorMsg = "Датата на напускане е задължителна!";
+
     }
 }

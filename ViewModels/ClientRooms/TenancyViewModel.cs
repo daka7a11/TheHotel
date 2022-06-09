@@ -10,41 +10,36 @@ namespace TheHotel.ViewModels.Clients
 {
     public class TenancyViewModel : IValidatableObject, IMapFrom<Client>, IMapTo<Client>, IMapTo<ClientRoom>, IHaveCustomMappings
     {
-        [Required]
+        [Required(ErrorMessage = GlobalConstants.RequiredFirstNameErrorMsg)]
         [MinLength(GlobalConstants.ClientNameMinLength, ErrorMessage = GlobalConstants.ClientNameLengthErrorMsg)]
         [MaxLength(GlobalConstants.ClientNameMaxLength, ErrorMessage = GlobalConstants.ClientNameLengthErrorMsg)]
-        [Display(Name = "First name")]
         public string FirstName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = GlobalConstants.RequiredLastNameErrorMsg)]
         [MinLength(GlobalConstants.ClientNameMinLength, ErrorMessage = GlobalConstants.ClientNameLengthErrorMsg)]
         [MaxLength(GlobalConstants.ClientNameMaxLength, ErrorMessage = GlobalConstants.ClientNameLengthErrorMsg)]
-        [Display(Name = "Last name")]
         public string LastName { get; set; }
 
-        [Required]
+
         [MinLength(GlobalConstants.PINMinLegth, ErrorMessage = GlobalConstants.PersonalIdentityNumberErrorMsg)]
         [MaxLength(GlobalConstants.PINMaxLegth, ErrorMessage = GlobalConstants.PersonalIdentityNumberErrorMsg)]
-        [Display(Name = "Personal identity number")]
         public string PersonalIdentityNumber { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = GlobalConstants.RequiredPhoneErrorMsg)]
         public string Phone { get; set; }
 
+        [Required(ErrorMessage = GlobalConstants.RequiredEmailErrorMsg)]
         [EmailAddress]
         public string Email { get; set; }
 
-        [Display(Name = "Room id")]
         public int RoomId { get; set; }
 
-        [Required(ErrorMessage = "Accommodation date is required!")]
+        [Required(ErrorMessage = GlobalConstants.RequiredAccommodationDateErrorMsg)]
         [DataType(DataType.Date)]
-        [Display(Name = "Accommodation date")]
         public DateTime? AccommodationDate { get; set; }
 
-        [Required(ErrorMessage = "Departure date is required!")]
+        [Required(ErrorMessage = GlobalConstants.RequiredDepartureDateErrorMsg)]
         [DataType(DataType.Date)]
-        [Display(Name = "Departure date")]
         public DateTime? DepartureDate { get; set; }
 
 

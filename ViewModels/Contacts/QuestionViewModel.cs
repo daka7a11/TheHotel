@@ -7,22 +7,23 @@ namespace TheHotel.ViewModels.Contacts
 {
     public class QuestionViewModel : IMapTo<Question>
     {
-        [Required]
+        [Required(ErrorMessage = GlobalConstants.RequiredFirstNameErrorMsg)]
         [MinLength(GlobalConstants.ClientNameMinLength)]
         [MaxLength(GlobalConstants.ClientNameMaxLength)]
         public string FirstName { get; set; }
 
+        [Required(ErrorMessage = GlobalConstants.RequiredEmailErrorMsg)]
         [EmailAddress]
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = GlobalConstants.RequiredPhoneErrorMsg)]
         public string Phone { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = GlobalConstants.RequiredPropertyErrorMsg)]
         [MinLength(GlobalConstants.TitleMinLength, ErrorMessage = GlobalConstants.TitleLengthErrorMsg)]
         public string Title { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = GlobalConstants.RequiredPropertyErrorMsg)]
         [MinLength(GlobalConstants.MessageTextMinLength, ErrorMessage = GlobalConstants.MessageLengthErrorMsg)]
         public string Text { get; set; }
     }

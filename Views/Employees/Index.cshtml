@@ -1,0 +1,36 @@
+﻿@using TheHotel.ViewModels.Employees
+
+@model IEnumerable<EmployeeViewModel>
+
+@{
+    ViewData["Title"] = "Employees";
+}
+
+<div>
+    <h1 class="text-center text-light m-4">Служители</h1>
+</div>
+
+<table class="table table-hover table-striped table-responsive-md text-light">
+    <thead>
+        <tr class="text-center">
+            <th>Име</th>
+            <th>Фамилия</th>
+            <th>Роля</th>
+            <th>Регистриран на</th>
+        </tr>
+    </thead>
+    @foreach (var employee in Model.OrderBy(x => x.Role))
+    {
+        <tbody>
+            <tr class="text-center"
+                onclick="window.location.href = '/Employees/Details?employeeId=@employee.Id'"
+                onmouseover="this.style.backgroundColor = 'orange'"
+                onmouseout="this.style.backgroundColor = 'transparent'">
+                <td>@employee.FirstName</td>
+                <td>@employee.LastName</td>
+                <td>@employee.Role</td>
+                <td>@employee.CreatedOn</td>
+            </tr>
+        </tbody>
+    }
+</table>

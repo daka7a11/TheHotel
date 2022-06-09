@@ -1,0 +1,92 @@
+﻿@using TheHotel.ViewModels.Employees
+
+@model EmployeeViewModel
+
+@{
+    ViewData["Title"] = "Employee Details";
+}
+
+<div>
+    <div class="text-center">
+        <h1 class="text-light m-4">Служител</h1>
+    </div>
+    <div class="row m-4">
+        <a class="btn btn-warning m-2 text-info" href="/Employees/Edit?employeeId=@Model.Id">Редактиране</a>
+        @if (Model.DeletedOn == null)
+        {
+            <a class="btn btn-danger m-2 text-light" onclick="DeleteModal" data-toggle="modal" data-target="#DeleteModal" style="cursor:pointer">Изтриване</a>
+        }
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div>
+                <dl class="row m-1">
+                    <dt class="col-md-4 text-warning">Име:</dt>
+                    <dd class="col-md-6">@Model.FirstName</dd>
+                </dl>
+                <dl class="row m-1">
+                    <dt class="col-md-4 text-warning">Фамилия:</dt>
+                    <dd class="col-md-6">@Model.LastName</dd>
+                </dl>
+                <dl class="row m-1">
+                    <dt class="col-md-4 text-warning">ЕГН:</dt>
+                    <dd class="col-md-6">@Model.PersonalIdentityNumber</dd>
+                </dl>
+                <dl class="row m-1">
+                    <dt class="col-md-4 text-warning">Имейл:</dt>
+                    <dd class="col-md-6">@Model.Email</dd>
+                </dl>
+                <dl class="row m-1">
+                    <dt class="col-md-4 text-warning">Телефон:</dt>
+                    <dd class="col-md-6">@Model.Phone</dd>
+                </dl>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div>
+                <dl class="row m-1">
+                    <dt class="col-md-6 text-warning">Регистриран на:</dt>
+                    <dd class="col-md-6">@Model.CreatedOn</dd>
+                </dl>
+                @if (Model.ModifiedOn != null)
+                {
+                    <dl class="row m-1">
+                        <dt class="col-md-6 text-warning">Последно редактиран на:</dt>
+                        <dd class="col-md-6">@Model.ModifiedOn</dd>
+                    </dl>
+                }
+                @if (Model.DeletedOn != null)
+                {
+                    <dl class="row m-1">
+                        <dt class="col-md-6 text-warning">Изтрит на:</dt>
+                        <dd class="col-md-6">@Model.DeletedOn</dd>
+                    </dl>
+                }
+                <dl class="row m-1">
+                    <dt class="col-md-6 text-warning">Приети резервации:</dt>
+                    <dd class="col-md-6">@Model.AcceptedReservation</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-center" id="exampleModalLabel">Потвърждение</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Сигурни ли сте, че искате да ИЗТРИЕТЕ служителя?
+            </div>
+            <div class="modal-footer">
+                <button id="deleteBtn" class="btn btn-success" onclick=" window.location.href = '/Employees/Delete?employeeId=@Model.Id'">Да, изтривам</button>
+                <button type="button" class="btn btn-light" data-dismiss="modal">Отказ</button>
+            </div>
+        </div>
+    </div>
+</div>
