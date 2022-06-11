@@ -7,8 +7,8 @@
 }
 else
 {
-    <table class="table table-hover table-striped">
-        <tr class="text-center text-light">
+    <table class="table table-hover table-striped text-light">
+        <tr class="text-center text-warning">
             <th>Име</th>
             <th>Отстъпка</th>
             <th>Начална дата</th>
@@ -17,7 +17,7 @@ else
         </tr>
         @foreach (var offer in Model)
         {
-            <tr class="text-center text-light">
+            <tr class="text-center">
                 <td>@offer.Name</td>
                 <td>@offer.Discount</td>
                 <td>@offer.StartDate</td>

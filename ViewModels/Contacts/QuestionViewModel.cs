@@ -7,7 +7,7 @@ namespace TheHotel.ViewModels.Contacts
 {
     public class QuestionViewModel : IMapTo<Question>
     {
-        [Required(ErrorMessage = GlobalConstants.RequiredFirstNameErrorMsg)]
+        [Required(ErrorMessage = GlobalConstants.RequiredNameErrorMsg)]
         [MinLength(GlobalConstants.ClientNameMinLength)]
         [MaxLength(GlobalConstants.ClientNameMaxLength)]
         public string FirstName { get; set; }
@@ -19,11 +19,11 @@ namespace TheHotel.ViewModels.Contacts
         [Required(ErrorMessage = GlobalConstants.RequiredPhoneErrorMsg)]
         public string Phone { get; set; }
 
-        [Required(ErrorMessage = GlobalConstants.RequiredPropertyErrorMsg)]
+        [Required(ErrorMessage = GlobalConstants.RequiredTitleErrorMsg)]
         [MinLength(GlobalConstants.TitleMinLength, ErrorMessage = GlobalConstants.TitleLengthErrorMsg)]
         public string Title { get; set; }
 
-        [Required(ErrorMessage = GlobalConstants.RequiredPropertyErrorMsg)]
+        [Required(ErrorMessage = GlobalConstants.RequiredQuesitonErrorMsg)]
         [MinLength(GlobalConstants.MessageTextMinLength, ErrorMessage = GlobalConstants.MessageLengthErrorMsg)]
         public string Text { get; set; }
     }

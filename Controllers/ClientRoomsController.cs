@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AspNetCore.ReCaptcha;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -61,6 +62,7 @@ namespace TheHotel.Controllers
             return this.View(model);
         }
 
+        [ValidateReCaptcha(ErrorMessage = GlobalConstants.InvalidRecaptchaErrorMsg)]
         [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> Tenancy(TenancyViewModel model)

@@ -10,7 +10,7 @@ namespace TheHotel.ViewModels.Offers
     {
         public int Id { get; set; }
 
-        [Required(ErrorMessage = GlobalConstants.RequiredPropertyErrorMsg)]
+        [Required(ErrorMessage = GlobalConstants.RequiredNameErrorMsg)]
         public string Name { get; set; }
 
         public DateTime StartDate { get; set; }
@@ -19,10 +19,9 @@ namespace TheHotel.ViewModels.Offers
 
         public int Discount { get; set; }
 
-        [Required(ErrorMessage = GlobalConstants.RequiredPropertyErrorMsg)]
+        [Required(ErrorMessage = GlobalConstants.RequiredDescriptionErrorMsg)]
         public string Description { get; set; }
 
-        [Required(ErrorMessage = GlobalConstants.RequiredPropertyErrorMsg)]
         public string ImageUrl { get; set; }
     }
 }

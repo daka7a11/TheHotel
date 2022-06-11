@@ -17,18 +17,15 @@ else
     </div>
 
     <table class="table table-hover table-striped table-responsive-md text-light">
-        <thead>
-            <tr class="text-center">
+            <tr class="text-center text-warning">
                 <th>Име</th>
                 <th>Фамилия</th>
                 <th>Роля</th>
                 <th>Регистриран на</th>
                 <th>Изтрит на</th>
             </tr>
-        </thead>
         @foreach (var employee in Model.OrderBy(x => x.Role))
         {
-            <tbody>
                 <tr class="text-center"
                     onclick="window.location.href = '/Employees/Details?employeeId=@employee.Id'"
                     onmouseover="this.style.backgroundColor = 'orange'"
@@ -40,7 +37,6 @@ else
                     <td>@employee.CreatedOn</td>
                     <td>@employee.DeletedOn</td>
                 </tr>
-            </tbody>
         }
     </table>
 }

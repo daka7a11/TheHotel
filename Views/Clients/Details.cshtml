@@ -36,9 +36,8 @@
         <br>
         <h2 class="text-center text-light">Резервирани стаи</h2>
         <div>
-            <table class="table table-hover table-striped table-responsive-md">
-                <thead>
-                    <tr class="text-center bg-secondary text-light shadow">
+            <table class="table table-hover table-striped table-responsive-md text-light">
+                    <tr class="text-center text-warning">
                         <th>№</th>
                         <th>Вид</th>
                         <th>Етаж</th>
@@ -48,11 +47,9 @@
                         <th>Дата на напускане</th>
                         <th>Нощувки</th>
                     </tr>
-                </thead>
                 @foreach (var item in Model.Rooms.Where(x => x.IsConfirmed == true).OrderByDescending(x => x.AccommodationDate))
                 {
                     var totalDays = (int)(item.DepartureDate - item.AccommodationDate).TotalDays;
-                    <tbody class="text-light">
                         <tr onmouseover="this.style.backgroundColor = 'orange'" 
                             onmouseout="this.style.backgroundColor = 'transparent'" 
                             class="text-center" onclick="window.location.href = '/ClientRooms/ReservationDetails?clientRoomId=' + '@item.Id'" 
@@ -66,7 +63,6 @@
                             <td class="font-weight-bold">@item.DepartureDate.ToLocalTime().ToString("dd.MM.yyyy")</td>
                             <td>@totalDays</td>
                         </tr>
-                    </tbody>
                 }
             </table>
         </div>

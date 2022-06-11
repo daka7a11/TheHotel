@@ -7,8 +7,8 @@
 }
 else
 {
-    <table class="table table-hover table-striped shadow">
-        <tr class="text-center bg-secondary text-light shadow">
+    <table class="table table-hover table-striped text-light">
+        <tr class="text-center text-warning">
             <th>Име</th>
             <th>Фамилия</th>
             <th>ЕГН</th>
@@ -19,7 +19,7 @@ else
         </tr>
         @foreach (var client in Model)
         {
-            <tr class="text-center text-light">
+            <tr class="text-center">
                 <td>@client.FirstName</td>
                 <td>@client.LastName</td>
                 <td>@client.PersonalIdentityNumber</td>

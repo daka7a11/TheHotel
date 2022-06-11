@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AspNetCore.ReCaptcha;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using TheHotel.Common;
 using TheHotel.Data.Models;
@@ -35,6 +37,7 @@ namespace TheHotel.Controllers
             return View();
         }
 
+        [ValidateReCaptcha(ErrorMessage = GlobalConstants.InvalidRecaptchaErrorMsg)]
         [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> Index(QuestionViewModel model)

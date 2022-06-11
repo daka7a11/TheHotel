@@ -46,12 +46,14 @@ namespace TheHotel.Services.Reviews
 
         public double GetAverageRating()
         {
-            return reviewsRepository.All().Average(x => x.Rating);
+            return reviewsRepository.All()
+                .Average(x => x.Rating);
         }
 
         public int GetTotalPages()
         {
-            int totalReviews = reviewsRepository.All().Count();
+            int totalReviews = reviewsRepository.All()
+                .Count();
             int totalPages = (int)Math.Ceiling((decimal)totalReviews / 5);
             return totalPages;
         }

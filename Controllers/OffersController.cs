@@ -41,7 +41,7 @@ namespace TheHotel.Controllers
 
             await offersService.AddAsync(model);
 
-            return Redirect("/");
+            return Redirect($"/Offers");
         }
 
         public IActionResult Details(int offerId)

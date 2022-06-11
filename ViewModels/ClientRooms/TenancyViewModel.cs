@@ -10,7 +10,7 @@ namespace TheHotel.ViewModels.Clients
 {
     public class TenancyViewModel : IValidatableObject, IMapFrom<Client>, IMapTo<Client>, IMapTo<ClientRoom>, IHaveCustomMappings
     {
-        [Required(ErrorMessage = GlobalConstants.RequiredFirstNameErrorMsg)]
+        [Required(ErrorMessage = GlobalConstants.RequiredNameErrorMsg)]
         [MinLength(GlobalConstants.ClientNameMinLength, ErrorMessage = GlobalConstants.ClientNameLengthErrorMsg)]
         [MaxLength(GlobalConstants.ClientNameMaxLength, ErrorMessage = GlobalConstants.ClientNameLengthErrorMsg)]
         public string FirstName { get; set; }

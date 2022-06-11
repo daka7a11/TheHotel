@@ -60,7 +60,11 @@
 
         public const string OfferDateValidateErrorMsg = "Датата на изтичане на офертата не може да е по-малка или равна на началната дата!";
 
-        public const string RequiredPropertyErrorMsg = "Това поле е задължително!";
+        public const string RequiredTitleErrorMsg = "Полето заглавие е задължително!";
+
+        public const string RequiredQuesitonErrorMsg = "Полето запитване е задължително!";
+
+        public const string RequiredReviewErrorMsg = "Полето отзив е задължително!";
 
         public const string InvalidCaptchaErrorMsg = "Моля въведете валиден код!";
 
@@ -76,17 +80,23 @@
 
         public const string RequiredPINErrorMsg = "Полето ЕГН е задължително!";
 
-        public const string RequiredFirstNameErrorMsg = "Полето Име е задължително!";
+        public const string RequiredNameErrorMsg = "Полето име е задължително!";
 
-        public const string RequiredLastNameErrorMsg = "Полето Фамилия е задължително!";
+        public const string RequiredLastNameErrorMsg = "Полето фамилия е задължително!";
 
-        public const string RequiredPhoneErrorMsg = "Полето Телефон е задължително!";
+        public const string RequiredPhoneErrorMsg = "Полето телефон е задължително!";
 
-        public const string RequiredEmailErrorMsg = "Полето Имейл е задължително!";
+        public const string RequiredEmailErrorMsg = "Полето имейл е задължително!";
+
+        public const string RequiredDescriptionErrorMsg = "Полето описание е задължително!";
 
         public const string RequiredAccommodationDateErrorMsg = "Датата на настаняване е задължителна!";
 
         public const string RequiredDepartureDateErrorMsg = "Датата на напускане е задължителна!";
+
+        public const string InvalidRecaptchaErrorMsg = "Моля потвърдете, че не сте робот!";
+
+        public const string RequiredPropertyErrorMsg = "Полето е задължително!";
 
     }
 }

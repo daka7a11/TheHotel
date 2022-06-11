@@ -7,7 +7,7 @@ namespace TheHotel.ViewModels.Reviews
 {
     public class CreateReviewViewModel : IMapTo<Review>
     {
-        [Required(ErrorMessage = GlobalConstants.RequiredFirstNameErrorMsg)]
+        [Required(ErrorMessage = GlobalConstants.RequiredNameErrorMsg)]
         [MinLength(GlobalConstants.ClientNameMinLength)]
         [MaxLength(GlobalConstants.ClientNameMaxLength)]
         public string FirstName { get; set; }
@@ -23,7 +23,7 @@ namespace TheHotel.ViewModels.Reviews
 
         public int Rating { get; set; }
 
-        [Required(ErrorMessage = GlobalConstants.RequiredPropertyErrorMsg)]
+        [Required(ErrorMessage = GlobalConstants.RequiredReviewErrorMsg)]
         [MinLength(GlobalConstants.MessageTextMinLength, ErrorMessage = GlobalConstants.MessageLengthErrorMsg)]
         public string Text { get; set; }
     }

@@ -67,25 +67,22 @@
     @if (Model.HireDates.Where(x => x.IsConfirmed == true && x.IsDeleted == false).Count() > 0 
         && (User.IsInRole(GlobalConstants.AdministratorRole) || User.IsInRole(GlobalConstants.ReceptionistRole)))
     {
-        <h4 class="text-center text-light">Всички наети дати</h4>
+        <h4 class="text-center text-light m-4">Всички наети дати</h4>
         <div>
-            <table class="table table-hover table-striped table-responsive-md shadow">
-                <thead>
-                    <tr class="text-center bg-secondary text-light shadow">
+            <table class="table table-hover table-striped table-responsive-md text-light">
+                    <tr class="text-center text-warning">
                         <th>Пълно име</th>
                         <th>ЕГН</th>
                         <th>Дата на настаняване</th>
                         <th>Дата на напускане</th>
                         <th>Нощувки</th>
                     </tr>
-                </thead>
                 @foreach (var item in Model.HireDates
                     .Where(x => x.IsConfirmed)
                     .Where(x => x.IsDeleted == false)
                     .OrderByDescending(x => x.AccommodationDate))
                 {
                     int totalDays = (int)item.DepartureDate.Subtract(item.AccommodationDate).TotalDays;
-                    <tbody>
                         <tr onmouseover="this.style.backgroundColor = 'orange'" 
                             onmouseout="this.style.backgroundColor = 'transparent'" 
                             class="text-center text-light" 
@@ -97,7 +94,6 @@
                             <td class="font-weight-bold">@item.DepartureDate.ToLocalTime().ToString("dd.MM.yyyy")</td>
                             <td>@totalDays</td>
                         </tr>
-                    </tbody>
                 }
             </table>
         </div>

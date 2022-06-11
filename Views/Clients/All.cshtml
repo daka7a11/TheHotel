@@ -15,9 +15,8 @@
 <h1 class="text-center text-light m-4">Клиенти</h1>
 @if (Model.Any())
 {
-    <table class="table table-hover table-striped table-responsive-md text-light">
-        <thead class="bg-secondary ">
-            <tr class="text-center">
+    <table class="table table-hover table-striped text-light">
+            <tr class="text-center text-warning">
                 <th>Име</th>
                 <th>Фамилия</th>
                 <th>ЕГН</th>
@@ -25,12 +24,11 @@
                 <th>Имейл</th>
                 <th colspan="2" class="border-right-0">Брой наети стаи</th>
             </tr>
-        </thead>
         @foreach (var item in Model.OrderByDescending(x => x.Rooms.OrderByDescending(y => y.AccommodationDate).FirstOrDefault()?.AccommodationDate))
         {
-            <tbody>
                 <tr onmouseover="this.style.color = 'orange'" 
-                    onmouseout="this.style.color = 'white'" class="text-center">
+                    onmouseout="this.style.color = 'white'" 
+                    class="text-center">
                     <td>@item.FirstName</td>
                     <td>@item.LastName</td>
                     <td>@item.PersonalIdentityNumber</td>
@@ -43,7 +41,6 @@
                         </div>
                     </td>
                 </tr>
-            </tbody>
         }
     </table>
 }

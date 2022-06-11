@@ -1,4 +1,5 @@
 ﻿@using TheHotel.ViewModels.Reviews
+@using AspNetCore.ReCaptcha
 
 @model CreateReviewViewModel
 
@@ -7,7 +8,7 @@
 </div>
 
 <form method="post">
-    <div class="text-danger text-center border-danger" asp-validation-summary="ModelOnly"></div>
+    <div class="text-danger text-center border-danger" asp-validation-summary="All"></div>
     <div class="row">
         <div class="col-md-4">
             <div class="form-group text-warning">
@@ -51,6 +52,9 @@
             </div>
         </div>
         <div class="col-md-12 text-center">
+            <div class="form-group d-inline-block m-2">
+                @Html.ReCaptcha()
+            </div>
             <div class="text-center">
                 <button type="submit" class="btn-lg btn-warning">Добави</button>
             </div>

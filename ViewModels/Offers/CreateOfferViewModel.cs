@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using TheHotel.Common;
@@ -10,17 +9,18 @@ namespace TheHotel.ViewModels.Offers
 {
     public class CreateOfferViewModel : IValidatableObject,IMapFrom<Offer> , IMapTo<Offer>
     {
-        [Required(ErrorMessage = GlobalConstants.RequiredPropertyErrorMsg)]
+        public int Id { get; set; }
+
+        [Required(ErrorMessage = GlobalConstants.RequiredNameErrorMsg)]
         public string Name { get; set; }
 
-        [Required(ErrorMessage = GlobalConstants.RequiredPropertyErrorMsg)]
+        [Required(ErrorMessage = GlobalConstants.RequiredDescriptionErrorMsg)]
         public string Description { get; set; }
 
         public DateTime StartDate { get; set; }
 
         public DateTime? EndDate { get; set; } = null;
 
-        [Required(ErrorMessage = GlobalConstants.RequiredPropertyErrorMsg)]
         public string ImageUrl { get; set; }
 
         public int Discount { get; set; }

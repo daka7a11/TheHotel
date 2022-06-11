@@ -1,4 +1,5 @@
 ﻿@using TheHotel.ViewModels.Contacts
+@using AspNetCore.ReCaptcha
 
 @model QuestionViewModel
 
@@ -32,7 +33,10 @@
             <div class="text-center border-bottom border-warning">
                 <h3 class="text-warning">Свържете се с нас</h3>
             </div>
+            <div class="text-center text-danger font-weight-bold m-2" asp-validation-summary="All"></div>
             <div class="row">
+
+
                 <div class="col-md-4">
                     <div class="form-group">
                         <label asp-for="FirstName">Име</label>
@@ -63,8 +67,13 @@
                     </div>
                 </div>
             </div>
-            <div class="text-center">
-                <button class="btn btn-warning btn-lg m-2" type="submit">Изпрати запитване</button>
+            <div class="row m-2">
+                <div class="form-group d-inline-block m-2">
+                    @Html.ReCaptcha()
+                </div>
+                <div class="text-center d-inline-block m-2">
+                    <button class="btn btn-warning btn-lg m-2" type="submit">Изпрати запитване</button>
+                </div>
             </div>
         </form>
     </div>

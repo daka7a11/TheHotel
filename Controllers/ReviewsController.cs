@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AspNetCore.ReCaptcha;
+using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using TheHotel.Common;
 using TheHotel.Data.Models;
@@ -27,9 +29,13 @@ namespace TheHotel.Controllers
 
             var reviews = reviewsService.Get5Reviews<ReviewsViewModel>(page);
             var totalPages = reviewsService.GetTotalPages();
-            var averageRating = reviewsService.GetAverageRating();
+            double averageRating = 0;
+            if (reviews.Count() > 0)
+            {
+                averageRating = reviewsService.GetAverageRating();
+            }
 
-            if (page > totalPages)
+            if (page > totalPages && totalPages > 0)
             {
                 return Redirect($"/Reviews?page={totalPages}");
             }
@@ -50,6 +56,7 @@ namespace TheHotel.Controllers
             return View();
         }
 
+        [ValidateReCaptcha(ErrorMessage = GlobalConstants.InvalidRecaptchaErrorMsg)]
         [HttpPost]
         public async Task<IActionResult> CreateReview(CreateReviewViewModel model)
         {

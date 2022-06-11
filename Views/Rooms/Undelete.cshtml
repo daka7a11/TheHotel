@@ -4,12 +4,12 @@
 
 @if (Model.Count == 0)
 {
-    <h2 class="text-center text-light">Няма изтрити стаи!</h2>
+    <h2 class="text-center text-light m-4">Няма изтрити стаи!</h2>
 }
 else
 {
-    <table class="table table-hover table-striped shadow">
-        <tr class="text-center bg-secondary text-light shadow">
+    <table class="table table-hover table-striped text-light m-4">
+        <tr class="text-center text-warning">
             <th>№</th>
             <th>Размер</th>
             <th>Етаж</th>
@@ -20,7 +20,9 @@ else
         </tr>
         @foreach (var room in Model)
         {
-            <tr class="text-center text-light">
+            <tr class="text-center"
+                onmouseover="this.style.color = 'orange'"
+                onmouseout="this.style.color = 'white'">
                 <td>@room.Id</td>
                 <td>@room.Size m&sup2;</td>
                 <td>@room.Floor</td>

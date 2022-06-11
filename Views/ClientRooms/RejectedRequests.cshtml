@@ -14,8 +14,8 @@ else
 {
     <h2 class="text-center text-light">Отхвърлени заявки</h2>
 
-    <table class="table table-hover table-striped shadow">
-        <tr class="text-center bg-secondary text-light shadow">
+    <table class="table table-hover table-striped text-light">
+        <tr class="text-center text-warning">
             <th>Име</th>
             <th>Фамилия</th>
             <th>Стая №</th>
@@ -26,7 +26,7 @@ else
         </tr>
         @foreach (var request in Model.OrderByDescending(x => x.DeletedOn))
         {
-            <tr class="text-center text-light"
+            <tr class="text-center"
                 onclick="window.location.href = '/ClientRooms/ReservationDetails?clientRoomId=@request.Id'"
                 onmouseover="this.style.backgroundColor='orange'"
                 onmouseout="this.style.backgroundColor='transparent'"
