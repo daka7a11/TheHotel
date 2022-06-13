@@ -141,33 +141,41 @@ namespace TheHotel.Controllers
 
             await this.clientRoomsService.AddAsync(clientRoom);
 
-            if (isEmployee)
-            {
-                return this.Redirect($"/ClientRooms/ReservationDetails?clientRoomId={clientRoom.Id}");
-
-                //TODO: Notify client with mail that reservation is successfuly created.
-            }
-
             var reservationModel = AutoMapperConfig.MapperInstance.Map<MailReservationViewModel>(clientRoom);
             reservationModel.TotalDiscount = offersService.GetTotalDiscount(clientRoom);
             reservationModel.TotalPrice = ((int)(clientRoom.DepartureDate - clientRoom.AccommodationDate).TotalDays * clientRoom.Room.Price) - reservationModel.TotalDiscount;
 
-            var mailBody = await renderService.RenderToStringAsync("MailReservation", reservationModel);
+            string mailBody = string.Empty;
 
             MailRequest mailRequest = new MailRequest()
             {
                 ToEmail = currClient.Email,
-                Subject = GlobalConstants.ReservationRequest,
-                Body = mailBody,
             };
 
-            await mailService.SendEmailAsync(mailRequest);
+            if (isEmployee)
+            {
+                mailBody = await renderService.RenderToStringAsync("MailReservationConfirmed", reservationModel);
 
-            TempData.Add("SuccessfullyRequest", currClient.Email);
+                mailRequest.Subject = GlobalConstants.ReservationAccepted;
+                mailRequest.Body = mailBody;
 
-            var a = TempData["SuccessfullyRequest"];
+                await mailService.SendEmailAsync(mailRequest);
 
-            return this.Redirect($"/");
+                return this.Redirect($"/ClientRooms/ReservationDetails?clientRoomId={clientRoom.Id}");
+            }
+            else
+            {
+                mailBody = await renderService.RenderToStringAsync("MailRequestReservation", reservationModel);
+
+                mailRequest.Subject = GlobalConstants.ReservationRequest;
+                mailRequest.Body = mailBody;
+
+                await mailService.SendEmailAsync(mailRequest);
+
+                TempData.Add("SuccessfullyRequest", currClient.Email);
+
+                return this.Redirect("/");
+            }
         }
 
         public IActionResult RoomRequests()
@@ -201,6 +209,21 @@ namespace TheHotel.Controllers
 
             await clientRoomsService.ConfirmRequestAsync(clientRoomId, employeeId);
 
+            var reservationModel = AutoMapperConfig.MapperInstance.Map<MailReservationViewModel>(clientRoom);
+            reservationModel.TotalDiscount = offersService.GetTotalDiscount(clientRoom);
+            reservationModel.TotalPrice = ((int)(clientRoom.DepartureDate - clientRoom.AccommodationDate).TotalDays * clientRoom.Room.Price) - reservationModel.TotalDiscount;
+
+            string mailBody = await renderService.RenderToStringAsync("MailReservationConfirmed", reservationModel);
+
+            MailRequest mailRequest = new MailRequest()
+            {
+                ToEmail = clientRoom.Client.Email,
+                Subject = GlobalConstants.ReservationAccepted,
+                Body = mailBody,
+            };
+
+            await mailService.SendEmailAsync(mailRequest);
+
             return this.Redirect($"/Rooms/Details?roomId={room.Id}");
 
         }
@@ -211,6 +234,24 @@ namespace TheHotel.Controllers
             var employeeId = userManager.GetUserId(User);
 
             await clientRoomsService.DeleteRequestAsync(clientRoomId, employeeId);
+
+            var clientRoom = clientRoomsService.GetById(clientRoomId);
+
+            var reservationModel = AutoMapperConfig.MapperInstance.Map<MailReservationViewModel>(clientRoom);
+            reservationModel.TotalDiscount = offersService.GetTotalDiscount(clientRoom);
+            reservationModel.TotalPrice = ((int)(clientRoom.DepartureDate - clientRoom.AccommodationDate).TotalDays * clientRoom.Room.Price) - reservationModel.TotalDiscount;
+
+            string mailBody = await renderService.RenderToStringAsync("MailReservationDeclined", reservationModel);
+
+            MailRequest mailRequest = new MailRequest()
+            {
+                ToEmail = clientRoom.Client.Email,
+                Subject = GlobalConstants.ReservationDeclined,
+                Body = mailBody,
+            };
+
+            await mailService.SendEmailAsync(mailRequest);
+
             return this.RedirectToAction(nameof(RoomRequests));
         }
 

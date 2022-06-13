@@ -6,7 +6,7 @@
     ViewData["Title"] = "Question Details";
 }
 
-<h1 class="text-light text-center m-4">Запитване</h1>
+<h1 class="text-light text-center m-5">Запитване</h1>
 
 @if (Model.DeletedOn == null)
 {
@@ -44,7 +44,7 @@
 @if (Model.DeletedOn == null)
 {
     <div>
-        <h3 class="text-center text-warning m-4">Бърз отговор</h3>
+        <h3 class="text-center text-warning m-5">Бърз отговор</h3>
         <form id="responseForm" method="post">
             <div class="form-group text-center">
                 <label class="d-block" for="messageArea">Съобщение</label>
@@ -57,7 +57,7 @@
         </form>
 
         <div class="form-group text-center">
-            <button class="btn btn-warning" onclick="ResponseModal" data-toggle="modal" data-target="#ResponseModal">Отговори</button>
+            <button class="btn btn-lg btn-warning" onclick="ResponseModal" data-toggle="modal" data-target="#ResponseModal">Отговори</button>
         </div>
 
     </div>

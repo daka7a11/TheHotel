@@ -1,0 +1,84 @@
+﻿@model MailReservationViewModel
+
+<h1 class="text-center">Резервация</h1>
+<p>Благодарим ви за направената резервация. Ще ви уведомим, когато резервацията ви е потвърдена.</p>
+
+<table class="table">
+    <tr>
+        <th>Клиент</th>
+        <th></th>
+        <th>Стая</th>
+        <th></th>
+        <th>Резервация</th>
+    </tr>
+    <tr>
+        <td>
+            <table>
+                <tr>
+                    <th>Име</th>
+                    <th>Фамилия</th>
+                    <th>ЕГН</th>
+                    <th>Телефон</th>
+                </tr>
+                <tr>
+                    <td>@Model.ClientFirstName</td>
+                    <td>@Model.ClientLastName</td>
+                    <td>@Model.ClientPersonalIdentityNumber</td>
+                    <td>@Model.ClientPhone</td>
+                </tr>
+            </table>
+        </td>
+        <td>
+            <table>
+                <tr>
+                    <th></th>
+                </tr>
+                <tr>
+                    <td></td>
+                </tr>
+            </table>
+        </td>
+        <td>
+            <table>
+                <tr>
+                    <th>№</th>
+                    <th>Вид</th>
+                    <th>Етаж</th>
+                    <th>Цена</th>
+                </tr>
+                <tr>
+                    <td>@Model.RoomId</td>
+                    <td>@Model.RoomType</td>
+                    <td>@Model.RoomFloor</td>
+                    <td>@Model.RoomPrice</td>
+                </tr>
+            </table>
+        </td>
+        <td>
+            <table>
+                <tr>
+                    <th></th>
+                </tr>
+                <tr>
+                    <td></td>
+                </tr>
+            </table>
+        </td>
+        <td>
+            <table>
+                <tr>
+                    <th>Дата на настаняване</th>
+                    <th>Дата на напускане</th>
+                    <th>Отстъпка</th>
+                    <th>Крайна цена</th>
+                </tr>
+                <tr>
+                    <td>@Model.AccommodationDate.ToShortDateString()</td>
+                    <td>@Model.DepartureDate.ToShortDateString()</td>
+                    <td>@Model.TotalDiscount лв.</td>
+                    <td>@Model.TotalPrice лв.</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

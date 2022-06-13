@@ -1,10 +1,12 @@
-﻿@{
+﻿@using TheHotel.ViewModels
+
+@model ICollection<Weather>
+
+@{
     ViewData["Title"] = "Home";
+    var culture = new System.Globalization.CultureInfo("bg-BG");
 }
 
-
-
-<partial name="_UnderConstruction" />
 <div>
     @if (TempData["SuccessfullyRequest"] != null)
     {
@@ -26,8 +28,91 @@
             <button onclick="ale.style.display = 'none';" type="button" class=" bi-x-lg bg-success border-0 float-md-right" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     }
-    <h1 class="text-center text-light">Добре дошли в ... !</h1>
+    <h1 class="text-center text-light m-5">Добре дошли в ... !</h1>
 </div>
 
-<div id="map" class="col-md-6" style="height:400px; width:contain"></div>
-<partial name="_GoogleMap"/>
+<div class="row m-5">
+    <div class="col-md-6 center offset-md-3">
+        <div class="text-center">
+            <p class="">
+                Радваме се, че сте избрали нашия хотел.
+                От името на целия екип ви приветстваме много топло и вярваме, че престоят ви при нас ще бъде едновременно приятен и комфортен.
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="m-5">
+    <h3 class="text-light text-center">Информация за времето</h3>
+</div>
+
+<div class="m-5">
+    <table class="text-center table-striped table-responsive m-5">
+        <tr class="text-warning border-bottom">
+            <td></td>
+            <th>
+                @DateTime.UtcNow.ToShortDateString()
+                <br />
+                @culture.DateTimeFormat.GetDayName(DateTime.UtcNow.AddDays(0).DayOfWeek)
+            </th>
+            <th>
+                @DateTime.UtcNow.AddDays(1).ToShortDateString()
+                <br />
+                @culture.DateTimeFormat.GetDayName(DateTime.UtcNow.AddDays(1).DayOfWeek)
+            </th>
+            <th>
+                @DateTime.UtcNow.AddDays(2).ToShortDateString()
+                <br />
+                @culture.DateTimeFormat.GetDayName(DateTime.UtcNow.AddDays(2).DayOfWeek)
+            </th>
+            <th>
+                @DateTime.UtcNow.AddDays(3).ToShortDateString()
+                <br />
+                @culture.DateTimeFormat.GetDayName(DateTime.UtcNow.AddDays(3).DayOfWeek)
+            </th>
+            <th>
+                @DateTime.UtcNow.AddDays(4).ToShortDateString()
+                <br />
+                @culture.DateTimeFormat.GetDayName(DateTime.UtcNow.AddDays(4).DayOfWeek)
+            </th>
+        </tr>
+        <tr>
+            <th class="text-warning" scope="row">Температура</th>
+            <td>@Math.Round(Model.Skip(0).FirstOrDefault().Temp) &#8451;</td>
+            <td>@Math.Round(Model.Skip(1).FirstOrDefault().Temp) &#8451;</td>
+            <td>@Math.Round(Model.Skip(2).FirstOrDefault().Temp) &#8451;</td>
+            <td>@Math.Round(Model.Skip(3).FirstOrDefault().Temp) &#8451;</td>
+            <td>@Math.Round(Model.Skip(4).FirstOrDefault().Temp) &#8451;</td>
+        </tr>
+        <tr>
+            <th class="text-warning" scope="row">Влажност</th>
+            <td>@Model.Skip(0).FirstOrDefault().Humidity%</td>
+            <td>@Model.Skip(1).FirstOrDefault().Humidity%</td>
+            <td>@Model.Skip(2).FirstOrDefault().Humidity%</td>
+            <td>@Model.Skip(3).FirstOrDefault().Humidity%</td>
+            <td>@Model.Skip(4).FirstOrDefault().Humidity%</td>
+        </tr>
+        <tr>
+            <th class="text-warning" scope="row">Скорост на вятъра</th>
+            <td>@Math.Round(Model.Skip(0).FirstOrDefault().WindSpeed) км / ч</td>
+            <td>@Math.Round(Model.Skip(1).FirstOrDefault().WindSpeed) км / ч</td>
+            <td>@Math.Round(Model.Skip(2).FirstOrDefault().WindSpeed) км / ч</td>
+            <td>@Math.Round(Model.Skip(3).FirstOrDefault().WindSpeed) км / ч</td>
+            <td>@Math.Round(Model.Skip(4).FirstOrDefault().WindSpeed) км / ч</td>
+        </tr>
+    </table>
+</div>
+<div class="m-5">
+    <h3 class="text-center text-light m-5">Местоположение</h3>
+    <div id="map" class="col-md-12 rounded m-4" style="height:400px"></div>
+    <partial name="_GoogleMap" />
+</div>
+
+
+
+<div class="mt-5 text-center">
+        <h2 class="text-center text-light m-3">Имате въпрос?</h2>
+        <a class="btn btn-lg btn-warning" href="/Contacts">Свържете се с нас!</a>
+</div>
+
+<partial name="_TopScrollers"/>

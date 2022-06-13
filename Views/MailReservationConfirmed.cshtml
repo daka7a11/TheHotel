@@ -1,7 +1,7 @@
 ﻿@model MailReservationViewModel
 
 <h1 class="text-center">Резервация</h1>
-<p>Благодарим ви за направената резервация. Ще ви уведомим, когато резервацията ви е потвърдена.</p>
+<p>Резервацията Ви е потвърдена. Очакваме ви на @Model.AccommodationDate.ToShortDateString()</p>
 
 <table class="table">
     <tr>
@@ -73,8 +73,8 @@
                     <th>Крайна цена</th>
                 </tr>
                 <tr>
-                    <td>@Model.AccommodationDate</td>
-                    <td>@Model.DepartureDate</td>
+                    <td>@Model.AccommodationDate.ToShortDateString()</td>
+                    <td>@Model.DepartureDate.ToShortDateString()</td>
                     <td>@Model.TotalDiscount лв.</td>
                     <td>@Model.TotalPrice лв.</td>
                 </tr>

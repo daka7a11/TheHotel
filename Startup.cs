@@ -6,7 +6,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Reflection;
 using TheHotel.Common;
 using TheHotel.Data;
@@ -42,6 +44,8 @@ namespace TheHotel
             services.AddReCaptcha(Configuration.GetSection("GoogleReCaptcha"));
 
             services.AddSession();
+
+            services.AddSingleton<IConfiguration>(Configuration);
 
             services.AddControllersWithViews();
             services.AddRazorPages()
@@ -88,6 +92,12 @@ namespace TheHotel
 
             services.AddTransient<IEmployeesService, EmployeesService>();
 
+            services.AddHttpClient<HttpClient>(c =>
+            {
+                c.BaseAddress = new Uri("https://localhost:44375/");
+                c.DefaultRequestHeaders.Accept.Clear();
+                c.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -36,7 +36,7 @@ namespace TheHotel.Controllers
         {
             var model = new AllViewModel();
 
-            if (accommodationDate == null || departureDate == null)
+            if (accommodationDate == null || departureDate == null || departureDate.Value.Date <= accommodationDate.Value.Date)
             {
                 var allRooms = this.roomsService.GetAll()
                     .Select(x => new AllRoomsViewModel()

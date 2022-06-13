@@ -116,14 +116,6 @@ namespace TheHotel.Services.ClientRooms
                 reservationRequest.CreatedOn = System.DateTime.UtcNow;
                 await clientRoomsRepository.SaveChangesAsync();
             }
-
-            MailRequest mailRequest = new MailRequest()
-            {
-                ToEmail = reservationRequest.Client.Email,
-                Subject = GlobalConstants.ReservationAccepted,
-                Body = "Приета",
-            };
-            await mailService.SendEmailAsync(mailRequest);
         }
 
         public async Task DeleteRequestAsync(int id, string employeeId)
@@ -131,23 +123,13 @@ namespace TheHotel.Services.ClientRooms
             var reservationRequest = clientRoomsRepository.All()
                 .Include(x => x.Client)
                 .FirstOrDefault(x => x.Id == id);
-            if (reservationRequest == null)
+            if (reservationRequest != null)
             {
-                return;
+                clientRoomsRepository.Delete(reservationRequest);
+                reservationRequest.EmployeeId = employeeId;
+                reservationRequest.CreatedOn = System.DateTime.UtcNow;
+                await clientRoomsRepository.SaveChangesAsync();
             }
-
-            clientRoomsRepository.Delete(reservationRequest);
-            reservationRequest.EmployeeId = employeeId;
-            reservationRequest.CreatedOn = System.DateTime.UtcNow;
-            await clientRoomsRepository.SaveChangesAsync();
-
-            MailRequest mailRequest = new MailRequest()
-            {
-                ToEmail = reservationRequest.Client.Email,
-                Subject = GlobalConstants.ReservationDeclined,
-                Body = "Отказана",
-            };
-            await mailService.SendEmailAsync(mailRequest);
         }
 
         public void Delete(int reservationId)
