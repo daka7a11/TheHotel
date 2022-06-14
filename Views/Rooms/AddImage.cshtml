@@ -1,6 +1,6 @@
 ﻿@model TheHotel.ViewModels.Rooms.AddImageToRoomViewModel
 
-<form method="post">
+<form method="post" enctype="multipart/form-data">
     <div class="d-flex justify-content-center">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="form-group">
@@ -9,8 +9,8 @@
         </div>
         <br />
         <div class="form-group">
-            <label asp-for="ImageUrl"> </label>
-            <input class="form-control" type="text" name="imageUrl" value="" />
+            <label asp-for="Images"> </label>
+            <input class="form-control" type="file" asp-for="Images" multiple/>
         </div>
         <div>
             <button class="form-control" type="submit">Добави</button>

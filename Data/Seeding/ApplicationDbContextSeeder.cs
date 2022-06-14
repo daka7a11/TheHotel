@@ -18,7 +18,6 @@ namespace TheHotel.Data.Seeding
                               new RoomTypeSeeder(),
                               new RoomSeeder(),
                               new ClientSeeder(),
-                              new ImageSeeder(),
                               new AdministratorSeeder(),
                               new OffersSeeder(),
                           };

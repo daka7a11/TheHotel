@@ -37,11 +37,10 @@ else
 }
 @foreach (var room in Model.AllRoomsViewModel)
 {
-    string imgSrc = $"../img/rooms/room{room.Id}.jpg";
     <div class="roomSection row mb-2">
         <div class="col-sm-4 ">
             <a href="/Rooms/Details?roomId=@room.Id">
-                <img class="img-fluid img-thumbnail" src=@imgSrc alt="Room image" />
+                <img class="img-fluid img-thumbnail" style="width:350px; height:250px" src=@room.FirstImgSrc alt="Room image" />
             </a>
         </div>
         <div class="row col-sm-8 ml-2">

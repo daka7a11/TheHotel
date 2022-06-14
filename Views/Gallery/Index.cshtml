@@ -1,0 +1,54 @@
+﻿@using TheHotel.Common
+
+@model IEnumerable<string>
+
+@{
+    ViewData["Title"] = "Gallery";
+}
+
+<link href="~/css/MyStyle.css" rel="stylesheet" />
+
+<div class="m-5">
+    <h1 class="text-center text-light">Галерия</h1>
+</div>
+
+@if (User.IsInRole(GlobalConstants.AdministratorRole))
+{
+    <div class="m-4">
+        <a class="btn btn-warning" href="/Gallery/AddImages">Добавяне на снимка/и</a>
+    </div>
+}
+
+<div class="row">
+    @foreach (var imgSrc in Model)
+    {
+        <div class="full-img-box" id="fullImgBox">
+            <img id="fullImg" src="~/img/1/room1.jpg" />
+            <span onclick="closeFullImg()">X</span>
+        </div>
+
+        <div class="img-gallery col-md-4 d-inline-block" style="max-height:40vh">
+            <img onclick="openFullImg(this.src)" class="img-fluid img-thumbnail" src="@imgSrc" style="object-fit:fill; height:90%; width:100%" alt="Gallery image" />
+        </div>
+    }
+</div>
+
+<script>
+
+    var fullImgBox = document.getElementById("fullImgBox");
+    var fullImg = document.getElementById("fullImg");
+
+    function openFullImg(img) {
+        fullImg.src = img;
+        fullImg.style.border = "5px solid #ddd";
+        fullImg.style.borderRadius = "5px";
+        fullImg.style.padding = "1px";
+        fullImgBox.style.display = "flex";
+        fullImgBox.style.backgroundColor = "rgb(0,0,0,0.8)";
+    }
+
+    function closeFullImg() {
+        fullImgBox.style.display = "none";
+    }
+
+</script>

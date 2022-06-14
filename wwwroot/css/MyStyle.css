@@ -1,12 +1,51 @@
 ﻿html, body {
     height: 100%;
-} 
+}
 
 body {
     font-family: cursive;
     font-size: 18px;
-    background-image: linear-gradient(rgb(0,0,0,0.7), rgba(0,0,0,0.8)), url("../img/bgImg.jpg"); background-size:contain;
+    background-image: linear-gradient(rgb(0,0,0,0.7), rgba(0,0,0,0.8)), url("../img/bgImg.jpg");
+    background-size: contain;
 }
+
+.img-gallery img {
+    cursor: pointer
+}
+
+    .img-gallery img:hover {
+        transform: scale(0.8) rotate(-5deg);
+        transition: 0.3s;
+        border-radius: 20px;
+    }
+
+.full-img-box {
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.9);
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index:100;
+}
+
+    .full-img-box img {
+        width: 90%;
+        max-width: 500px;
+    }
+
+    .full-img-box span {
+        position:absolute;
+        top:5%;
+        right:5%;
+        font-size: 30px;
+        color:white;
+        cursor:pointer;
+    }
+
 
 .validation-summary-errors ul {
     list-style: none;
@@ -23,8 +62,8 @@ div.restaurantWelcomeDiv {
     background-size: cover;
 }
 
-div.modal-body{
-    color:black;
+div.modal-body {
+    color: black;
 }
 
 input, textarea {

@@ -30,8 +30,5 @@ namespace TheHotel.Data.Models
         public string Description { get; set; }
 
         public ICollection<ClientRoom> HireDates { get; set; }
-
-        public ICollection<Image> Images { get; set; }
-
     }
 }

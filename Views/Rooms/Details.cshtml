@@ -56,10 +56,10 @@
 
 
     <div class="row mt-4 mb-2">
-        @foreach (var img in Model.Images)
+        @foreach (var imgSrc in Model.ImagesSrc)
         {
-            <div class="col-sm-6 mt-2 mb-2">
-                <img class="img-fluid img-thumbnail" src="@img.Url" alt="Room @Model.Id image." />
+            <div class="col-md-6 mt-2 mb-2">
+                <img class="img-fluid img-thumbnail" src="@imgSrc" alt="Room @Model.Id image." />
             </div>
         }
     </div>

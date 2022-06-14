@@ -10,6 +10,9 @@ using Newtonsoft.Json.Linq;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
+using TheHotel.Common;
 
 namespace TheHotel.Controllers
 {
@@ -29,7 +32,7 @@ namespace TheHotel.Controllers
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            HttpResponseMessage response = 
+            HttpResponseMessage response =
                await client.GetAsync($"https://api.openweathermap.org/data/2.5/forecast?lat=1&lon=1&cnt=0&units=metric&lang=en&appid={config.GetSection("OpenWeatherApiKey").Value}");
 
             List<Weather> weathers = new List<Weather>();
@@ -39,7 +42,7 @@ namespace TheHotel.Controllers
                 var data = await response.Content.ReadAsStringAsync();
                 var parsedObject = JObject.Parse(data);
                 var weatherlist = parsedObject["list"];
-                for (int i = 3; i < weatherlist.Count(); i+=8)
+                for (int i = 3; i < weatherlist.Count(); i += 8)
                 {
                     var temp = weatherlist[i]["main"]["temp"].ToString();
                     var humidity = weatherlist[i]["main"]["humidity"].ToString();
@@ -57,10 +60,6 @@ namespace TheHotel.Controllers
             return View(weathers);
         }
 
-        public IActionResult Gallery()
-        {
-            return View();
-        }
 
         public IActionResult Privacy()
         {

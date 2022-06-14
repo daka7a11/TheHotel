@@ -1,8 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using TheHotel.Common;
 using TheHotel.Data;
 using TheHotel.Data.Models;
 using TheHotel.Data.Repositories;
@@ -14,22 +18,21 @@ namespace TheHotel.Services.Rooms
     public class RoomsService : IRoomsService
     {
         private readonly IDeletableEntityRepository<Room> roomsRepository;
-        private readonly IDeletableEntityRepository<Image> imagesRepository;
         private readonly IDeletableEntityRepository<RoomType> roomTypesRepository;
+        private readonly IWebHostEnvironment env;
 
         public RoomsService(IDeletableEntityRepository<Room> roomsRepository,
-            IDeletableEntityRepository<Image> imagesRepository,
-            IDeletableEntityRepository<RoomType> roomTypesRepository)
+            IDeletableEntityRepository<RoomType> roomTypesRepository,
+            IWebHostEnvironment env)
         {
             this.roomsRepository = roomsRepository;
-            this.imagesRepository = imagesRepository;
             this.roomTypesRepository = roomTypesRepository;
+            this.env = env;
         }
 
-        public async Task AddImageToRoomAsync(int roomId, string imageUrl)
+        public void AddImageToRoomAsync(int roomId, IEnumerable<IFormFile> images)
         {
-            await imagesRepository.AddAsync(new Image() { RoomId = roomId, Url = imageUrl });
-            await imagesRepository.SaveChangesAsync();
+            GlobalMethods.AddImages(env.WebRootPath, roomId.ToString(), images);
         }
 
         public void Delete(int roomId)
@@ -56,7 +59,6 @@ namespace TheHotel.Services.Rooms
             return roomsRepository.All()
                 .Include(x => x.HireDates)
                 .Include(x => x.RoomType)
-                .Include(x => x.Images)
                 .ToList();
         }
         public ICollection<T> GetAll<T>()
@@ -64,7 +66,6 @@ namespace TheHotel.Services.Rooms
             return roomsRepository.All()
                 .Include(x => x.HireDates)
                 .Include(x => x.RoomType)
-                .Include(x => x.Images)
                 .To<T>()
                 .ToList();
         }
@@ -81,7 +82,6 @@ namespace TheHotel.Services.Rooms
                 .Include(x => x.HireDates)
                 .ThenInclude(x => x.Client)
                 .Include(x => x.RoomType)
-                .Include(x => x.Images)
                 .FirstOrDefault();
         }
         public T GetById<T>(int id)
@@ -91,7 +91,6 @@ namespace TheHotel.Services.Rooms
                 .Include(x => x.HireDates)
                 .ThenInclude(x => x.Client)
                 .Include(x => x.RoomType)
-                .Include(x => x.Images)
                 .To<T>()
                 .FirstOrDefault();
         }
@@ -116,6 +115,11 @@ namespace TheHotel.Services.Rooms
                 .Where(x => x.IsDeleted == true)
                 .To<T>()
                 .ToList();
+        }
+
+        public IEnumerable<string> GetRoomImages(int roomId)
+        {
+            return GlobalMethods.GetImages(env.WebRootPath,roomId.ToString());
         }
 
         public void Undelete(int roomId)

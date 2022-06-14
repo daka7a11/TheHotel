@@ -98,5 +98,7 @@
 
         public const string RequiredPropertyErrorMsg = "Полето е задължително!";
 
+        public const string RequiredImageErrorMsg = "Моля изберете поне 1 снимка!";
+
     }
 }

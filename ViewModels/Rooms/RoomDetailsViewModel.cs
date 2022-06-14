@@ -19,7 +19,7 @@ namespace TheHotel.ViewModels.Rooms
 
         public ICollection<ClientRoom> HireDates { get; set; }
 
-        public ICollection<Image> Images { get; set; }
+        public IEnumerable<string> ImagesSrc { get; set; }
 
         public string Description { get; set; }
 

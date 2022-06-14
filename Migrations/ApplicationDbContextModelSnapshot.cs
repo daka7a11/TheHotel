@@ -369,38 +369,6 @@ namespace TheHotel.Migrations
                     b.ToTable("ClientRooms");
                 });
 
-            modelBuilder.Entity("TheHotel.Data.Models.Image", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("RoomId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Url")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RoomId");
-
-                    b.ToTable("Images");
-                });
-
             modelBuilder.Entity("TheHotel.Data.Models.Offer", b =>
                 {
                     b.Property<int>("Id")
@@ -690,17 +658,6 @@ namespace TheHotel.Migrations
                     b.Navigation("Room");
                 });
 
-            modelBuilder.Entity("TheHotel.Data.Models.Image", b =>
-                {
-                    b.HasOne("TheHotel.Data.Models.Room", "Room")
-                        .WithMany("Images")
-                        .HasForeignKey("RoomId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Room");
-                });
-
             modelBuilder.Entity("TheHotel.Data.Models.Room", b =>
                 {
                     b.HasOne("TheHotel.Data.Models.RoomType", "RoomType")
@@ -731,8 +688,6 @@ namespace TheHotel.Migrations
             modelBuilder.Entity("TheHotel.Data.Models.Room", b =>
                 {
                     b.Navigation("HireDates");
-
-                    b.Navigation("Images");
                 });
 
             modelBuilder.Entity("TheHotel.Data.Models.RoomType", b =>

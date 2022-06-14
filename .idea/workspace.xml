@@ -2,7 +2,22 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="43f66e83-d317-417f-a2ce-f850974266e2" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/CONF.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controllers/HomeController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/HomeController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controllers/RoomsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/RoomsController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/ApplicationDbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/ApplicationDbContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Models/Image.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Models/Room.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Models/Room.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Seeding/ApplicationDbContextSeeder.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Seeding/ApplicationDbContextSeeder.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Seeding/ImageSeeder.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Services/Rooms/IRoomsService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/Rooms/IRoomsService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Services/Rooms/RoomsService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/Rooms/RoomsService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TheHotel.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/TheHotel.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ViewModels/Rooms/AddImageToRoomViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ViewModels/Rooms/AddImageToRoomViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ViewModels/Rooms/AllRoomsViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ViewModels/Rooms/AllRoomsViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ViewModels/Rooms/RoomDetailsViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ViewModels/Rooms/RoomDetailsViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Views/Home/Gallery.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Views/Home/Gallery.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Views/Rooms/Details.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Views/Rooms/Details.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wwwroot/img/restaurant/restaurantBgImg.jpg" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

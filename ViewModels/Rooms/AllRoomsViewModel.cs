@@ -16,6 +16,6 @@
 
         public string Description { get; set; }
 
-        public string FirstImgUrl { get; set; }
+        public string FirstImgSrc { get; set; }
     }
 }

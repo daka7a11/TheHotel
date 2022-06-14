@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Http;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using TheHotel.Data.Models;
 using TheHotel.ViewModels.Rooms;
@@ -11,13 +12,15 @@ namespace TheHotel.Services.Rooms
 
         IEnumerable<KeyValuePair<int, string>> GetAllRoomTypes();
 
+        IEnumerable<string> GetRoomImages(int roomId);
+
         ICollection<Room> GetAll();
         ICollection<T> GetAll<T>();
 
         Room GetById(int id);
         T GetById<T>(int id);
 
-        Task AddImageToRoomAsync(int roomId, string imageUrl);
+        void AddImageToRoomAsync(int roomId, IEnumerable<IFormFile> images);
 
         void Edit(int roomId, EditRoomViewModel model);
 

@@ -1,13 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Http;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace TheHotel.ViewModels.Rooms
 {
     public class AddImageToRoomViewModel
     {
-        [Display(Name = "Room id")]
         public int RoomId { get; set; }
 
-        [Display(Name = "Image url")]
-        public string ImageUrl { get; set; }
+        public IEnumerable<IFormFile> Images { get; set; }
     }
 }

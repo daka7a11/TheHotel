@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections;
@@ -20,16 +21,19 @@ namespace TheHotel.Controllers
         private readonly IClientRoomsService clientRoomsService;
         private readonly IViewRenderService viewRenderService;
         private readonly IMailService mailService;
+        private readonly IWebHostEnvironment env;
 
         public RoomsController(IRoomsService roomsService,
             IClientRoomsService clientRoomsService,
             IViewRenderService viewRenderService,
-            IMailService mailService)
+            IMailService mailService,
+            IWebHostEnvironment env)
         {
             this.roomsService = roomsService;
             this.clientRoomsService = clientRoomsService;
             this.viewRenderService = viewRenderService;
             this.mailService = mailService;
+            this.env = env;
         }
 
         public IActionResult All(DateTime? accommodationDate, DateTime? departureDate, int? numGuests)
@@ -44,10 +48,11 @@ namespace TheHotel.Controllers
                         Id = x.Id,
                         Size = x.Size,
                         RoomType = x.RoomType.Type,
-                        MaxGuests = x.RoomType.MaxGuests,
                         Floor = x.Floor,
                         Price = x.Price,
                         Description = x.Description,
+                        MaxGuests = x.RoomType.MaxGuests,
+                        FirstImgSrc = roomsService.GetRoomImages(x.Id).FirstOrDefault(),
                     });
 
                 model.AllRoomsViewModel = allRooms;
@@ -65,8 +70,8 @@ namespace TheHotel.Controllers
                     Floor = x.Floor,
                     Price = x.Price,
                     Description = x.Description,
-                    FirstImgUrl = x.Images.FirstOrDefault()?.Url,
                     MaxGuests = x.RoomType.MaxGuests,
+                    FirstImgSrc = roomsService.GetRoomImages(x.Id).FirstOrDefault(),
                 });
 
             model = new AllViewModel()
@@ -111,6 +116,8 @@ namespace TheHotel.Controllers
                 return this.Redirect($"RoomError?roomId={roomId}");
             }
 
+           room.ImagesSrc = roomsService.GetRoomImages(room.Id);
+
             return this.View(room);
         }
 
@@ -124,19 +131,19 @@ namespace TheHotel.Controllers
 
         [Authorize(Roles = GlobalConstants.AdministratorRole)]
         [HttpPost]
-        public async Task<IActionResult> AddImage(AddImageToRoomViewModel viewModel)
+        public IActionResult AddImage(AddImageToRoomViewModel model)
         {
-            var room = roomsService.GetById(viewModel.RoomId);
+            var room = roomsService.GetById(model.RoomId);
 
             if (room == null)
             {
-                ModelState.AddModelError("", "Invalid room id.");
-                return this.View(viewModel);
+                ModelState.AddModelError(string.Empty, String.Format(GlobalConstants.InvalidRoomErrorMsg,model.RoomId));
+                return this.View(model);
             }
 
-            await roomsService.AddImageToRoomAsync(viewModel.RoomId, viewModel.ImageUrl);
+            roomsService.AddImageToRoomAsync(model.RoomId, model.Images);
 
-            return this.Redirect($"/Rooms/Details?roomId={viewModel.RoomId}");
+            return this.Redirect($"/Rooms/Details?roomId={model.RoomId}");
         }
 
         public IActionResult Edit(int roomId)
