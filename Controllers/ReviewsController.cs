@@ -24,7 +24,7 @@ namespace TheHotel.Controllers
         {
             if (page <= 0)
             {
-                return RedirectToAction("Index");
+                return RedirectToAction(nameof(Index));
             }
 
             var reviews = reviewsService.Get5Reviews<ReviewsViewModel>(page);

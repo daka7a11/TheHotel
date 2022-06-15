@@ -2,9 +2,11 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TheHotel.Common;
+using TheHotel.ViewModels.Gallery;
 
 namespace TheHotel.Controllers
 {
@@ -20,11 +22,34 @@ namespace TheHotel.Controllers
         }
 
         [AllowAnonymous]
-        public IActionResult Index()
+        public IActionResult Index(int page=1)
         {
+            if (page <= 0)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
             var galleryImgsSrc = GlobalMethods.GetImages(env.WebRootPath, "Gallery");
 
-            return View(galleryImgsSrc);
+            //15 images per page
+            int totalPages = (int)Math.Ceiling(galleryImgsSrc.Count() * 1.00 / 15);
+
+            if (page > totalPages)
+            {
+                return Redirect($"/Gallery/Index?page={totalPages}");
+            }
+
+            var images = galleryImgsSrc.Skip((page * 15) - 15)
+                .Take(15);
+
+            var model = new GalleryIndexViewModel
+            {
+                Images = images,
+                Page = page,
+                TotalPages = totalPages,
+            };
+
+            return View(model);
         }
 
         public IActionResult AddImages()
@@ -33,7 +58,6 @@ namespace TheHotel.Controllers
         }
 
         [HttpPost]
-        [RequestSizeLimit(40000000)]
         public IActionResult AddImages(IEnumerable<IFormFile> images)
         {
             if (images.Count() == 0)

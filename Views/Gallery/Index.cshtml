@@ -1,9 +1,12 @@
-﻿@using TheHotel.Common
+﻿@using TheHotel.ViewModels.Gallery
 
-@model IEnumerable<string>
+@model GalleryIndexViewModel
 
 @{
     ViewData["Title"] = "Gallery";
+    int prevPage = Model.Page - 1;
+    int currPage = Model.Page;
+    int nextPage = Model.Page + 1;
 }
 
 <link href="~/css/MyStyle.css" rel="stylesheet" />
@@ -20,7 +23,7 @@
 }
 
 <div class="row">
-    @foreach (var imgSrc in Model)
+    @foreach (var imgSrc in Model.Images)
     {
         <div class="full-img-box" id="fullImgBox">
             <img id="fullImg" src="~/img/1/room1.jpg" />
@@ -32,6 +35,27 @@
         </div>
     }
 </div>
+
+<nav class="m-4" style="position:page; left:0; right:0; text-align:center; bottom:0">
+    <ul class="pagination justify-content-center">
+        @if (prevPage > 0)
+        {
+            <li class="page-item">
+                <a class="page-link" href="/Gallery?page=@prevPage">@Html.Raw("<<")</a>
+            </li>
+
+            <li class="page-item"><a class="page-link" href="/Gallery?page=@prevPage">@prevPage</a></li>
+        }
+        <li class="page-item"><a class="page-link font-weight-bolder text-warning" href="/Gallery?page=@currPage">@currPage</a></li>
+        @if (nextPage <= Model.TotalPages)
+        {
+            <li class="page-item"><a class="page-link" href="/Gallery?page=@nextPage">@nextPage</a></li>
+            <li class="page-item">
+                <a class="page-link" href="/Gallery?page=@nextPage">@Html.Raw(">>")</a>
+            </li>
+        }
+    </ul>
+</nav>
 
 <script>
 
