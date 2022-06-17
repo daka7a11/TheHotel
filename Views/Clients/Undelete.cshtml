@@ -1,6 +1,11 @@
 ﻿@using TheHotel.ViewModels.Clients
 
 @model ICollection<UndeleteClientsViewModel>
+
+@{
+    ViewData["Title"] = "Undelete Clients";
+}
+
 @if (Model.Count() == 0)
 {
     <h2 class="text-center text-light">Няма изтрити клиенти!</h2>
@@ -17,47 +22,21 @@ else
             <th>Телефон</th>
             <th>Имейл</th>
             <th>Изтрит на</th>
-            <th></th>
         </tr>
         @foreach (var client in Model)
         {
-            <tr class="text-center">
+            <tr class="text-center"
+                onmouseover="this.style.color = 'orange'"
+                onmouseout="this.style.color = 'white'"
+                onclick="window.location.href = '/Clients/Details?clientId=@client.Id'"
+                style="cursor:pointer">
                 <td>@client.FirstName</td>
                 <td>@client.LastName</td>
                 <td>@client.PersonalIdentityNumber</td>
                 <td>@client.Phone</td>
                 <td>@client.Email</td>
                 <td>@client.DeletedOn.ToLocalTime().ToString("g")</td>
-                <td class="col-sm-2">
-                    <div class="d-inline-block text-center">
-                        <a class="btn btn-success text-light mb-2" onclick="UndeleteModal" data-toggle="modal" data-target="#UndeleteModal" style="cursor:pointer">Възстановяване</a>
-                    </div>
-                </td>
             </tr>
-
-            <form name="undeleteForm" id="undeleteForm" method="post">
-                <input type="hidden" name="clientId" value="@client.Id" />
-            </form>
-
-            <div class="modal fade" id="UndeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title text-center" id="exampleModalLabel">Потвърждение</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            Сигурни ли сте, че искате да ВЪЗСТАНОВИТЕ изтрития клиент?
-                        </div>
-                        <div class="modal-footer">
-                            <button id="btnUndelete" class="btn btn-success" onclick="undeleteForm.submit();">Да, възстановявам</button>
-                            <button type="button" class="btn btn-light" data-dismiss="modal">Отказ</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
         }
     </table>
 }

@@ -38,13 +38,13 @@
 
         public const string PersonalIdentityNumberErrorMsg = "Стойността трябва да е между 9 и 10 цифри!";
 
-        public const string ClientNameLengthErrorMsg = "Value shoud be between 3 and 30 characters!";
+        public const string ClientNameLengthErrorMsg = "Името трябва да е между 3 и 30 букви!";
 
         public const string ClientNameRegexErrorMsg = "Името трябва да съдържа само букви!";
 
-        public const string InvalidHireDateErrorMsg = "You cannot hire room {0} right now. The room is hired from {1} to {2}";
+        public const string InvalidHireDateErrorMsg = "Не може да резервирате стая {0}. Стаята е резервирана от {1} до {2}";
 
-        public const string InvalidTenancyDateErrorMsg = "{0} date is invalid!";
+        public const string InvalidTenancyDateErrorMsg = "Датата {0} е невалидна!";
 
         public const string EmailExistErrorMsg = "{0} е използван от друг клиент!";
 

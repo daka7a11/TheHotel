@@ -72,7 +72,7 @@ namespace TheHotel.Controllers
         {
             clientsService.Delete(clientId);
 
-            return this.RedirectToAction(nameof(All));
+            return this.Redirect($"/Clients/Details?clientId={clientId}");
         }
 
         public IActionResult Undelete()

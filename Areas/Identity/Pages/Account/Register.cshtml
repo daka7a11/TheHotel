@@ -4,14 +4,14 @@
     ViewData["Title"] = "Register";
 }
 
-<h1 class="text-center text-light">Регистрация</h1>
+<h1 class="text-center text-light ">Регистрация</h1>
 
 @Model.Input.
 
 <div class="row">
     <div class="col-md-4 offset-4">
         <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <h4 class="text-center text-light">Създаване на нов акаунт</h4>
+            <h4 class="text-center text-warning">Създаване на нов акаунт</h4>
             <hr />
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">

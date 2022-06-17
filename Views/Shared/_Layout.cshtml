@@ -53,30 +53,27 @@
                                             <a class="nav-link text-light border-bottom" asp-controller="ClientRooms" asp-action="RoomRequests">Заявки</a>
                                         </li>
                                         <li class="nav-item">
+                                            <a class="nav-link text-light border-bottom" asp-controller="Contacts" asp-action="AllQuestions">Запитвания</a>
+                                        </li>
+                                        <li class="nav-item">
                                             <a class="nav-link text-light border-bottom" asp-controller="Clients" asp-action="All">Клиенти</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link text-light border-bottom" asp-controller="ClientRooms" asp-action="RejectedRequests">Охвърлени заявки</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link text-light border-bottom" asp-controller="ClientRooms" asp-action="DeletedReservations">Изтрити резервации</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link text-light border-bottom" asp-controller="Contacts" asp-action="AnsweredQuestions">Отговорени запитвания</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link text-light border-bottom" asp-controller="Clients" asp-action="Undelete">Изтрити клиенти</a>
                                         </li>
                                         @if (User.IsInRole(GlobalConstants.AdministratorRole))
                                         {
                                             <li class="nav-item">
-                                                <a class="nav-link text-light border-bottom" asp-area="Identity" asp-page="/Account/Register">Регистрация</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link text-light border-bottom" asp-controller="ClientRooms" asp-action="RejectedRequests">Охвърлени заявки</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link text-light border-bottom" asp-controller="ClientRooms" asp-action="DeletedReservations">Изтрити резервации</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link text-light border-bottom" asp-controller="Contacts" asp-action="AllQuestions">Запитвания</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link text-light border-bottom" asp-controller="Contacts" asp-action="AnsweredQuestions">Отговорени запитвания</a>
-                                            </li>
-                                            <li class="nav-item">
                                                 <a class="nav-link text-light border-bottom" asp-controller="Offers" asp-action="Undelete">Изтрити оферти</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link text-light border-bottom" asp-controller="Clients" asp-action="Undelete">Изтрити клиенти</a>
                                             </li>
                                             <li class="nav-item">
                                                 <a class="nav-link text-light border-bottom" asp-controller="Rooms" asp-action="Undelete">Изтрити стаи</a>
@@ -86,6 +83,9 @@
                                             </li>
                                             <li class="nav-item">
                                                 <a class="nav-link text-light border-bottom" asp-controller="Employees" asp-action="Undelete">Изтрити служители</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link text-light border-bottom" asp-area="Identity" asp-page="/Account/Register">Регистрация</a>
                                             </li>
                                         }
                                     </ul>

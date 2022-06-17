@@ -2,67 +2,71 @@
 
 @model ReservationDetailsViewModel
 
+@{
+    ViewData["Title"] = "Reservation Details";
+}
+
 <div>
     <div class="row">
-        <div class="col-md-4 d-inline-block border-left">
-            <h3 class="text-center text-light">Клиент</h3>
+        <div class="col-md-4 d-inline-block border-left border-warning">
+            <h3 class="text-center text-warning m-4">Клиент</h3>
             <div>
                 <dl class="row m-1">
-                    <dt class="col-md-4">Име: </dt>
+                    <dt class="col-md-4 text-warning">Име: </dt>
                     <dd class="col-md-8">@Model.ClientFirstName</dd>
                 </dl>
                 <dl class="row m-1">
-                    <dt class="col-md-4">Фамилия: </dt>
+                    <dt class="col-md-4 text-warning">Фамилия: </dt>
                     <dd class="col-md-8">@Model.ClientLastName</dd>
                 </dl>
                 <dl class="row m-1">
-                    <dt class="col-md-4">ЕГН: </dt>
+                    <dt class="col-md-4 text-warning">ЕГН: </dt>
                     <dd class="col-md-8">@Model.ClientPersonalIdentityNumber</dd>
                 </dl>
                 <dl class="row m-1">
-                    <dt class="col-md-4">Телефон: </dt>
+                    <dt class="col-md-4 text-warning">Телефон: </dt>
                     <dd class="col-md-8">@Model.ClientPhone</dd>
                 </dl>
                 <dl class="row m-1">
-                    <dt class="col-md-4">Имейл: </dt>
+                    <dt class="col-md-4 text-warning">Имейл: </dt>
                     <dd class="col-md-8">@Model.ClientEmail</dd>
                 </dl>
             </div>
         </div>
-        <div class="col-md-3 border-left">
-            <h3 class="text-center text-light">Стая</h3>
+        <div class="col-md-3 border-left border-warning">
+            <h3 class="text-center text-warning m-4">Стая</h3>
             <div>
                 <dl class="row m-1">
-                    <dt class="col-md-4">№: </dt>
+                    <dt class="col-md-4 text-warning">№: </dt>
                     <dd class="col-md-8">@Model.RoomId</dd>
                 </dl>
                 <dl class="row m-1">
-                    <dt class="col-md-4">Етаж: </dt>
+                    <dt class="col-md-4 text-warning">Етаж: </dt>
                     <dd class="col-md-8">@Model.RoomFloor</dd>
                 </dl>
                 <dl class="row m-1">
-                    <dt class="col-md-4">Вид: </dt>
+                    <dt class="col-md-4 text-warning">Вид: </dt>
                     <dd class="col-md-8">@Model.RoomType</dd>
                 </dl>
                 <dl class="row m-1">
-                    <dt class="col-md-4">Цена: </dt>
+                    <dt class="col-md-4 text-warning">Цена: </dt>
                     <dd class="col-md-8">@Model.RoomPrice</dd>
                 </dl>
             </div>
         </div>
-        <div class="col-md-5 border-left">
-            <h3 class="text-center text-light">Резервация</h3>
+        <div class="col-md-5 border-left border-warning">
+            <h3 class="text-center text-warning m-4">Резервация</h3>
             <div>
                 <dl class="row m-1">
-                    <dt class="col-md-4">Дата на настаняване: </dt>
+                    <dt class="col-md-4 text-warning">Дата на настаняване: </dt>
                     <dd class="col-md-8">@Model.AccommodationDate.ToLocalTime().ToShortDateString()</dd>
                 </dl>
                 <dl class="row m-1">
-                    <dt class="col-md-4">Дата на напускане: </dt>
+                    <dt class="col-md-4 text-warning">Дата на напускане: </dt>
                     <dd class="col-md-8">@Model.DepartureDate.ToLocalTime().ToShortDateString()</dd>
                 </dl>
                 <dl class="row m-1">
-                    <dt class="col-md-4">Потвърдена ли е? </dt>
+                    <dt class="col-md-4 text-warning">Потвърдена ли е? </dt>
                     <dd class="col-md-8">
                         @if (Model.IsConfirmed)
                         {
@@ -75,7 +79,7 @@
                     </dd>
                 </dl>
                 <dl class="row m-1">
-                    <dt class="col-md-4">Изтрита ли е? </dt>
+                    <dt class="col-md-4 text-warning">Изтрита ли е? </dt>
                     <dd class="col-md-8">
                         @if (Model.IsDeleted)
                         {
@@ -88,7 +92,7 @@
                     </dd>
                 </dl>
                 <dl class="row m-1">
-                    <dt class="col-md-4">Обслужена от: </dt>
+                    <dt class="col-md-4 text-warning">Обслужена от: </dt>
                     <dd class="col-md-8">@Model.EmployeeNames</dd>
                 </dl>
             </div>

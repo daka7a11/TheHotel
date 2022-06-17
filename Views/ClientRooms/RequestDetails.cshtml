@@ -1,6 +1,10 @@
 ﻿@using TheHotel.ViewModels.ClientRooms
 @model RequestDetailsViewModel;
 
+@{
+    ViewData["Title"] = "Request Details";
+}
+
 @if (TempData["ErrorMsg"] != null)
 {
     <div class="row mt-4 font-weight-bold border-bottom border-danger text-danger d-inline-block">@TempData["ErrorMsg"]</div>

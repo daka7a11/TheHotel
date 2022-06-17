@@ -155,7 +155,7 @@ namespace TheHotel.Controllers
         public IActionResult Delete(int roomId)
         {
             roomsService.Delete(roomId);
-            return this.Redirect("/Rooms/All");
+            return this.Redirect($"/Rooms/Details?roomId={roomId}");
         }
 
         public IActionResult Undelete()
@@ -168,7 +168,7 @@ namespace TheHotel.Controllers
         public IActionResult Undelete(int roomId)
         {
             roomsService.Undelete(roomId);
-            return this.Redirect("/Rooms/All");
+            return this.Redirect($"/Rooms/Details?roomId={roomId}");
         }
     }
 }

@@ -3,7 +3,7 @@
 @model EditEmployeeViewModel
 
 @{
-    ViewData["Title"] = "Edit employee";
+    ViewData["Title"] = "Edit Employee";
 
     var rolesItems = Model.Roles.Select(x => new SelectListItem (x.Value,x.Key));
 }

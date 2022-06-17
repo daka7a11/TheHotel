@@ -2,7 +2,9 @@
 
 @model IEnumerable<RoomRequestViewModel>
 
-
+@{
+    ViewData["Title"] = "Room Requests";
+}
 
 @if (Model.Count() == 0)
 {
@@ -10,7 +12,7 @@
 }
 else
 {
-    <h1 class="text-center text-light m-4">Заявки за потвърждение</h1>
+    <h1 class="text-center text-light m-5">Заявки за потвърждение</h1>
 
     <table class="table table-hover table-striped table-lg m-4 text-light">
         <tr class="text-center text-warning">
@@ -26,10 +28,10 @@ else
         </tr>
         @foreach (var request in Model)
         {
-            <tr onmouseover="this.style.backgroundColor = 'orange'" 
-                onmouseout="this.style.backgroundColor = 'transparent'" 
-                onclick="window.location = '/ClientRooms/RequestDetails?clientRoomId=@request.Id'" 
-                class="text-center" 
+            <tr onmouseover="this.style.backgroundColor = 'orange'"
+                onmouseout="this.style.backgroundColor = 'transparent'"
+                onclick="window.location = '/ClientRooms/RequestDetails?clientRoomId=@request.Id'"
+                class="text-center"
                 style="line-height: 200%; cursor:pointer">
                 <td>@request.ClientFirstName</td>
                 <td>@request.ClientLastName</td>

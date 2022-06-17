@@ -2,7 +2,7 @@
 
 @model EditRoomViewModel
 @{
-    ViewData["Title"] = "Edit room";
+    ViewData["Title"] = "Edit Room";
 
     var roomTypeItems = Model.RoomTypes.Select(x => new SelectListItem(x.Value, x.Key.ToString()));
 }

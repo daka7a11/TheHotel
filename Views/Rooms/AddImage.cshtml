@@ -1,19 +1,25 @@
-﻿@model TheHotel.ViewModels.Rooms.AddImageToRoomViewModel
+﻿@using TheHotel.ViewModels.Rooms
+
+@model AddImageToRoomViewModel
+
+@{
+    ViewData["Title"] = "Add image to room";
+}
+
+<div class="text-center m-5">
+    <h2 class="text-light">Добавяне на снимки към стая @Model.RoomId</h2>
+</div>
 
 <form method="post" enctype="multipart/form-data">
-    <div class="d-flex justify-content-center">
+    <div class="offset-md-4 col-md-4 text-center">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
         <div class="form-group">
-            <label asp-for="RoomId"> </label>
-            <input class="form-control text-center font-weight-bolder" type="number" name="roomId" value="@Model.RoomId" readonly />
+            <label class="text-warning" asp-for="Images">Изберете снимка/и</label>
+            <input class="form-control border-0 text-warning" type="file" asp-for="Images" style="background:none;" multiple />
         </div>
-        <br />
-        <div class="form-group">
-            <label asp-for="Images"> </label>
-            <input class="form-control" type="file" asp-for="Images" multiple/>
-        </div>
-        <div>
-            <button class="form-control" type="submit">Добави</button>
+        <div class="m-4">
+            <button class="btn btn-lg btn-warning" type="submit">Добави</button>
         </div>
     </div>
 </form>

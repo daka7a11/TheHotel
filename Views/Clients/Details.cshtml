@@ -2,34 +2,55 @@
 @model ClientViewModel
 
 @{
-    ViewData["Title"] = "Client details";
+    ViewData["Title"] = "Client Details";
 }
 
 <div class="details">
     <div class="text-center">
-        <h1 class="text-light mt-2 mb-4">@Model.FirstName @Model.LastName</h1>
+        <h1 class="text-warning mt-2 mb-4">@Model.FirstName @Model.LastName</h1>
     </div>
     <div class="row mb-2 mt-2 ml-1">
         <a class="btn btn-warning mr-2 text-info" href="/Clients/Edit?clientId=@Model.Id">Редактиране</a>
-        <a class="btn btn-danger mr-2 text-light" onclick="DeleteModal" data-toggle="modal" data-target="#DeleteModal" style="cursor:pointer">Изтриване</a>
+        @if (Model.IsDeleted)
+        {
+            <form action="Undelete" id="undeleteForm" method="post">
+                <input type="hidden" name="clientId" value="@Model.Id" />
+            </form>
+            <a class="btn btn-success mr-2 text-light" onclick="UndeleteModal" data-toggle="modal" data-target="#UndeleteModal" style="cursor:pointer">Възстановяване</a>
+        }
+        else
+        {
+            <a class="btn btn-danger mr-2 text-light" onclick="DeleteModal" data-toggle="modal" data-target="#DeleteModal" style="cursor:pointer">Изтриване</a>
+        }
     </div>
     <div class="row">
-        <div class="col-md-8 d-inline-block ">
+        <div class="col-md-6 d-inline-block ">
             <div>
                 <dl class="row m-1">
-                    <dt class="col-md-4">ЕГН:</dt>
+                    <dt class="col-md-4 text-warning">ЕГН:</dt>
                     <dd class="col-md-6">@Model.PersonalIdentityNumber</dd>
                 </dl>
                 <dl class="row m-1">
-                    <dt class="col-md-4">Телефон:</dt>
+                    <dt class="col-md-4 text-warning">Телефон:</dt>
                     <dd class="col-md-6">@Model.Phone</dd>
                 </dl>
                 <dl class="row m-1">
-                    <dt class="col-md-4">Имейл:</dt>
+                    <dt class="col-md-4 text-warning">Имейл:</dt>
                     <dd class="col-md-6">@Model.Email</dd>
                 </dl>
             </div>
         </div>
+        @if (Model.IsDeleted)
+        {
+            <div class="col-md-6 d-inline-block ">
+                <div>
+                    <dl class="row m-1">
+                        <dt class="col-md-4 text-warning">Изтрит на:</dt>
+                        <dd class="col-md-6">@Model.DeletedOn.Value.ToString("g")</dd>
+                    </dl>
+                </div>
+            </div>
+        }
     </div>
     @if (Model.Rooms.Count > 0)
     {
@@ -37,32 +58,32 @@
         <h2 class="text-center text-light">Резервирани стаи</h2>
         <div>
             <table class="table table-hover table-striped table-responsive-md text-light">
-                    <tr class="text-center text-warning">
-                        <th>№</th>
-                        <th>Вид</th>
-                        <th>Етаж</th>
-                        <th>Размер</th>
-                        <th>Цена</th>
-                        <th>Дата на настаняване</th>
-                        <th>Дата на напускане</th>
-                        <th>Нощувки</th>
-                    </tr>
+                <tr class="text-center text-warning">
+                    <th>№</th>
+                    <th>Вид</th>
+                    <th>Етаж</th>
+                    <th>Размер</th>
+                    <th>Цена</th>
+                    <th>Дата на настаняване</th>
+                    <th>Дата на напускане</th>
+                    <th>Нощувки</th>
+                </tr>
                 @foreach (var item in Model.Rooms.Where(x => x.IsConfirmed == true).OrderByDescending(x => x.AccommodationDate))
                 {
                     var totalDays = (int)(item.DepartureDate - item.AccommodationDate).TotalDays;
-                        <tr onmouseover="this.style.backgroundColor = 'orange'" 
-                            onmouseout="this.style.backgroundColor = 'transparent'" 
-                            class="text-center" onclick="window.location.href = '/ClientRooms/ReservationDetails?clientRoomId=' + '@item.Id'" 
-                            style="cursor:pointer">
-                            <td>@item.Room.Id</td>
-                            <td>@item.Room.RoomType.Type</td>
-                            <td>@item.Room.Floor</td>
-                            <td>@item.Room.Size</td>
-                            <td>@item.Room.Price</td>
-                            <td class="font-weight-bold">@item.AccommodationDate.ToLocalTime().ToString("dd.MM.yyyy")</td>
-                            <td class="font-weight-bold">@item.DepartureDate.ToLocalTime().ToString("dd.MM.yyyy")</td>
-                            <td>@totalDays</td>
-                        </tr>
+                    <tr onmouseover="this.style.backgroundColor = 'orange'"
+                        onmouseout="this.style.backgroundColor = 'transparent'"
+                        class="text-center" onclick="window.location.href = '/ClientRooms/ReservationDetails?clientRoomId=' + '@item.Id'"
+                        style="cursor:pointer">
+                        <td>@item.Room.Id</td>
+                        <td>@item.Room.RoomType.Type</td>
+                        <td>@item.Room.Floor</td>
+                        <td>@item.Room.Size</td>
+                        <td>@item.Room.Price</td>
+                        <td class="font-weight-bold">@item.AccommodationDate.ToLocalTime().ToString("dd.MM.yyyy")</td>
+                        <td class="font-weight-bold">@item.DepartureDate.ToLocalTime().ToString("dd.MM.yyyy")</td>
+                        <td>@totalDays</td>
+                    </tr>
                 }
             </table>
         </div>
@@ -83,6 +104,26 @@
             </div>
             <div class="modal-footer">
                 <button id="deleteBtn" class="btn btn-success" onclick=" window.location.href = '/Clients/Delete?clientId=' + '@Model.Id';">Да, изтривам</button>
+                <button type="button" class="btn btn-light" data-dismiss="modal">Отказ</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="UndeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-center" id="exampleModalLabel">Потвърждение</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Сигурни ли сте, че искате да ВЪЗСТАНОВИТЕ клиента?
+            </div>
+            <div class="modal-footer">
+                <button id="deleteBtn" class="btn btn-success" onclick=" undeleteForm.submit()">Да, възстановявам</button>
                 <button type="button" class="btn btn-light" data-dismiss="modal">Отказ</button>
             </div>
         </div>

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using TheHotel.Data.Models;
 using TheHotel.Mapping;
@@ -21,6 +22,10 @@ namespace TheHotel.ViewModels.Clients
         public string Phone { get; set; }
 
         public string Email { get; set; }
+
+        public bool IsDeleted { get; set; }
+
+        public DateTime? DeletedOn { get; set; }
 
         public virtual ICollection<ClientRoom> Rooms { get; set; }
     }

@@ -2,46 +2,63 @@
 @model RoomDetailsViewModel
 
 @{
-    ViewData["Title"] = "Room details";
+    ViewData["Title"] = "Room Details";
 }
 
 <div class="details">
-    <div class=" text-center">
-        <h1 class="text-light">Стая @Model.Id</h1>
+    <div class=" text-center m-5">
+        <h2 class="text-light">Стая @Model.Id</h2>
     </div>
-    <br />
     @if (User.IsInRole(GlobalConstants.AdministratorRole))
     {
-        <div class="row mb-2">
-            <a class="btn btn-primary mr-2 text-light" href="/Rooms/AddImage?roomId=@Model.Id">Добавяне на снимка</a>
-            <a class="btn btn-warning mr-2 text-info" href="/Rooms/Edit?roomId=@Model.Id">Редактиране</a>
-            <a class="btn btn-danger mr-2 text-light" onclick="DeleteModal" data-toggle="modal" data-target="#DeleteModal" style="cursor:pointer">Изтриване</a>
+        <div class="row m-2">
+                <a class="btn btn-primary mr-2 text-light" href="/Rooms/AddImage?roomId=@Model.Id">Добавяне на снимка</a>
+                <a class="btn btn-warning mr-2 text-info" href="/Rooms/Edit?roomId=@Model.Id">Редактиране</a>
+                @if (Model.IsDeleted)
+                {
+                    <form action="Undelete" id="undeleteForm" method="post">
+                        <input type="hidden" name="roomId" value="@Model.Id" />
+                    </form>
+                    <a class="btn btn-success mr-2 text-light" onclick="UndeleteModal" data-toggle="modal" data-target="#UndeleteModal" style="cursor:pointer">Възстановяване</a>
+
+                }
+                else
+                {
+                    <a class="btn btn-danger mr-2 text-light" onclick="DeleteModal" data-toggle="modal" data-target="#DeleteModal" style="cursor:pointer">Изтриване</a>
+                }
         </div>
     }
     <div class="row">
         <div class="col-sm-6 d-inline-block ">
-            <div class="border-left">
+            <div class="border-left border-warning">
                 <dl class="row m-1">
-                    <dt class="col-md-4">Вид: </dt>
+                    <dt class="col-md-4 text-warning">Вид: </dt>
                     <dd class="col-sm-8">@Model.RoomType</dd>
                 </dl>
                 <dl class="row m-1">
-                    <dt class="col-md-4">Етаж: </dt>
+                    <dt class="col-md-4 text-warning">Етаж: </dt>
                     <dd class="col-sm-8">@Model.Floor</dd>
                 </dl>
                 <dl class="row m-1">
-                    <dt class="col-md-4">Размер: </dt>
+                    <dt class="col-md-4 text-warning">Размер: </dt>
                     <dd class="col-sm-8">@Model.Size m&sup2;</dd>
                 </dl>
                 <dl class="row m-1">
-                    <dt class="col-md-4">Цена: </dt>
+                    <dt class="col-md-4 text-warning">Цена: </dt>
                     <dd class="col-sm-8">@Model.Price лв.</dd>
                 </dl>
+                @if (Model.IsDeleted)
+                {
+                    <dl class="row m-1">
+                        <dt class="col-md-4 text-warning">Изтрита на: </dt>
+                        <dd class="col-sm-8">@Model.DeletedOn.Value.ToString("g")</dd>
+                    </dl>
+                }
             </div>
         </div>
         <div class="col-md-6 d-inline-block">
             <dl>
-                <dt class="text-center border-bottom">Описание</dt>
+                <dt class="text-center border-bottom border-warning text-warning">Описание</dt>
                 <dd class="text-center m-2">@Model.Description</dd>
 
             </dl>
@@ -54,7 +71,7 @@
     </div>
 
 
-    <div class="row mt-4 mb-2">
+    <div class="row m-5">
         @foreach (var imgSrc in Model.ImagesSrc)
         {
             <div class="col-md-6 mt-2 mb-2">
@@ -65,9 +82,9 @@
     </div>
 
     @if (Model.HireDates.Where(x => x.IsConfirmed == true && x.IsDeleted == false).Count() > 0
-       && (User.IsInRole(GlobalConstants.AdministratorRole) || User.IsInRole(GlobalConstants.ReceptionistRole)))
+    && (User.IsInRole(GlobalConstants.AdministratorRole) || User.IsInRole(GlobalConstants.ReceptionistRole)))
     {
-        <h4 class="text-center text-light m-4">Всички наети дати</h4>
+        <h4 class="text-center text-light m-5">Всички резервирани дати за стая @Model.Id</h4>
         <div>
             <table class="table table-hover table-striped table-responsive-md text-light">
                 <tr class="text-center text-warning">
@@ -78,9 +95,9 @@
                     <th>Нощувки</th>
                 </tr>
                 @foreach (var item in Model.HireDates
-                   .Where(x => x.IsConfirmed)
-                   .Where(x => x.IsDeleted == false)
-                   .OrderByDescending(x => x.AccommodationDate))
+                .Where(x => x.IsConfirmed)
+                .Where(x => x.IsDeleted == false)
+                .OrderByDescending(x => x.AccommodationDate))
                 {
                     int totalDays = (int)item.DepartureDate.Subtract(item.AccommodationDate).TotalDays;
                     <tr onmouseover="this.style.backgroundColor = 'orange'"
@@ -114,6 +131,26 @@
             </div>
             <div class="modal-footer">
                 <button id="editBtn" type="button" class="btn btn-success" onclick="window.location.href='/Rooms/Delete?roomId='+'@Model.Id'">Да, премахвам</button>
+                <button type="button" class="btn btn-light" data-dismiss="modal">Отказ</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="UndeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-center" id="exampleModalLabel">Потвърждение</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Сигурни ли сте, че искате да ВЪЗСТАНОВИТЕ клиента?
+            </div>
+            <div class="modal-footer">
+                <button id="deleteBtn" class="btn btn-success" onclick=" undeleteForm.submit()">Да, възстановявам</button>
                 <button type="button" class="btn btn-light" data-dismiss="modal">Отказ</button>
             </div>
         </div>

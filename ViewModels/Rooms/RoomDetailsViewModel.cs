@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using TheHotel.Data.Models;
 using TheHotel.Mapping;
@@ -20,6 +21,10 @@ namespace TheHotel.ViewModels.Rooms
         public ICollection<ClientRoom> HireDates { get; set; }
 
         public IEnumerable<string> ImagesSrc { get; set; }
+
+        public bool IsDeleted { get; set; }
+
+        public DateTime? DeletedOn { get; set; }
 
         public string Description { get; set; }
 

@@ -2,9 +2,13 @@
 
 @model CreateOfferViewModel
 
-    <div>
-        <h1 class="text-light text-center m-4">Добави нова оферта</h1>
-    </div>
+@{
+    ViewData["Title"] = "Create Offer";
+}
+
+<div>
+    <h1 class="text-light text-center m-4">Добави нова оферта</h1>
+</div>
 
 <form method="post">
     <div class="text-danger text-center border-danger" asp-validation-summary="ModelOnly"></div>

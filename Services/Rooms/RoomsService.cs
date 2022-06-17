@@ -77,7 +77,7 @@ namespace TheHotel.Services.Rooms
 
         public Room GetById(int id)
         {
-            return roomsRepository.All()
+            return roomsRepository.AllWithDeleted()
                 .Where(x => x.Id == id)
                 .Include(x => x.HireDates)
                 .ThenInclude(x => x.Client)
@@ -86,7 +86,7 @@ namespace TheHotel.Services.Rooms
         }
         public T GetById<T>(int id)
         {
-            return roomsRepository.All()
+            return roomsRepository.AllWithDeleted()
                 .Where(x => x.Id == id)
                 .Include(x => x.HireDates)
                 .ThenInclude(x => x.Client)

@@ -58,7 +58,7 @@ namespace TheHotel.Services.Clients
 
         public Client GetClientById(string clientId)
         {
-            return clientsRepository.All()
+            return clientsRepository.AllWithDeleted()
                 .Include(x => x.Rooms)
                 .ThenInclude(x => x.Room)
                 .ThenInclude(x => x.RoomType)
@@ -67,7 +67,7 @@ namespace TheHotel.Services.Clients
 
         public Client GetClientByPIN(string personalIdentityNumber)
         {
-            return clientsRepository.All()
+            return clientsRepository.AllWithDeleted()
                 .FirstOrDefault(x => x.PersonalIdentityNumber == personalIdentityNumber);
         }
 
