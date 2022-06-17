@@ -66,8 +66,8 @@ namespace TheHotel.Areas.Identity.Pages.Account
             public string LastName { get; set; }
 
             [Required(ErrorMessage = GlobalConstants.PersonalIdentityNumberErrorMsg)]
-            [MinLength(GlobalConstants.PINMinLegth)]
-            [MaxLength(GlobalConstants.PINMaxLegth)]
+            [MinLength(GlobalConstants.PINMinLength)]
+            [MaxLength(GlobalConstants.PINMaxLength)]
             public string PersonalIdentityNumber { get; set; }
 
             [Required]

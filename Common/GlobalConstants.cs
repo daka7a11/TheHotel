@@ -2,11 +2,13 @@
 {
     public static class GlobalConstants
     {
-        public const string AdministratorRole = "Administrator";
+        public const string AdministratorRole = "Администратор";
 
-        public const string ReceptionistRole = "Receptionist";
+        public const string ReceptionistRole = "Рецепционист";
 
         public const string NameSymbolsRegex = "([A-Z][a-z]+)";
+
+        public const string PinOnlyDigits = "[0-9]+";
 
         public const string SystemName = "TheHotel";
 
@@ -22,9 +24,9 @@
 
         public const double RoomMaxPrice = 1000;
 
-        public const int PINMinLegth = 9;
+        public const int PINMinLength = 9;
 
-        public const int PINMaxLegth = 10;
+        public const int PINMaxLength = 10;
 
         public const int ClientNameMinLength = 3;
 
@@ -80,6 +82,8 @@
 
         public const string RequiredPINErrorMsg = "Полето ЕГН е задължително!";
 
+        public const string RequiredMiddleNamerrorMsg = "Полето Презиме е задължително!";
+
         public const string RequiredNameErrorMsg = "Полето име е задължително!";
 
         public const string RequiredLastNameErrorMsg = "Полето фамилия е задължително!";
@@ -100,5 +104,6 @@
 
         public const string RequiredImageErrorMsg = "Моля изберете поне 1 снимка!";
 
+        public const string RequiredRoleErrorMsg = "Моля изберете роля!";
     }
 }

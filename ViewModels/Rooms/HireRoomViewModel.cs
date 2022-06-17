@@ -9,9 +9,9 @@ namespace TheHotel.ViewModels.Rooms
         public int RoomId { get; set; }
 
         [Required(ErrorMessage = GlobalConstants.RequiredPINErrorMsg)]
-        [MinLength(GlobalConstants.PINMinLegth,
+        [MinLength(GlobalConstants.PINMinLength,
             ErrorMessage = GlobalConstants.PersonalIdentityNumberErrorMsg)]
-        [MaxLength(GlobalConstants.PINMaxLegth, 
+        [MaxLength(GlobalConstants.PINMaxLength, 
             ErrorMessage = GlobalConstants.PersonalIdentityNumberErrorMsg)]
         [RegularExpression("[0-9]*", ErrorMessage = GlobalConstants.PersonalIdentityNumberErrorMsg)]
         public string PersonalIdentityNumber { get; set; }

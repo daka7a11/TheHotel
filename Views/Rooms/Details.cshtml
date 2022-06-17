@@ -60,39 +60,40 @@
             <div class="col-md-6 mt-2 mb-2">
                 <img class="img-fluid img-thumbnail" src="@imgSrc" alt="Room @Model.Id image." />
             </div>
+
         }
     </div>
 
-    @if (Model.HireDates.Where(x => x.IsConfirmed == true && x.IsDeleted == false).Count() > 0 
-        && (User.IsInRole(GlobalConstants.AdministratorRole) || User.IsInRole(GlobalConstants.ReceptionistRole)))
+    @if (Model.HireDates.Where(x => x.IsConfirmed == true && x.IsDeleted == false).Count() > 0
+       && (User.IsInRole(GlobalConstants.AdministratorRole) || User.IsInRole(GlobalConstants.ReceptionistRole)))
     {
         <h4 class="text-center text-light m-4">Всички наети дати</h4>
         <div>
             <table class="table table-hover table-striped table-responsive-md text-light">
-                    <tr class="text-center text-warning">
-                        <th>Пълно име</th>
-                        <th>ЕГН</th>
-                        <th>Дата на настаняване</th>
-                        <th>Дата на напускане</th>
-                        <th>Нощувки</th>
-                    </tr>
+                <tr class="text-center text-warning">
+                    <th>Пълно име</th>
+                    <th>ЕГН</th>
+                    <th>Дата на настаняване</th>
+                    <th>Дата на напускане</th>
+                    <th>Нощувки</th>
+                </tr>
                 @foreach (var item in Model.HireDates
-                    .Where(x => x.IsConfirmed)
-                    .Where(x => x.IsDeleted == false)
-                    .OrderByDescending(x => x.AccommodationDate))
+                   .Where(x => x.IsConfirmed)
+                   .Where(x => x.IsDeleted == false)
+                   .OrderByDescending(x => x.AccommodationDate))
                 {
                     int totalDays = (int)item.DepartureDate.Subtract(item.AccommodationDate).TotalDays;
-                        <tr onmouseover="this.style.backgroundColor = 'orange'" 
-                            onmouseout="this.style.backgroundColor = 'transparent'" 
-                            class="text-center text-light" 
-                            onclick="window.location.href = '/ClientRooms/ReservationDetails?clientRoomId=' + '@item.Id'" 
-                            style="cursor:pointer">
-                            <td>@item.Client.FirstName @item.Client.LastName</td>
-                            <td>@item.Client.PersonalIdentityNumber</td>
-                            <td class="font-weight-bold">@item.AccommodationDate.ToLocalTime().ToString("dd.MM.yyyy")</td>
-                            <td class="font-weight-bold">@item.DepartureDate.ToLocalTime().ToString("dd.MM.yyyy")</td>
-                            <td>@totalDays</td>
-                        </tr>
+                    <tr onmouseover="this.style.backgroundColor = 'orange'"
+                        onmouseout="this.style.backgroundColor = 'transparent'"
+                        class="text-center text-light"
+                        onclick="window.location.href = '/ClientRooms/ReservationDetails?clientRoomId=' + '@item.Id'"
+                        style="cursor:pointer">
+                        <td>@item.Client.FirstName @item.Client.LastName</td>
+                        <td>@item.Client.PersonalIdentityNumber</td>
+                        <td class="font-weight-bold">@item.AccommodationDate.ToLocalTime().ToString("dd.MM.yyyy")</td>
+                        <td class="font-weight-bold">@item.DepartureDate.ToLocalTime().ToString("dd.MM.yyyy")</td>
+                        <td>@totalDays</td>
+                    </tr>
                 }
             </table>
         </div>

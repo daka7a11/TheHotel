@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TheHotel.Common;
@@ -18,12 +19,15 @@ namespace TheHotel.Controllers
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IEmployeesService employeesService;
+        private readonly RoleManager<ApplicationRole> roleManager;
 
         public EmployeesController(UserManager<ApplicationUser> userManager,
-            IEmployeesService employeesService)
+            IEmployeesService employeesService,
+            RoleManager<ApplicationRole> roleManager)
         {
             this.userManager = userManager;
             this.employeesService = employeesService;
+            this.roleManager = roleManager;
         }
 
         public async Task<IActionResult> Index()
@@ -83,6 +87,34 @@ namespace TheHotel.Controllers
             await employeesService.Undelete(employeeId);
 
             return Redirect($"/Employees/Details?employeeId={employeeId}");
+        }
+
+        public async Task<IActionResult> Edit(string employeeId)
+        {
+            var employee = await userManager.FindByIdAsync(employeeId);
+            var model = AutoMapperConfig.MapperInstance.Map<EditEmployeeViewModel>(employee);
+            model.Roles = employeesService.GetAllRoles();
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(string employeeId,EditEmployeeViewModel model)
+        {
+            if (String.IsNullOrWhiteSpace(model.RoleId))
+            {
+                ModelState.AddModelError(string.Empty, GlobalConstants.RequiredRoleErrorMsg);
+            }
+
+            if (!ModelState.IsValid)
+            {
+                model.Roles = employeesService.GetAllRoles();
+                return View(model);
+            }
+
+            employeesService.Edit(employeeId, model); 
+
+            return Redirect("/");
         }
     }
 }

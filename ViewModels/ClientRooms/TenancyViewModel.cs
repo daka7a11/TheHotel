@@ -21,8 +21,8 @@ namespace TheHotel.ViewModels.Clients
         public string LastName { get; set; }
 
 
-        [MinLength(GlobalConstants.PINMinLegth, ErrorMessage = GlobalConstants.PersonalIdentityNumberErrorMsg)]
-        [MaxLength(GlobalConstants.PINMaxLegth, ErrorMessage = GlobalConstants.PersonalIdentityNumberErrorMsg)]
+        [MinLength(GlobalConstants.PINMinLength, ErrorMessage = GlobalConstants.PersonalIdentityNumberErrorMsg)]
+        [MaxLength(GlobalConstants.PINMaxLength, ErrorMessage = GlobalConstants.PersonalIdentityNumberErrorMsg)]
         public string PersonalIdentityNumber { get; set; }
 
         [Required(ErrorMessage = GlobalConstants.RequiredPhoneErrorMsg)]

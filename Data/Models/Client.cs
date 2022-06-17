@@ -23,8 +23,8 @@ namespace TheHotel.Data.Models
         public string LastName { get; set; }
 
         [Required]
-        [MinLength(GlobalConstants.PINMinLegth)]
-        [MaxLength(GlobalConstants.PINMaxLegth)]
+        [MinLength(GlobalConstants.PINMinLength)]
+        [MaxLength(GlobalConstants.PINMaxLength)]
         public string PersonalIdentityNumber { get; set; }
 
         [Required]

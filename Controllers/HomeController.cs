@@ -13,16 +13,21 @@ using Microsoft.Extensions.Configuration;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using TheHotel.Common;
+using Microsoft.AspNetCore.Identity;
+using TheHotel.Data.Models;
 
 namespace TheHotel.Controllers
 {
     public class HomeController : Controller
     {
         private readonly IConfiguration config;
+        private readonly UserManager<ApplicationUser> userManager;
 
-        public HomeController(IConfiguration config)
+        public HomeController(IConfiguration config,
+            UserManager<ApplicationUser> userManager)
         {
             this.config = config;
+            this.userManager = userManager;
         }
 
         public async Task<IActionResult> Index()

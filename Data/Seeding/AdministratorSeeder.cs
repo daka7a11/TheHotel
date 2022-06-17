@@ -11,11 +11,14 @@ namespace TheHotel.Data.Seeding
     {
         public async Task SeedAsync(ApplicationDbContext db)
         {
+            ApplicationUser user = null;
+            ApplicationRole admRole = null;
+
             if (!db.Users.Any())
             {
                 var hasher = new PasswordHasher<ApplicationUser>();
 
-                var user = new ApplicationUser()
+                user = new ApplicationUser()
                 {
                     FirstName = "Admin",
                     MiddleName = "Adminov",
@@ -33,11 +36,45 @@ namespace TheHotel.Data.Seeding
 
                 await db.Users.AddAsync(user);
 
-                var role = await db.Roles.AddAsync(new ApplicationRole() { Name = "Administrator", NormalizedName = "ADMINISTRATOR" });
 
-                await db.UserRoles.AddAsync(new IdentityUserRole<string>() { UserId = user.Id, RoleId = role.Entity.Id });
+               
+            }
 
-                await db.SaveChangesAsync();
+            if (!db.Roles.Any())
+            {
+                admRole = new ApplicationRole 
+                { 
+                    Name = "Администратор",
+                    NormalizedName = "АДМИНИСТРАТОР" 
+                };
+
+                var receptionistRole = new ApplicationRole
+                {
+                    Name = "Рецепционист",
+                    NormalizedName = "РЕЦЕПЦИОНИСТ"
+                };
+
+                await db.Roles.AddRangeAsync(admRole, receptionistRole);
+            }
+
+            if (!db.UserRoles.Any())
+            {
+                if (user == null)
+                {
+                    user = db.Users.FirstOrDefault(x => x.Email == "adm@abv.bg");
+                }
+
+                if (admRole == null)
+                {
+                    admRole = db.Roles.FirstOrDefault(x => x.Name == "Администратор");
+                }
+
+                if (user != null && admRole != null)
+                {
+                    await db.UserRoles.AddAsync(new IdentityUserRole<string>() { UserId = user.Id, RoleId = admRole.Id });
+
+                    await db.SaveChangesAsync();
+                }
             }
         }
     }

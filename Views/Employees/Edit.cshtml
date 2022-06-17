@@ -1,0 +1,83 @@
+﻿@using TheHotel.ViewModels.Employees
+
+@model EditEmployeeViewModel
+
+@{
+    ViewData["Title"] = "Edit employee";
+
+    var rolesItems = Model.Roles.Select(x => new SelectListItem (x.Value,x.Key));
+}
+
+<div class="text-center m-5">
+    <h1 class="text-light">Редактиране на служител</h1>
+</div>
+
+<form id="EditEmployeeForm" method="post">
+
+    <div class="text-danger text-center m-5" asp-validation-summary="ModelOnly"></div>
+
+    <div class="col-md-4 offset-4" style="font-size:x-large">
+        <div class="form-group">
+            <label class="text-warning" asp-for="FirstName">Име</label>
+            <input class="form-control" asp-for="FirstName" />
+            <span class="text-danger" style="font-size:medium" asp-validation-for="FirstName"></span>
+        </div>
+        <div class="form-group">
+            <label class="text-warning" asp-for="MiddleName">Презиме</label>
+            <input class="form-control" asp-for="MiddleName" />
+            <span class="text-danger" style="font-size:medium" asp-validation-for="MiddleName"></span>
+        </div>
+        <div class="form-group">
+            <label class="text-warning" asp-for="LastName">Фамилия</label>
+            <input class="form-control" asp-for="LastName" />
+            <span class="text-danger" style="font-size:medium" asp-validation-for="LastName"></span>
+        </div>
+        <div class="form-group">
+            <label class="text-warning" asp-for="PersonalIdentityNumber">ЕГН</label>
+            <input class="form-control" asp-for="PersonalIdentityNumber" />
+            <span class="text-danger" style="font-size:medium" asp-validation-for="PersonalIdentityNumber"></span>
+        </div>
+        <div class="form-group">
+            <label class="text-warning" asp-for="PhoneNumber">Телефон</label>
+            <input class="form-control" asp-for="PhoneNumber" />
+            <span class="text-danger" style="font-size:medium" asp-validation-for="PhoneNumber"></span>
+        </div>
+        <div class="form-group">
+            <label class="text-warning" asp-for="RoleId">Роля</label>
+            <select class="form-control" style="opacity:0.9" asp-for="RoleId" asp-items="rolesItems">
+                <option disabled selected value="Изберете роля">Изберете роля</option>
+                <option value="None">Без роля</option>
+            </select>
+            <span class="text-danger" style="font-size:medium" asp-validation-for="RoleId"></span>
+        </div>
+
+        <div>
+            <input type="hidden" asp-for="Id" value="@Model.Id" />
+            <input type="hidden" asp-for="Roles" value="@Model.Roles" />
+        </div>
+
+        <div class="text-center m-5">
+            <a class="btn-lg btn-warning border-0" onclick="EditModal" data-toggle="modal" data-target="#EditModal" style="cursor:pointer">Редактирай</a>
+        </div>
+    </div>
+</form>
+
+<div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-center" id="exampleModalLabel">Потвърждение</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Сигурни ли сте, че искате да РЕДАКТИРАТЕ служителя?
+            </div>
+            <div class="modal-footer">
+                <button id="editBtn" type="button" class="btn btn-success" onclick="EditEmployeeForm.submit()">Да, редактирам</button>
+                <button type="button" class="btn btn-light" data-dismiss="modal">Отказ</button>
+            </div>
+        </div>
+    </div>
+</div>

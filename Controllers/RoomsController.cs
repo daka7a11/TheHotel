@@ -1,41 +1,25 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections;
 using System.Linq;
-using System.Threading.Tasks;
 using TheHotel.Common;
-using TheHotel.EmailSender;
-using TheHotel.EmailSender.ViewRender;
 using TheHotel.Mapping;
-using TheHotel.Services.ClientRooms;
 using TheHotel.Services.Rooms;
 using TheHotel.ViewModels.Rooms;
 
 namespace TheHotel.Controllers
 {
+    [Authorize(Roles = GlobalConstants.AdministratorRole)]
     public class RoomsController : Controller
     {
         private readonly IRoomsService roomsService;
-        private readonly IClientRoomsService clientRoomsService;
-        private readonly IViewRenderService viewRenderService;
-        private readonly IMailService mailService;
-        private readonly IWebHostEnvironment env;
 
-        public RoomsController(IRoomsService roomsService,
-            IClientRoomsService clientRoomsService,
-            IViewRenderService viewRenderService,
-            IMailService mailService,
-            IWebHostEnvironment env)
+        public RoomsController(IRoomsService roomsService)
         {
             this.roomsService = roomsService;
-            this.clientRoomsService = clientRoomsService;
-            this.viewRenderService = viewRenderService;
-            this.mailService = mailService;
-            this.env = env;
         }
 
+        [AllowAnonymous]
         public IActionResult All(DateTime? accommodationDate, DateTime? departureDate, int? numGuests)
         {
             var model = new AllViewModel();
@@ -87,6 +71,7 @@ namespace TheHotel.Controllers
             return this.View(model);
         }
 
+        [AllowAnonymous]
         public IActionResult ClientPin(int roomId)
         {
             var model = new HireRoomViewModel()
@@ -96,6 +81,7 @@ namespace TheHotel.Controllers
             return this.View(model);
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public IActionResult ClientPin(HireRoomViewModel model)
         {
@@ -107,6 +93,7 @@ namespace TheHotel.Controllers
             return this.RedirectToAction("Tenancy", "ClientRooms", new { roomId = model.RoomId, clientPin = model.PersonalIdentityNumber });
         }
 
+        [AllowAnonymous]
         public IActionResult Details(int roomId)
         {
             var room = roomsService.GetById<RoomDetailsViewModel>(roomId);
@@ -121,7 +108,6 @@ namespace TheHotel.Controllers
             return this.View(room);
         }
 
-        [Authorize(Roles = GlobalConstants.AdministratorRole)]
         public IActionResult AddImage(int roomId)
         {
             var model = new AddImageToRoomViewModel { RoomId = roomId };
@@ -129,7 +115,6 @@ namespace TheHotel.Controllers
             return this.View(model);
         }
 
-        [Authorize(Roles = GlobalConstants.AdministratorRole)]
         [HttpPost]
         public IActionResult AddImage(AddImageToRoomViewModel model)
         {
@@ -154,7 +139,6 @@ namespace TheHotel.Controllers
             return this.View(input);
         }
 
-        [Authorize(Roles = GlobalConstants.AdministratorRole)]
         [HttpPost]
         public IActionResult Edit(EditRoomViewModel model)
         {
@@ -168,22 +152,18 @@ namespace TheHotel.Controllers
             return this.Redirect($"Details?roomId={model.Id}");
         }
 
-
-        [Authorize(Roles = GlobalConstants.AdministratorRole)]
         public IActionResult Delete(int roomId)
         {
             roomsService.Delete(roomId);
             return this.Redirect("/Rooms/All");
         }
 
-        [Authorize(Roles = GlobalConstants.AdministratorRole)]
         public IActionResult Undelete()
         {
             var model = roomsService.GetDeleted<UndeleteViewModel>();
             return this.View(model);
         }
 
-        [Authorize(Roles = GlobalConstants.AdministratorRole)]
         [HttpPost]
         public IActionResult Undelete(int roomId)
         {
