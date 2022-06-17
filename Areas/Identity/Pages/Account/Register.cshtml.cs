@@ -18,7 +18,7 @@ using TheHotel.Data.Models;
 
 namespace TheHotel.Areas.Identity.Pages.Account
 {
-    [Authorize(Roles = "Administrator")]
+    [Authorize(Roles = GlobalConstants.AdministratorRole)]
     public class RegisterModel : PageModel
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
