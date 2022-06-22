@@ -67,11 +67,12 @@
                                         <li class="nav-item">
                                             <a class="nav-link text-light border-bottom" asp-controller="Contacts" asp-action="AnsweredQuestions">Отговорени запитвания</a>
                                         </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link text-light border-bottom" asp-controller="Clients" asp-action="Undelete">Изтрити клиенти</a>
-                                        </li>
+
                                         @if (User.IsInRole(GlobalConstants.AdministratorRole))
                                         {
+                                            <li class="nav-item">
+                                                <a class="nav-link text-light border-bottom" asp-controller="Clients" asp-action="Undelete">Изтрити клиенти</a>
+                                            </li>
                                             <li class="nav-item">
                                                 <a class="nav-link text-light border-bottom" asp-controller="Offers" asp-action="Undelete">Изтрити оферти</a>
                                             </li>

@@ -19,6 +19,8 @@ namespace TheHotel.Controllers
             this.clientsService = clientsService;
         }
 
+        [AllowAnonymous]
+        [Authorize(Roles = GlobalConstants.ReceptionistRole)]
         public IActionResult All()
         {
             var clients = clientsService.GetAll<ClientViewModel>();
@@ -26,6 +28,8 @@ namespace TheHotel.Controllers
             return this.View(clients);
         }
 
+        [AllowAnonymous]
+        [Authorize(Roles = GlobalConstants.ReceptionistRole)]
         [HttpPost]
         public IActionResult All(string clientPin)
         {
@@ -40,6 +44,8 @@ namespace TheHotel.Controllers
             return this.View(clients);
         }
 
+        [AllowAnonymous]
+        [Authorize(Roles = GlobalConstants.ReceptionistRole)]
         public IActionResult Details(string clientId)
         {
             var client = clientsService.GetClientById(clientId);
@@ -54,12 +60,16 @@ namespace TheHotel.Controllers
             return this.View(model);
         }
 
+        [AllowAnonymous]
+        [Authorize(Roles = GlobalConstants.ReceptionistRole)]
         public IActionResult Edit(string clientId)
         {
             var model = AutoMapperConfig.MapperInstance.Map<EditClientViewModel>(clientsService.GetClientById(clientId));
             return this.View(model);
         }
 
+        [AllowAnonymous]
+        [Authorize(Roles = GlobalConstants.ReceptionistRole)]
         [HttpPost]
         public IActionResult Edit(EditClientViewModel model)
         {

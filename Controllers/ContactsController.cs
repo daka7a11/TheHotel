@@ -15,7 +15,7 @@ using TheHotel.ViewModels.Contacts;
 
 namespace TheHotel.Controllers
 {
-    [Authorize(Roles = GlobalConstants.AdministratorRole)]
+    [Authorize(Roles = GlobalConstants.AdministratorRole + "," + GlobalConstants.ReceptionistRole)]
     public class ContactsController : Controller
     {
         private readonly IContactsService contactsService;

@@ -11,16 +11,19 @@
     </div>
     <div class="row mb-2 mt-2 ml-1">
         <a class="btn btn-warning mr-2 text-info" href="/Clients/Edit?clientId=@Model.Id">Редактиране</a>
-        @if (Model.IsDeleted)
+        @if (User.IsInRole(GlobalConstants.AdministratorRole))
         {
-            <form action="Undelete" id="undeleteForm" method="post">
-                <input type="hidden" name="clientId" value="@Model.Id" />
-            </form>
-            <a class="btn btn-success mr-2 text-light" onclick="UndeleteModal" data-toggle="modal" data-target="#UndeleteModal" style="cursor:pointer">Възстановяване</a>
-        }
-        else
-        {
-            <a class="btn btn-danger mr-2 text-light" onclick="DeleteModal" data-toggle="modal" data-target="#DeleteModal" style="cursor:pointer">Изтриване</a>
+            @if (Model.IsDeleted)
+            {
+                <form action="Undelete" id="undeleteForm" method="post">
+                    <input type="hidden" name="clientId" value="@Model.Id" />
+                </form>
+                <a class="btn btn-success mr-2 text-light" onclick="UndeleteModal" data-toggle="modal" data-target="#UndeleteModal" style="cursor:pointer">Възстановяване</a>
+            }
+            else
+            {
+                <a class="btn btn-danger mr-2 text-light" onclick="DeleteModal" data-toggle="modal" data-target="#DeleteModal" style="cursor:pointer">Изтриване</a>
+            }
         }
     </div>
     <div class="row">

@@ -5,11 +5,17 @@
 }
 
 <script>
-    var map //43.74689846916985, 27.018680680192933
+    var map //43.8547061573396, 25.969934114282374
     function initMap() {
+        const myLatLng = { lat: 43.8547061573396, lng: 25.969934114282374 };
         map = new google.maps.Map(document.getElementById('map'), {
-            center: { lat: 43.74689846916985, lng: 27.018680680192933 },
-            zoom: 20
+            center: myLatLng,
+            zoom: 18
+        });
+
+        new google.maps.Marker({
+            position: myLatLng,
+            map,
         });
     }
 </script>

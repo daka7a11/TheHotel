@@ -22,7 +22,7 @@ else
             <th>Отговор на</th>
             <th>Запитване</th>
         </tr>
-        @foreach (var question in Model)
+        @foreach (var question in Model.OrderByDescending(x => x.DeletedOn))
         {
             <tr class="text-center"
                 onmouseover="this.style.backgroundColor = 'orange'"
