@@ -98,7 +98,7 @@
             </div>
         </div>
     </div>
-    @if (User.IsInRole(GlobalConstants.AdministratorRole) && Model.IsDeleted == false)
+    @if ((User.IsInRole(GlobalConstants.AdministratorRole) || User.IsInRole(GlobalConstants.ReceptionistRole)) && Model.IsDeleted == false)
     {
         <div class="row mb-2 mt-2 float-md-right">
             <a class="btn btn-danger mr-2 text-light" onclick="DeleteModal" data-toggle="modal" data-target="#DeleteModal" style="cursor:pointer">Изтриване</a>

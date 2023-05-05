@@ -123,7 +123,7 @@ namespace TheHotel.Controllers
                 return this.View(model);
             }
 
-            bool isEmployee = User.IsInRole("Administrator") || User.IsInRole("Receptionist");
+            bool isEmployee = User.IsInRole(GlobalConstants.AdministratorRole) || User.IsInRole(GlobalConstants.ReceptionistRole);
 
             var clientRoom = AutoMapperConfig.MapperInstance.Map<ClientRoom>(model);
             clientRoom.ClientId = currClient.Id;

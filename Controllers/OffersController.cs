@@ -8,7 +8,7 @@ using TheHotel.ViewModels.Offers;
 
 namespace TheHotel.Controllers
 {
-    [Authorize(Roles = GlobalConstants.AdministratorRole + "," + GlobalConstants.ReceptionistRole)]
+    [Authorize(Roles = GlobalConstants.AdministratorRole)]
     public class OffersController : Controller
     {
         private readonly IOffersService offersService;

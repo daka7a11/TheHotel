@@ -8,7 +8,7 @@ using TheHotel.ViewModels.Clients;
 
 namespace TheHotel.Controllers
 {
-    [Authorize(Roles = GlobalConstants.AdministratorRole)]
+    [Authorize(Roles = GlobalConstants.AdministratorRole + "," + GlobalConstants.ReceptionistRole)]
     public class ClientsController : Controller
     {
         private readonly IClientsService clientsService;
@@ -19,8 +19,6 @@ namespace TheHotel.Controllers
             this.clientsService = clientsService;
         }
 
-        [AllowAnonymous]
-        [Authorize(Roles = GlobalConstants.ReceptionistRole)]
         public IActionResult All()
         {
             var clients = clientsService.GetAll<ClientViewModel>();
@@ -28,8 +26,6 @@ namespace TheHotel.Controllers
             return this.View(clients);
         }
 
-        [AllowAnonymous]
-        [Authorize(Roles = GlobalConstants.ReceptionistRole)]
         [HttpPost]
         public IActionResult All(string clientPin)
         {
@@ -44,8 +40,6 @@ namespace TheHotel.Controllers
             return this.View(clients);
         }
 
-        [AllowAnonymous]
-        [Authorize(Roles = GlobalConstants.ReceptionistRole)]
         public IActionResult Details(string clientId)
         {
             var client = clientsService.GetClientById(clientId);
@@ -60,16 +54,12 @@ namespace TheHotel.Controllers
             return this.View(model);
         }
 
-        [AllowAnonymous]
-        [Authorize(Roles = GlobalConstants.ReceptionistRole)]
         public IActionResult Edit(string clientId)
         {
             var model = AutoMapperConfig.MapperInstance.Map<EditClientViewModel>(clientsService.GetClientById(clientId));
             return this.View(model);
         }
 
-        [AllowAnonymous]
-        [Authorize(Roles = GlobalConstants.ReceptionistRole)]
         [HttpPost]
         public IActionResult Edit(EditClientViewModel model)
         {
@@ -78,6 +68,7 @@ namespace TheHotel.Controllers
             return this.Redirect($"/Clients/Details?clientId={model.Id}");
         }
 
+        [Authorize(Roles = GlobalConstants.AdministratorRole)]
         public IActionResult Delete(string clientId)
         {
             clientsService.Delete(clientId);
@@ -85,6 +76,7 @@ namespace TheHotel.Controllers
             return this.Redirect($"/Clients/Details?clientId={clientId}");
         }
 
+        [Authorize(Roles = GlobalConstants.AdministratorRole)]
         public IActionResult Undelete()
         {
             var model = clientsService.GetDeleted<UndeleteClientsViewModel>();
@@ -92,6 +84,7 @@ namespace TheHotel.Controllers
             return this.View(model);
         }
 
+        [Authorize(Roles = GlobalConstants.AdministratorRole)]
         [HttpPost]
         public IActionResult Undelete(string clientId)
         {
@@ -100,6 +93,7 @@ namespace TheHotel.Controllers
             return this.Redirect($"/Clients/Details?clientId={clientId}");
         }
 
+        [Authorize(Roles = GlobalConstants.AdministratorRole)]
         [HttpPost]
         public IActionResult HardDelete(string clientId)
         {
